@@ -11,8 +11,8 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div>
-     <Navbar />
+    <div className='bg-gray-900'>
+     <Navbar name="Virender Verma" />
      <Intro />
      <AboutUs />
      <Skills />
@@ -20,7 +20,7 @@ const page = () => {
      <Experience />
      <ContactUs />
      <Footer />
-     <Login />
+     {/* <Login /> */}
     </div>
   )
 }

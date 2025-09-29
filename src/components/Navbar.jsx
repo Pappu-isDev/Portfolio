@@ -1,21 +1,54 @@
-import React from 'react';
+import React from "react";
 
-
-const Navbar = (props) => {
+const Navbar = ({ name }) => {
   return (
-    <div>
-      <div>`${props.name}`</div>
-      <div><ul>
-        <li>HOME</li>
-        <li>ABOUT ME</li>
-        <li>SKILLS</li>
-        <li>PROJECTS</li>
-        <li>EXPERIENCE</li>
-        <li>CONTACT ME</li>
-      </ul>
+    <>
+    <div className="bg-transparent sticky top-0 z-9999 text-gray-200 shadow-md">
+      <div className=" mx-auto px-3 py-4 flex justify-between items-center">
+        {/* Logo / Brand */}
+        {/* <div className="text-xl font-bold text-white">{name}</div> */}
+
+        {/* Menu */}
+        <div className="flex justify-between items-center w-full">
+          <div className="text-2xl font-sans ">{name}</div>
+          <div>
+          <ul className="flex gap-8">
+            <li className="relative group cursor-pointer px-3 font-sans  py-2 text-xl text-gray-200 font-medium transition-all duration-300 hover:text-white">
+              Home
+              <span className="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded"></span>
+            </li>
+
+            <li className="relative group cursor-pointer px-3 font-sans  py-2 text-xl text-gray-200 font-medium transition-all duration-300 hover:text-white">
+              About Me
+              <span className="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded"></span>
+            </li>
+
+            <li className="relative group cursor-pointer px-3 font-sans  py-2 text-xl text-gray-200 font-medium transition-all duration-300 hover:text-white">
+              Skills
+              <span className="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded"></span>
+            </li>
+
+            <li className="relative group cursor-pointer px-3 font-sans  py-2 text-xl text-gray-200 font-medium transition-all duration-300 hover:text-white">
+              Projects
+              <span className="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded"></span>
+            </li>
+
+            <li className="relative group cursor-pointer px-3 py-2 font-sans  text-xl text-gray-200 font-medium transition-all duration-300 hover:text-white">
+              Experience
+              <span className="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded"></span>
+            </li>
+
+            <li className="relative group cursor-pointer px-3 py-2 font-sans  text-xl text-gray-200 font-medium transition-all duration-300 hover:text-white">
+              Contact Me
+              <span className="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded"></span>
+            </li>
+          </ul>
+        </div>
+        </div>
       </div>
     </div>
-  )
-}
+    </>
+  );
+};
 
-export default Navbar
+export default Navbar;
