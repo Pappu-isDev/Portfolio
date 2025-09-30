@@ -7,12 +7,14 @@ import Navbar from '@/components/Navbar'
 import Projects from '@/components/Projects'
 import Skills from '@/components/Skills'
 import Login from '@/components/Login'
+
 import React from 'react'
 
 const page = () => {
+  const myName = process.env.NEXT_PUBLIC_NAME;
   return (
     <div className='bg-gray-900'>
-     <Navbar name="Virender Verma" />
+     <Navbar name={myName} />
      <Intro />
      <AboutUs />
      <Skills />
