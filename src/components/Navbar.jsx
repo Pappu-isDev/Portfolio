@@ -3,8 +3,8 @@ import React from "react";
 const Navbar = ({ name }) => {
   return (
     <>
-    <div className="bg-transparent sticky top-0 z-9999 text-gray-200 shadow-md">
-      <div className=" mx-auto px-3 py-4 flex justify-between items-center">
+    <div className="bg-transparent sticky top-0 backdrop-blur-[1.5px] border-b z-9999 text-gray-200 shadow-md">
+      <div className=" mx-auto px-3 py-3 flex justify-between items-center">
         {/* Logo / Brand */}
         {/* <div className="text-xl font-bold text-white">{name}</div> */}
 
