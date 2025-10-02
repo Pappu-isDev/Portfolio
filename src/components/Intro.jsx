@@ -23,8 +23,8 @@ const Intro = () => {
           <div className="flex justify-center">
             <div className="text-4xl font-sans mt-2">WELCOME TO MY PORTFOLIO</div>
           </div>
-          <div className=" my-30 ">
-            <div className="min-h-80 w-full">
+          <div className=" my-30 flex border-2 border-amber-400">
+            <div className="w-full border-2 border-red-400">
               <div className="ml-8 w-[60%] p-2 mt-14">
                 <h1 className="text-white font-sans">
                   <span className="text-xl sm:text-2xl font-sans">
@@ -55,6 +55,7 @@ const Intro = () => {
                 </div>
               </div>
             </div>
+          <div className="img border-2 border-green-400 w-80 h-100 flex justify-center items-center"><img src="/myImg.jpg" alt="Itz Me" className="object-cover p-2 w-70 h-80"/></div>
           </div>
         </div>
       </div>
