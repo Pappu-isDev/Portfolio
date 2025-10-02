@@ -25,7 +25,7 @@ const Intro = () => {
           </div>
           <div className=" my-30 flex border-2 border-amber-400">
             <div className="w-full border-2 border-red-400">
-              <div className="ml-8 w-[60%] p-2 mt-14">
+              <div className="ml-8 w-[80%] p-2 mt-14">
                 <h1 className="text-white font-sans">
                   <span className="text-xl sm:text-2xl font-sans">
                     Hello, I'm
@@ -51,11 +51,25 @@ const Intro = () => {
               <div>
                 <div className="installer mt-5 ml-10  ">
                   <label className="min-w-10" for="progressLinux">
-                  <input id="progressLinux" type="radio"/><span className="mx-auto"></span></label>
+                    <input id="progressLinux" type="radio" /><span className="mx-auto"></span></label>
                 </div>
               </div>
             </div>
-          <div className="img border-2 border-green-400 w-80 h-100 flex justify-center items-center"><img src="/myImg.jpg" alt="Itz Me" className="object-cover p-2 w-70 h-80"/></div>
+            <div className="img border-2 bg-gray-100 border-green-400 w-[30%] h-100 flex justify-center items-center">
+              <div className="w-[280px] h-[320px] perspective">
+                <div className="relative w-full h-full transition-transform duration-500 transform-style preserve-3d hover:rotate-y-180">
+                  {/* Front Image */}
+                  <div className="absolute w-full h-full backface-hidden">
+                    <img src="/myImg.jpg" alt="Itz Me" className="object-cover w-full h-full rounded-2xl shadow-md" />
+                  </div>
+
+                  {/* Back Image */}
+                  <div className="absolute w-full h-full rotate-y-180 backface-hidden">
+                    <img src="/myavtar.png" alt="Avatar" className="object-cover w-full h-full rounded-2xl shadow-md" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
