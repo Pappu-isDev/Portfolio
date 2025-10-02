@@ -103,7 +103,9 @@ body {
   backface-visibility: hidden;
 }
 
-
+animate-spin {
+    animation: spin 1.5s linear infinite;
+  }
 @keyframes downloadSuccess {
 
   0%,
