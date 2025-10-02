@@ -3,8 +3,10 @@ import React from "react";
 import { ReactTyped } from "react-typed";
 
 
+
 const Intro = () => {
   const myName = process.env.NEXT_PUBLIC_NAME;
+
   return (
     <>
       <div className="relative w-full h-screen overflow-hidden">
@@ -55,17 +57,29 @@ const Intro = () => {
                 </div>
               </div>
             </div>
-            <div className="img border-2 bg-gray-100 border-green-400 w-[30%] h-100 flex justify-center items-center">
-              <div className="w-[280px] h-[320px] perspective">
-                <div className="relative w-full h-full transition-transform duration-500 transform-style preserve-3d hover:rotate-y-180">
-                  {/* Front Image */}
-                  <div className="absolute w-full h-full backface-hidden">
-                    <img src="/myImg.jpg" alt="Itz Me" className="object-cover w-full h-full rounded-2xl shadow-md" />
-                  </div>
+            <div className="img border-2 border-green-400 w-[30%] h-100 flex justify-center items-center">
+              <div className="w-[280px] h-[320px] ">
+                <div className=" w-full h-full perspective   ">
+                  <div className="relative w-[290px] h-[330px] transition-transform duration-500 transform-style preserve-3d  hover:rotate-y-180  p-[5px] bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500 rounded-2xl shadow-lg ">
+                    {/* Front Image */}
+                    <div className="absolute  w-[280px]  h-[320px] backface-hidden">
+                      <img src="/myImg.jpg" alt="Itz Me" className="object-cover w-full h-full rounded-2xl  shadow-md" />
+                    </div>
 
-                  {/* Back Image */}
-                  <div className="absolute w-full h-full rotate-y-180 backface-hidden">
-                    <img src="/myavtar.png" alt="Avatar" className="object-cover w-full h-full rounded-2xl shadow-md" />
+                    {/* Back Image */}
+                    <div className="absolutew-[290px]  h-[330px] [transform:rotateY(180deg)] [backface-visibility:hidden] bg-slate-800/90 backdrop-blur-sm flex flex-col justify-center items-center p-6 rounded-2xl shadow-xl border-4 border-green-400/50">
+                      <img
+                        src="/myavtar.png"
+                        alt="Avatar"
+                        className="w-24 h-24 object-contain rounded-full mb-4 ring-4 ring-green-400"
+                      />
+                      <h2 className="text-white text-2xl font-extrabold tracking-tight">AI Developer</h2>
+                      <p className="text-green-400 text-sm mt-2 text-center">
+                        Leveraging Generative AI for next-gen web applications and design.
+                      </p>
+                      <div className="mt-4 text-xs text-gray-400/80">Connect with me!</div>
+                    </div>
+
                   </div>
                 </div>
               </div>
