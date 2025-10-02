@@ -50,7 +50,8 @@ const Intro = () => {
               </div>
               <div>
                 <div className="installer mt-5 ml-10  ">
-                  <label className="min-w-10" for="progressLinux"><input id="progressLinux" type="radio"/><span className="mx-auto  "></span></label>
+                  <label className="min-w-10" for="progressLinux">
+                  <input id="progressLinux" type="radio"/><span className="mx-auto"></span></label>
                 </div>
               </div>
             </div>
