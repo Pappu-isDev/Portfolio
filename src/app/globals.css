@@ -57,7 +57,7 @@ body {
 
 .installer label input:checked~span {
   background: #87E544;
-  animation: downloadSuccess 3.1s ease;
+  animation: downloadSuccess 1.2s ease;
 }
 
 .installer label span:after {
@@ -73,7 +73,7 @@ body {
 .installer label input:checked~span:after {
   content: 'Thank you!';
   font-size: 11.7px;
-  animation: downloadState 3s;
+  animation: downloadState 1s;
 }
 
 .installer label span:before {
@@ -88,7 +88,7 @@ body {
 }
 
 .installer label input:checked~span:before {
-  animation: downloadProgress 2s cubic-bezier(.67, .13, .1, .81);
+  animation: downloadProgress 1s cubic-bezier(.67, .13, .1, .81);
 }
 /* Custom utilities for 3D flip */
 .perspective {
@@ -103,7 +103,9 @@ body {
   backface-visibility: hidden;
 }
 
-
+.animate-spin {
+    animation: spin 1.5s linear infinite;
+  }
 @keyframes downloadSuccess {
 
   0%,
