@@ -51,13 +51,13 @@ const Intro = () => {
                 <p>Full-Stack Software Developer specializing in React, Node.js, and AWS to build scalable, high-performance web applications.</p>
               </div>
               <div>
-                <div className="installer mt-5 ml-10  ">
-                  <label className="min-w-10" for="progressLinux">
+                <div className="installer ml-10  ">
+                  <label className="min-w-10" htmlFor="progressLinux">
                     <input id="progressLinux" type="radio" /><span className="mx-auto"></span></label>
                 </div>
               </div>
             </div>
-            <div className="img border-2 border-green-400 w-[30%] h-100 flex justify-center items-center">
+            <div className="img border-2 border-green-400 w-[30%] h-90 flex justify-center items-center">
               <div className="w-[280px] h-[320px] ">
                 <div className=" w-full h-full perspective   ">
                   <div className="relative w-[290px] h-[330px] transition-transform duration-500 transform-style preserve-3d  hover:rotate-y-180  p-[5px] bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500 rounded-2xl shadow-lg ">
