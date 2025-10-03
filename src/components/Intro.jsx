@@ -92,7 +92,7 @@ const Intro = () => {
                       </div>
 
                       {/* Back Side */}
-                      <div className="absolute  w-[290px] h-[340px] mt-1 ml-[-4px]  w-[290px] h-[330px] [transform:rotateY(180deg)] [backface-visibility:hidden] bg-slate-800/60 backdrop-blur-sm flex flex-col justify-center items-center p-6 rounded-2xl shadow-xl border-4 border-green-400/50">
+                      <div className="absolute  w-[290px] h-[340px] mt-1 ml-[-4px] [transform:rotateY(180deg)] [backface-visibility:hidden] bg-slate-800/60 backdrop-blur-sm flex flex-col justify-center items-center p-6 rounded-2xl shadow-xl border-4 border-green-400/50">
                         <img
                           src="/myavtar.png"
                           alt="Avatar"
