@@ -1,3 +1,4 @@
+"use client";
 import React from 'react'
 import { FaGithub, FaLinkedin,  } from "react-icons/fa6";
 import { BsWhatsapp } from "react-icons/bs";
@@ -7,6 +8,9 @@ const AboutUs = () => {
   const myName = process.env.NEXT_PUBLIC_NAME;
   const gitUrl = process.env.NEXT_PUBLIC_GIT;
   const linkUrl = process.env.NEXT_PUBLIC_LINKEDIN;
+  const whatsUrl = process.env.NEXT_PUBLIC_WHATSAPP;
+  console.log("WhatsApp URL:",whatsUrl);
+  const naukriUrl = process.env.NEXT_PUBLIC_NAUKRI;
   return (
     <>
       <div className='w-full flex justify-center items-center  mx-auto text-center h-100 bg-gradient-to-b from-black via-black-200 to-gray-900 text-white'>
@@ -28,9 +32,20 @@ const AboutUs = () => {
     <FaGithub size={40} />
   </a>
 </div>
-  <div className="hover:text-[#25D366] hover:scale-110 cursor-pointer hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)] transition-all">
-    <BsWhatsapp size={40} />
-  </div>
+<div
+  className="hover:text-[#25D366] hover:scale-110 cursor-pointer hover:drop-shadow-[0_0_8px_rgba(37, 211, 102, 0.8)] transition-all flex items-center justify-center"
+  style={{ width: 40, height: 40 }}
+>
+<a
+  href={whatsUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 hover:text-[#25D366] hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(37,211,102,0.8)]"
+>
+  <BsWhatsapp size={40} />
+</a>
+</div>
+
 <div className="w-13 h-13 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white hover:drop-shadow-[0_0_8px_#0A66C2]">
   <a
     href={linkUrl}
@@ -44,7 +59,13 @@ const AboutUs = () => {
   <img src="/gmail.png" alt="gmail" className="w-8 h-8 mb-1" />
 </div>
 <div className="h-12 w-12 cursor-pointer transition-all duration-300 flex items-center justify-center rounded-full hover:bg-blue-900 hover:text-[#25D366] hover:scale-110">
+    <a
+    href={naukriUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
   <img src="/na.png" alt="naukri" className="w-7 h-7 mb-1" />
+  </a>
 </div>
 
 </div>
