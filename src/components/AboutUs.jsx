@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaGithub, FaLinkedin,  } from "react-icons/fa6";
+import { FaGithub, FaLinkedin, } from "react-icons/fa6";
 import { BsWhatsapp } from "react-icons/bs";
 import { FaLinkedinIn } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
@@ -18,36 +18,36 @@ const AboutUs = () => {
             </p>
           </div>
           <div className="flex justify-center items-center gap-10 mt-5 text-gray-500 ">
-<div className="flex justify-center items-center gap-10  text-gray-500">
-  <a
-    href={gitUrl}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="cursor-pointer transition-all duration-300 hover:text-[#181717] hover:scale-110 hover:drop-shadow-[0_0_8px_rgb(59,130,246),0_0_15px_rgb(59,130,246),0_0_25px_rgb(59,130,246)] rounded-full"
-  >
-    <FaGithub size={40} />
-  </a>
-</div>
-  <div className="hover:text-[#25D366] hover:scale-110 cursor-pointer hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)] transition-all">
-    <BsWhatsapp size={40} />
-  </div>
-<div className="w-13 h-13 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white hover:drop-shadow-[0_0_8px_#0A66C2]">
-  <a
-    href={linkUrl}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <FaLinkedinIn size={28} />
-  </a>
-</div>
-<div className="h-12 w-12 cursor-pointer transition-all duration-300 flex items-center justify-center rounded-full hover:bg-white hover:text-[#25D366] hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]">
-  <img src="/gmail.png" alt="gmail" className="w-8 h-8 mb-1" />
-</div>
-<div className="h-12 w-12 cursor-pointer transition-all duration-300 flex items-center justify-center rounded-full hover:bg-blue-900 hover:text-[#25D366] hover:scale-110">
-  <img src="/na.png" alt="naukri" className="w-7 h-7 mb-1" />
-</div>
+            <div className="flex justify-center items-center gap-10  text-gray-500">
+              <a
+                href={gitUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cursor-pointer transition-all duration-300 hover:text-[#181717] hover:scale-110 hover:drop-shadow-[0_0_8px_rgb(59,130,246),0_0_15px_rgb(59,130,246),0_0_25px_rgb(59,130,246)] rounded-full"
+              >
+                <FaGithub size={40} />
+              </a>
+            </div>
+            <div className="hover:text-[#25D366] hover:scale-110 cursor-pointer hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)] transition-all">
+              <BsWhatsapp size={40} />
+            </div>
+            <div className="w-13 h-13 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white hover:drop-shadow-[0_0_8px_#0A66C2]">
+              <a
+                href={linkUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaLinkedinIn size={28} />
+              </a>
+            </div>
+            <div className="h-12 w-12 cursor-pointer transition-all duration-300 flex items-center justify-center rounded-full hover:bg-white hover:text-[#25D366] hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]">
+              <img src="/gmail.png" alt="gmail" className="w-8 h-8 mb-1" />
+            </div>
+            <div className="h-12 w-12 cursor-pointer transition-all duration-300 flex items-center justify-center rounded-full hover:bg-blue-900 hover:text-[#25D366] hover:scale-110">
+              <img src="/na.png" alt="naukri" className="w-7 h-7 mb-1" />
+            </div>
 
-</div>
+          </div>
         </div>
       </div>
     </>
