@@ -9,7 +9,7 @@ const AboutUs = () => {
   const gitUrl = process.env.NEXT_PUBLIC_GIT;
   const linkUrl = process.env.NEXT_PUBLIC_LINKEDIN;
   const whatsUrl = process.env.NEXT_PUBLIC_WHATSAPP;
-  console.log("WhatsApp URL:",whatsUrl);
+  console.log("WhatsApp URL:", whatsUrl);
   const naukriUrl = process.env.NEXT_PUBLIC_NAUKRI;
   return (
     <>
@@ -22,51 +22,58 @@ const AboutUs = () => {
             </p>
           </div>
           <div className="flex justify-center items-center gap-10 mt-5 text-gray-500 ">
-<div className="flex justify-center items-center gap-10  text-gray-500">
-  <a
-    href={gitUrl}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="cursor-pointer transition-all duration-300 hover:text-[#181717] hover:scale-110 hover:drop-shadow-[0_0_8px_rgb(59,130,246),0_0_15px_rgb(59,130,246),0_0_25px_rgb(59,130,246)] rounded-full"
-  >
-    <FaGithub size={40} />
-  </a>
-</div>
-<div
-  className="hover:text-[#25D366] hover:scale-110 cursor-pointer hover:drop-shadow-[0_0_8px_rgba(37, 211, 102, 0.8)] transition-all flex items-center justify-center"
-  style={{ width: 40, height: 40 }}
->
-<a
-  href={whatsUrl}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 hover:text-[#25D366] hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(37,211,102,0.8)]"
->
-  <BsWhatsapp size={40} />
-</a>
-</div>
+            <div className="flex justify-center items-center gap-10  text-gray-500">
+              <a
+                href={gitUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cursor-pointer transition-all duration-300 hover:text-[#181717] hover:scale-110 hover:drop-shadow-[0_0_8px_rgb(59,130,246),0_0_15px_rgb(59,130,246),0_0_25px_rgb(59,130,246)] rounded-full"
+              >
+                <FaGithub size={40} />
+              </a>
+            </div>
+            <div
+              className="hover:text-[#25D366] hover:scale-110 cursor-pointer hover:drop-shadow-[0_0_8px_rgba(37, 211, 102, 0.8)] transition-all flex items-center justify-center"
+              style={{ width: 40, height: 40 }}
+            >
+              <a
+                href={whatsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 hover:text-[#25D366] hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(37,211,102,0.8)]"
+              >
+                <BsWhatsapp size={40} />
+              </a>
+            </div>
 
-<div className="w-13 h-13 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white hover:drop-shadow-[0_0_8px_#0A66C2]">
-  <a
-    href={linkUrl}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <FaLinkedinIn size={28} />
-  </a>
-</div>
-<div className="h-12 w-12 cursor-pointer transition-all duration-300 flex items-center justify-center rounded-full hover:bg-white hover:text-[#25D366] hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]">
-  <img src="/gmail.png" alt="gmail" className="w-8 h-8 mb-1" />
-</div>
-<div className="h-12 w-12 cursor-pointer transition-all duration-300 flex items-center justify-center rounded-full hover:bg-blue-900 hover:text-[#25D366] hover:scale-110">
-    <a
-    href={naukriUrl}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-  <img src="/na.png" alt="naukri" className="w-7 h-7 mb-1" />
-  </a>
-</div>
+            <div className="w-13 h-13 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white hover:drop-shadow-[0_0_8px_#0A66C2]">
+              <a
+                href={linkUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaLinkedinIn size={28} />
+              </a>
+            </div>
+            <div className="h-12 w-12 cursor-pointer transition-all duration-300 flex items-center justify-center rounded-full hover:bg-blue-100 hover:text-[#0A66C2] hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]">
+              <a
+                href="mailto:virenderv111@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img src="/gmail.png" alt="Gmail" className="w-8 h-8 mb-1" />
+              </a>
+            </div>
+
+            <div className="h-12 w-12 cursor-pointer transition-all duration-300 flex items-center justify-center rounded-full hover:bg-blue-900 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)] hover:text-[#25D366] hover:scale-110">
+              <a
+                href={naukriUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img src="/na.png" alt="naukri" className="w-7 h-7 mb-1" />
+              </a>
+            </div>
 
           </div>
         </div>
