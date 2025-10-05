@@ -1,15 +1,13 @@
 "use client";
 import React from 'react'
-import { FaGithub, FaLinkedin,  } from "react-icons/fa6";
+import { FaGithub} from "react-icons/fa6";
 import { BsWhatsapp } from "react-icons/bs";
 import { FaLinkedinIn } from "react-icons/fa";
-import { SiGmail } from "react-icons/si";
 const AboutUs = () => {
   const myName = process.env.NEXT_PUBLIC_NAME;
   const gitUrl = process.env.NEXT_PUBLIC_GIT;
   const linkUrl = process.env.NEXT_PUBLIC_LINKEDIN;
   const whatsUrl = process.env.NEXT_PUBLIC_WHATSAPP;
-  console.log("WhatsApp URL:",whatsUrl);
   const naukriUrl = process.env.NEXT_PUBLIC_NAUKRI;
   return (
     <>

@@ -7,7 +7,7 @@ import { ReactTyped } from "react-typed";
 const Intro = () => {
   const myName = process.env.NEXT_PUBLIC_NAME;
   const pdf = process.env.NEXT_PUBLIC_PDF;
-
+  console.log("pdf", pdf);
   return (
    
     <>
