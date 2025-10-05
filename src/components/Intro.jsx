@@ -5,46 +5,7 @@ import { ReactTyped } from "react-typed";
 const Intro = () => {
   const myName = process.env.NEXT_PUBLIC_NAME;
   const pdf = process.env.NEXT_PUBLIC_PDF;
-<<<<<<< HEAD
   console.log("pdf", pdf);
-=======
-
-  const [showToast, setShowToast] = useState(false);
-  const [showWelcomeToast, setShowWelcomeToast] = useState(false);
-  const [showFlipToast, setShowFlipToast] = useState(false);
-  const [isDownloading, setIsDownloading] = useState(false);
-
-  // Welcome toast on mount
-  useEffect(() => {
-    setShowWelcomeToast(true);
-    const timer = setTimeout(() => { setShowWelcomeToast(false), 2000 }, 5000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleDownload = () => {
-    setIsDownloading(true);
-
-    const link = document.createElement("a");
-    link.href = `/${pdf}`;
-    link.download = pdf;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    // Simulate download delay
-    setTimeout(() => {
-      setIsDownloading(false);
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 2000);
-    }, 800);
-  };
-
-  const handleCardHover = () => {
-    setShowFlipToast(true);
-    setTimeout(() => setShowFlipToast(false), 2000);
-  };
-
->>>>>>> 29cb00e50eeb6c91284d70c8bd9c976ba2507956
   return (
     <>
       <div className="relative w-full h-screen overflow-hidden">
