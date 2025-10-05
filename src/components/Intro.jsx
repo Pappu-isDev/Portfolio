@@ -1,4 +1,6 @@
 "use client";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap/all";
 import React, { useState, useEffect } from "react";
 import { ReactTyped } from "react-typed";
 
@@ -11,8 +13,16 @@ const Intro = () => {
   const [showFlipToast, setShowFlipToast] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
 
+
+  useGSAP(() => {
+
+    gsap.fromTo(".info", { opacity: 0, x: 0 }, { opacity: 1, x: 50, duration: 1, ease: "power2.out", stagger: 0.3, duration: 3,delay:1 });
+    gsap.fromTo(".info2", { opacity: 0, x: 0 }, { opacity: 1, x: -50, duration: 1, ease: "power2.out", stagger: 0.3, duration: 3,delay:1 });
+  }, []);
+
+
   // Welcome toast on mount
-  useEffect(() => {
+  useEffect (() => {
     setShowWelcomeToast(true);
     const timer = setTimeout(() => { setShowWelcomeToast(false), 2000 }, 5000);
     return () => clearTimeout(timer);
@@ -57,11 +67,11 @@ const Intro = () => {
         {/* Main Content */}
         <div className="relative z-10 h-full">
           <div className="flex justify-center">
-            <div className="text-4xl font-sans mt-2">WELCOME TO MY PORTFOLIO</div>
+            {/* <div className="text-4xl font-sans mt-2">WELCOME TO MY PORTFOLIO</div> */}
           </div>
 
           <div className="my-30 flex">
-            <div className="w-full">
+            <div className="info w-full">
               <div className="ml-8 w-[80%] p-2 mt-14">
                 <h1 className="text-white font-sans">
                   <span className="text-xl sm:text-2xl font-sans">Hello, I'm </span>
@@ -126,7 +136,7 @@ const Intro = () => {
             </div>
 
             {/* Flip Card */}
-            <div className="overflow-hidden rounded-2xl w-[28.5%] h-88 flex justify-center items-center mr-8">
+            <div className="info2 overflow-hidden rounded-2xl w-[28.5%] h-88 flex justify-center items-center mr-8">
               <div className="w-[280px] h-[350px]">
                 <div className="w-full h-full perspective">
                   <div className="relative w-full h-full">
@@ -185,16 +195,16 @@ const Intro = () => {
             </div>
           )} */}
           <div
-            className={`fixed top-1/3 left-[30%] justify-center mx-auto self-center w-100 text-center  text-xl rounded-lg  z-50 
-    transform transition-transform duration-500 ease-out
+            className={`fixed top-1/5 left-[35%] justify-center mx-auto self-center w-100 text-center  text-xl rounded-lg  z-50 
+    transform transition-transform duration-2000 ease-out
     ${showWelcomeToast ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}
           >
 
-            <div className="  h-50 w-150 mx-auto text-center bg-gradient-to-br from-[#1f1c2c] to-[#928DAB]
-    text-white px-30 py-4 rounded-2xl shadow-2xl backdrop-blur-lg
+            <div className="  min-h-20 min-w-50 mx-auto text-center bg-gradient-to-br from-[#1f1c2c] to-[#928DAB]
+    text-white px-5 py-3 rounded-2xl shadow-2xl backdrop-blur-lg
     border border-white/40
     animate-slide-in-left
-    flex items-center gap-4 transition-all duration-700"
+    flex items-center gap-4 transition-all duration-1000"
             >
               {/* Icon or Avatar */}
               <div className="bg-white/10 p-3 rounded-full shadow-inner ring-2 ring-pink-400/50 animate-pulse">
