@@ -5,7 +5,42 @@ import { ReactTyped } from "react-typed";
 const Intro = () => {
   const myName = process.env.NEXT_PUBLIC_NAME;
   const pdf = process.env.NEXT_PUBLIC_PDF;
-  console.log("pdf", pdf);
+
+  const [showToast, setShowToast] = useState(false);
+  const [showWelcomeToast, setShowWelcomeToast] = useState(false);
+  const [showFlipToast, setShowFlipToast] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  // Welcome toast on mount
+  useEffect(() => {
+    setShowWelcomeToast(true);
+    const timer = setTimeout(() => { setShowWelcomeToast(false), 2000 }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleDownload = () => {
+    setIsDownloading(true);
+
+    const link = document.createElement("a");
+    link.href = `/${pdf}`;
+    link.download = pdf;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Simulate download delay
+    setTimeout(() => {
+      setIsDownloading(false);
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 2000);
+    }, 800);
+  };
+
+  const handleCardHover = () => {
+    setShowFlipToast(true);
+    setTimeout(() => setShowFlipToast(false), 2000);
+  };
+
   return (
     <>
       <div className="relative w-full h-screen overflow-hidden">
@@ -54,9 +89,9 @@ const Intro = () => {
                 <button
                   onClick={handleDownload}
                   disabled={isDownloading}
-                  className={`px-6 py-3 text-lg font-semibold rounded-md transition-all duration-300 shadow-md ${isDownloading
+                  className={`px-6 py-3 text-lg font-semibold rounded-md transition-all duration-300 shadow-md cursor-pointer  ${isDownloading
                     ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-blue-600 hover:bg-blue-700 text-white"
+                    : "bg-blue-400 hover:bg-blue-700 hover:scale-90 text-white"
                     }`}
                 >
                   {isDownloading ? (
@@ -91,7 +126,7 @@ const Intro = () => {
             </div>
 
             {/* Flip Card */}
-            <div className="overflow-hidden rounded-2xl w-[28.5%] h-88 flex justify-center items-center">
+            <div className="overflow-hidden rounded-2xl w-[28.5%] h-88 flex justify-center items-center mr-8">
               <div className="w-[280px] h-[350px]">
                 <div className="w-full h-full perspective">
                   <div className="relative w-full h-full">

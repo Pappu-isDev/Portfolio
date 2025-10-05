@@ -8,7 +8,7 @@ const AboutUs = () => {
   const gitUrl = process.env.NEXT_PUBLIC_GIT;
   const linkUrl = process.env.NEXT_PUBLIC_LINKEDIN;
   const whatsUrl = process.env.NEXT_PUBLIC_WHATSAPP;
-  console.log("WhatsApp URL:", whatsUrl);
+  const mailUrl = process.env.NEXT_PUBLIC_GMAIL;
   const naukriUrl = process.env.NEXT_PUBLIC_NAUKRI;
   return (
     <>
@@ -56,7 +56,7 @@ const AboutUs = () => {
             </div>
             <div className="h-12 w-12 cursor-pointer transition-all duration-300 flex items-center justify-center rounded-full hover:bg-blue-100 hover:text-[#0A66C2] hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]">
               <a
-                href="mailto:virenderv111@gmail.com"
+                href={mailUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
