@@ -38,10 +38,18 @@ export default function SkillsSection() {
     "JavaScript",
     "React",
     "Tailwind CSS",
+    "Redux",
     "Bootstrap",
-    "Shadcn UI",
-    "Chakra UI",
-    "WordPress",
+   "Node Js",
+   "Nest Js",
+   "Next Js",
+   "AWS",
+   "MongoDB",
+   "MySQL",
+   "Postman",
+   "Git,GitHub",
+   "VS-Code",
+   "Docker"
   ];
 
   return (

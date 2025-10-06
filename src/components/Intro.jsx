@@ -36,8 +36,6 @@ const Intro = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-
-    // Simulate download delay
     setTimeout(() => {
       setIsDownloading(false);
       setShowToast(true);
@@ -151,7 +149,6 @@ const Intro = () => {
                       className="relative w-full h-full transition-transform duration-500 transform-style preserve-3d hover:rotate-y-180 z-10"
                       onMouseEnter={handleCardHover}
                     >
-                      {/* Front Side */}
                       <div className="absolute w-[290px] h-[340px] mt-1 ml-[-4px] backface-hidden">
                         <img
                           src="/myImg.jpg"
