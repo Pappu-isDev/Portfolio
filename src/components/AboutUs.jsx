@@ -24,14 +24,14 @@ const AboutUs = () => {
         y: 0,
         scale: 1,
         duration: 1,
-        ease: "back.out(1.7)",
+        ease: "power1.inOut",
         stagger: 0.3,
         scrollTrigger: {
           trigger: ".icons-container", 
-          start: "top 70%",            
-          end: "bottom 50%",          
+          start: "top 95%",            
+          end: "bottom 80%",          
           toggleActions: "play none none reverse",
-          markers: false 
+         markers:false
         }
       }
     );
@@ -53,18 +53,18 @@ const AboutUs = () => {
             </p>
           </div>
           <div className="icons-container flex justify-center items-center gap-10 mt-5 text-gray-500 ">
-            <div className="icon flex justify-center items-center gap-10  text-gray-500">
+            <div className=" flex justify-center items-center gap-10  text-gray-500">
               <a
                 href={gitUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="cursor-pointer transition-all duration-300 hover:text-[#181717] hover:scale-110 hover:drop-shadow-[0_0_8px_rgb(59,130,246),0_0_15px_rgb(59,130,246),0_0_25px_rgb(59,130,246)] rounded-full"
               >
-                <FaGithub size={40} />
+                <FaGithub size={40} className='icon' />
               </a>
             </div>
             <div
-              className=" icon hover:text-[#25D366] hover:scale-110 cursor-pointer hover:drop-shadow-[0_0_8px_rgba(37, 211, 102, 0.8)] transition-all flex items-center justify-center"
+              className="  hover:text-[#25D366] hover:scale-110 cursor-pointer hover:drop-shadow-[0_0_8px_rgba(37, 211, 102, 0.8)] transition-all flex items-center justify-center"
               style={{ width: 40, height: 40 }}
             >
               <a
@@ -73,36 +73,36 @@ const AboutUs = () => {
                 rel="noopener noreferrer"
                 className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 hover:text-[#25D366] hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(37,211,102,0.8)]"
               >
-                <BsWhatsapp size={40} />
+                <BsWhatsapp size={40} className='icon' />
               </a>
             </div>
 
-            <div className="icon w-13 h-13 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white hover:drop-shadow-[0_0_8px_#0A66C2]">
+            <div className=" w-13 h-13 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white hover:drop-shadow-[0_0_8px_#0A66C2]">
               <a
                 href={linkUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <FaLinkedinIn size={28} />
+                <FaLinkedinIn size={28} className='icon' />
               </a>
             </div>
-            <div className="icon h-12 w-12 cursor-pointer transition-all duration-300 flex items-center justify-center rounded-full hover:bg-blue-100 hover:text-[#0A66C2] hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]">
+            <div className=" h-12 w-12 cursor-pointer transition-all duration-300 flex items-center justify-center rounded-full hover:bg-blue-100 hover:text-[#0A66C2] hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]">
               <a
                 href={mailUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src="/gmail.png" alt="Gmail" className="w-8 h-8 mb-1" />
+                <img src="/gmail.png" alt="Gmail" className="icon w-8 h-8 mb-1" />
               </a>
             </div>
 
-            <div className="icon h-12 w-12 cursor-pointer transition-all duration-300 flex items-center justify-center rounded-full hover:bg-blue-900 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)] hover:text-[#25D366] hover:scale-110">
+            <div className=" h-12 w-12 cursor-pointer transition-all duration-300 flex items-center justify-center rounded-full hover:bg-blue-900 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)] hover:text-[#25D366] hover:scale-110">
               <a
                 href={naukriUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src="/na.png" alt="naukri" className="w-7 h-7 mb-1" />
+                <img src="/na.png" alt="naukri" className=" icon w-7 h-7 mb-1" />
               </a>
             </div>
 

@@ -15,9 +15,8 @@ const Intro = () => {
 
 
   useGSAP(() => {
-
-    gsap.fromTo(".info", { opacity: 0, x: 0 }, { opacity: 1, x: 50, duration: 1, ease: "power2.out", stagger: 0.3, duration: 3,delay:1 });
-    gsap.fromTo(".info2", { opacity: 0, x: 0 }, { opacity: 1, x: -50, duration: 1, ease: "power2.out", stagger: 0.3, duration: 3,delay:1 });
+    gsap.fromTo(".info", { opacity: 0, x: 0 }, { opacity: 1, x: 50, duration: 1, ease: "power3.inOut", stagger: 0.3, duration: 3,delay:1 });
+    gsap.fromTo(".info2", { opacity: 0, x: 0 }, { opacity: 1, x: -50, duration: 1, ease: "power3.inOut", stagger: 0.3, duration: 3,delay:1 });
   }, []);
 
 
