@@ -11,46 +11,39 @@ export default function SkillsSection() {
   const sectionRef = useRef(null);
   const naukriUrl = process.env.NEXT_PUBLIC_NAUKRI;
 
-  useGSAP(() => {
-    gsap.fromTo(
-      ".skill-card",
-      { opacity: 0, y: -70,  },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 1,
-        ease: "bounce",
-        stagger: 0.3,
-        scrollTrigger: {
-          trigger: ".trigger", 
-          start: "top 95%",            
-          end: "bottom 80%",          
-          toggleActions: "play none none reverse",
-         markers:false
-        }
+ useGSAP(() => {
+  gsap.fromTo(
+    ".skill-card",
+    { 
+      opacity: 0, 
+      y: -50,      
+    },
+    {
+      opacity: 1,     
+      y: 0,    
+      scale: 1,
+      duration: 0.8,
+      ease: 'bounce',
+      stagger: {
+        from: 'top',
+        amount: 3,
+        axis: 'y',
+        grid: [0,1]
+      },
+      scrollTrigger: {
+        trigger: ".trigger", 
+        start: "top 95%",            
+        end: "bottom 80%",          
+        toggleActions: "play none none reverse",
+        markers: false
       }
-    );
-  }, []);
+    }
+  );
+}, []);
+
 
   const skills = [
-    "HTML",
-    "CSS",
-    "JavaScript",
-    "React",
-    "Tailwind CSS",
-    "Redux",
-    "Bootstrap",
-   "Node Js",
-   "Nest Js",
-   "Next Js",
-   "AWS",
-   "MongoDB",
-   "MySQL",
-   "Postman",
-   "Git,GitHub",
-   "VS-Code",
-   "Docker"
+    "HTML","CSS","JS"
   ];
 
   return (
@@ -59,10 +52,10 @@ export default function SkillsSection() {
       className="py-20 px-6 sm:px-12 bg-gray-900 text-white"
       id="skills"
     >
-      <div className="max-w-5xl mx-auto text-center">
+      <div className="max-w-5xl relative mx-auto text-center">
         <h2 className="text-4xl font-bold mb-12">My Skills</h2>
 
-        <div className="trigger grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+        <div className="trigger absolute flex justify-center items-center gap-6">
           {skills.map((skill, index) => (
             <div
               key={index}
