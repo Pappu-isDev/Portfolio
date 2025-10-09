@@ -1,23 +1,28 @@
 
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from "react-icons/fa";
 
-
+const myName = process.env.NEXT_PUBLIC_NAME;
+const gitUrl = process.env.NEXT_PUBLIC_GIT;
+const linkUrl = process.env.NEXT_PUBLIC_LINKEDIN;
+const whatsUrl = process.env.NEXT_PUBLIC_WHATSAPP;
+const mailUrl = process.env.NEXT_PUBLIC_GMAIL;
+const naukriUrl = process.env.NEXT_PUBLIC_NAUKRI;
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-gray-300 py-8 px-4">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
         {/* Left Section */}
         <div className="text-center md:text-left">
-          <h2 className="text-xl font-semibold text-white">Virender Verma</h2>
+          <h2 className="text-xl font-semibold text-white">{myName}</h2>
           <p className="text-sm text-gray-400">
-            Front-End Developer | React | Tailwind | Next.js
+            Full-Stack Developer | React | Tailwind | Next.js
           </p>
         </div>
 
         {/* Social Links */}
         <div className="flex space-x-6 text-xl">
           <a
-            href="https://github.com/"
+            href={gitUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition-colors"
@@ -25,7 +30,7 @@ const Footer = () => {
             <FaGithub />
           </a>
           <a
-            href="https://linkedin.com/"
+            href={linkUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition-colors"
@@ -33,15 +38,17 @@ const Footer = () => {
             <FaLinkedin />
           </a>
           <a
-            href="https://instagram.com/"
+            href={naukriUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition-colors"
           >
-            <FaInstagram />
+            <img src="/na.png" alt="naukri" className=" icon w-6 h-6 " />
           </a>
           <a
-            href="mailto:virender@example.com"
+            href={mailUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="hover:text-white transition-colors"
           >
             <FaEnvelope />
