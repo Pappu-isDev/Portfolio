@@ -3,6 +3,8 @@ import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 
 
 const ContactUs=()=> {
+  const email = process.env.NEXT_PUBLIC_EMAIL;
+  const phone = process.env.NEXT_PUBLIC_PHONE;
   return (
     <section id="contact" className="bg-gray-900 text-gray-300 py-16 px-6">
       <div className="max-w-5xl mx-auto text-center">
@@ -19,7 +21,7 @@ const ContactUs=()=> {
               <FaEnvelope className="text-blue-400 text-2xl" />
               <div>
                 <h4 className="font-semibold text-white">Email</h4>
-                <p>virender@example.com</p>
+                <p>{email}</p>
               </div>
             </div>
 
@@ -27,7 +29,7 @@ const ContactUs=()=> {
               <FaPhoneAlt className="text-blue-400 text-2xl" />
               <div>
                 <h4 className="font-semibold text-white">Phone</h4>
-                <p>+91 9350604018</p>
+                <p>{phone}</p>
               </div>
             </div>
 
