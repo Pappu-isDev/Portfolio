@@ -2,6 +2,7 @@
 import React, { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import AboutMe from "./AboutMe";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   FaHtml5,
@@ -25,32 +26,6 @@ export default function SkillsSection() {
   const sectionRef = useRef(null);
   const naukriUrl = process.env.NEXT_PUBLIC_NAUKRI;
 
-  // useGSAP(() => {
-  //   gsap.fromTo(
-  //     ".skill-card",
-  //     { opacity: 0, y: -80,x:50, scale: 1, rotationX: -40  },
-  //     {
-  //       opacity: 1,
-  //       y: 0,
-  //       x:0,
-  //       scale: 1,
-  //       duration: 1.2,
-  //       ease: "bounce.out",
-  //       stagger: {
-  //         each: 0.2,
-  //         from: "start",
-
-  //       },
-  //       scrollTrigger: {
-  //         trigger: ".trigger", 
-  //         start: "top 95%",            
-  //         end: "bottom 80%",          
-  //         toggleActions: "play none none reverse",
-  //        markers:false
-  //       }
-  //     }
-  //   );
-  // }, []);
   gsap.registerPlugin(ScrollTrigger);
   useGSAP(() => {
     gsap.fromTo(
@@ -109,18 +84,7 @@ const skills = [
       <div className="max-w-5xl  mx-auto text-center">
         <h2 className="text-4xl font-bold mb-12">My Skills</h2>
 
-       {/* <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-  {skills.map((skill, index) => (
-    <div
-      key={index}
-      className="skill-card trigger rounded-xl text-white text-center font-semibold flex flex-col items-center justify-center p-6 shadow-lg hover:scale-105 transition-transform duration-300"
-      style={{ backgroundColor: skill.bg }}
-    >
-      {skill.icon}
-      <span className="mt-3">{skill.name}</span>
-    </div>
-  ))}
-</div> */}
+      <AboutMe />
  <div className="  grid grid-cols-4  gap-6">
           {skills.map((skill, index) => (
             <div
