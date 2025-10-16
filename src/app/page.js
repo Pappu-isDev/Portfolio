@@ -30,7 +30,7 @@ const Page = () => {
         id="intro"
 
         variants={sectionVariants}
-        initial="hidden"
+        // initial="hidden"
         whileInView="visible"
         transition={{ duration: 0.8 }}
         viewport={{ once: false, amount: 0.3 }}
@@ -43,7 +43,7 @@ const Page = () => {
         id="about"
 
         variants={sectionVariants}
-        initial="hidden"
+        // initial="hidden"
         whileInView="visible"
         transition={{ duration: 0.8 }}
         viewport={{ once: false, amount: 0.3 }}
@@ -56,7 +56,7 @@ const Page = () => {
         id="skills"
 
         variants={sectionVariants}
-        initial="hidden"
+        // initial="hidden"
         whileInView="visible"
         transition={{ duration: 0.8 }}
         viewport={{ once: false, amount: 0.3 }}
