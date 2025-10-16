@@ -69,7 +69,7 @@ const Page = () => {
         id="projects"
 
         variants={sectionVariants}
-        initial="hidden"
+        
         whileInView="visible"
         transition={{ duration: 0.8 }}
         viewport={{ once: false, amount: 0.3 }}
@@ -82,7 +82,7 @@ const Page = () => {
         id="experience"
 
         variants={sectionVariants}
-        initial="hidden"
+       
         whileInView="visible"
         transition={{ duration: 0.8 }}
         viewport={{ once: false, amount: 0.3 }}
@@ -95,7 +95,7 @@ const Page = () => {
         id="contact"
 
         variants={sectionVariants}
-        initial="hidden"
+        
         whileInView="visible"
         transition={{ duration: 0.8 }}
         viewport={{ once: false, amount: 0.3 }}
