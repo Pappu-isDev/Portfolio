@@ -15,13 +15,13 @@ const Intro = () => {
 
 
   useGSAP(() => {
-    gsap.fromTo(".info", { opacity: 0, x: 0 }, { opacity: 1, x: 50, duration: 1, ease: "power3.inOut", stagger: 0.3, duration: 3,delay:1 });
-    gsap.fromTo(".info2", { opacity: 0, x: 0 }, { opacity: 1, x: -50, duration: 1, ease: "power3.inOut", stagger: 0.3, duration: 3,delay:1 });
+    gsap.fromTo(".info", { opacity: 0, x: 0 }, { opacity: 1, x: 50, duration: 1, ease: "power3.inOut", stagger: 0.3, duration: 3, delay: 1 });
+    gsap.fromTo(".info2", { opacity: 0, x: 0 }, { opacity: 1, x: -50, duration: 1, ease: "power3.inOut", stagger: 0.3, duration: 3, delay: 1 });
   }, []);
 
 
   // Welcome toast on mount
-  useEffect (() => {
+  useEffect(() => {
     setShowWelcomeToast(true);
     const timer = setTimeout(() => { setShowWelcomeToast(false), 2000 }, 5000);
     return () => clearTimeout(timer);
@@ -178,7 +178,7 @@ const Intro = () => {
           </div>
 
           <div
-            className={`fixed top-1/3 left-0 bg-green-700 text-white px-8 py-4 text-xl rounded-lg shadow-lg z-50 
+            className={`fixed top-1/4 left-0 bg-green-700 text-white px-8 py-4 text-xl rounded-lg shadow-lg z-50 
     transform transition-transform duration-500 ease-out
     ${showToast ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}
           >
@@ -203,17 +203,26 @@ const Intro = () => {
     flex items-center gap-4 transition-all duration-1000"
             >
               {/* Icon or Avatar */}
-              <div className="bg-white/10 p-3 rounded-full shadow-inner ring-2 ring-pink-400/50 animate-pulse">
+              {/* <div className="  rounded-full shadow-inner animate-pulse"> */}
+              <div className="flex items-center space-x-2">
+                {/* SVG Icon */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-pink-400"
+                  className="h-6 w-6 rounded-full text-white"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                   strokeWidth={2}
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 20c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z" />
+
                 </svg>
+
+                {/* Image (Avatar) */}
+                <img
+                  src="/myavtar.png"
+                  alt="My Avatar"
+                  className="h-15 w-15 rounded-full object-cover"
+                />
               </div>
 
               {/* Toast Message */}

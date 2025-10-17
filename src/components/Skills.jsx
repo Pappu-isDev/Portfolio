@@ -135,7 +135,7 @@ const SkillsPage = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
         viewport={{ once: true }}
-        className="text-5xl md:text-6xl font-extrabold mb-12 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 drop-shadow-[0_0_20px_rgba(59,130,246,0.7)]"
+        className="text-5xl md:text-6xl p-5 font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 drop-shadow-[0_0_20px_rgba(59,130,246,0.7)]"
       >
         My Core Technology Stack 🚀
       </motion.h1>
@@ -202,16 +202,16 @@ const SkillsPage = () => {
                 boxShadow: "0 0 40px rgba(14,165,233,0.9)",
                 transition: { duration: 0.4 },
               }}
-              className="relative flex flex-col items-center justify-center bg-gradient-to-br from-[#0f172a]/60 to-[#1e293b]/90 rounded-2xl p-8 border border-cyan-400/30 backdrop-blur-md shadow-[0_0_25px_rgba(0,0,0,0.6)] hover:border-cyan-400 transition-all duration-300 cursor-pointer overflow-hidden"
+              className="relative flex flex-col items-center justify-center bg-gradient-to-br from-[#0f172a]/20 to-[#1e293b]/90 rounded-2xl py-4 border border-cyan-400/30 backdrop-blur-md shadow-[0_0_25px_rgba(0,0,0,0.6)] hover:border-cyan-400 transition-all duration-300 cursor-pointer overflow-hidden"
             >
               <motion.div
-                className="p-5 mb-4 rounded-full bg-cyan-500/10 border border-cyan-400/40"
+                className="p-4 mb-4"
                 animate={{
                   y: [0, -5, 0],
                 }}
                 transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
               >
-                <IconComp size={60} />
+                <IconComp size={45} />
               </motion.div>
               <p className="text-lg font-semibold text-cyan-400 mt-2 text-center drop-shadow-[0_0_10px_rgba(6,182,212,0.6)]">
                 {skill}
@@ -219,7 +219,7 @@ const SkillsPage = () => {
 
               {/* glowing overlay */}
               <motion.span
-                className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 to-blue-500/10 blur-lg opacity-0"
+                className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/40 to-blue-500/20 blur-lg opacity-0"
                 whileHover={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
               />
