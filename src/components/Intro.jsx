@@ -60,10 +60,10 @@ const Intro = () => {
         />
 
         {/* Main Content */}
-        <div className="relative z-10 h-full flex flex-col lg:flex-row items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 h-full w-[100%] flex flex-col  lg:flex-row items-center justify-between ">
           {/* Left Content Section */}
-          <div className="info w-full lg:w-1/2 flex flex-col justify-center items-start mt-8 lg:mt-0">
-            <div className="w-full max-w-2xl p-2 lg:mt-14">
+          <div className="info  flex flex-col justify-center items-start mt-8 lg:mt-0">
+            <div className="w-full  p-2 lg:mt-14">
               <h1 className="text-white font-sans text-center lg:text-left">
                 <span className="text-xl sm:text-2xl lg:text-2xl font-sans block lg:inline">Hello, I'm </span>
                 <span className="text-3xl sm:text-4xl lg:text-4xl font-bold text-blue-400 block lg:inline mt-2 lg:mt-0 lg:ml-2">
@@ -130,7 +130,7 @@ const Intro = () => {
           </div>
 
           {/* Right Card Section */}
-          <div className="info2 w-full lg:w-1/2 flex justify-center items-center mt-8 lg:mt-0 lg:mr-8">
+          <div className="info2   p-1 rounded-2xl overflow-hidden  flex justify-center items-center mt-8 lg:mt-0 ">
             <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
               <div className="w-full h-full perspective">
                 <div className="relative w-full h-full flex justify-center">
