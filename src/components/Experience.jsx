@@ -71,7 +71,7 @@ const experiences = [
   },
 ];
 
-// Framer Motion Variants
+// Framer Motion Variants - SAME AS BEFORE
 const leftVariants = {
   hidden: { opacity: 0, x: -100 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
@@ -84,23 +84,23 @@ const rightVariants = {
 
 const ExperienceCard = ({ experience }) => (
   <div
-    className="p-8 rounded-3xl shadow-2xl bg-gray-800/80 backdrop-blur-sm border border-blue-500/30 text-gray-100 
+    className="p-6 sm:p-8 rounded-3xl shadow-2xl bg-gray-800/80 backdrop-blur-sm border border-blue-500/30 text-gray-100 
                transform hover:scale-[1.02] hover:shadow-cyan-400/50 transition-all duration-300 cursor-pointer 
                group h-full flex flex-col"
   >
-    <div className="flex justify-between items-start mb-4">
-      <h3 className="text-2xl font-extrabold text-blue-400 group-hover:text-cyan-300 transition-colors">
+    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-0 mb-4">
+      <h3 className="text-xl sm:text-2xl font-extrabold text-blue-400 group-hover:text-cyan-300 transition-colors">
         {experience.title}
       </h3>
-      <p className="flex items-center text-sm font-semibold text-gray-400 p-1 px-3 bg-gray-700 rounded-full">
+      <p className="flex items-center text-xs sm:text-sm font-semibold text-gray-400 p-1 px-3 bg-gray-700 rounded-full w-fit">
         <FaCalendarAlt className="mr-1 text-blue-500" /> {experience.period}
       </p>
     </div>
 
-    <p className="flex items-center text-md text-gray-300 mb-2">
+    <p className="flex items-center text-sm sm:text-md text-gray-300 mb-2">
       <FaBuilding className="mr-2 text-cyan-500" /> {experience.company}
     </p>
-    <p className="flex items-center text-sm text-gray-400 mb-4">
+    <p className="flex items-center text-xs sm:text-sm text-gray-400 mb-4">
       <FaMapMarkerAlt className="mr-2 text-cyan-500" /> {experience.location}
     </p>
 
@@ -117,7 +117,7 @@ const ExperienceCard = ({ experience }) => (
       {experience.techStack.map((tech, index) => (
         <span
           key={index}
-          className="px-3 py-1 bg-cyan-600/20 text-cyan-300 text-xs font-medium rounded-full hover:bg-cyan-600/30 transition-colors shadow-inner"
+          className="px-2 sm:px-3 py-1 bg-cyan-600/20 text-cyan-300 text-xs font-medium rounded-full hover:bg-cyan-600/30 transition-colors shadow-inner"
         >
           {tech}
         </span>
@@ -133,16 +133,17 @@ const Experience = () => {
   const visibleExperiences = showAll ? experiences : experiences.slice(0, 3);
 
   return (
-    <section id="experience" className="bg-[#0f172a] text-white py-20 px-4 md:px-8">
-      <div className="max-w-5xl mx-auto">
+    <section id="experience" className="bg-[#0f172a] text-white py-16 sm:py-20 px-4 overflow-x-hidden sm:px-6 lg:px-8">
+      <div className="max-w-4xl lg:max-w-5xl mx-auto">
         <h2
-          className="text-5xl font-extrabold text-center mb-16 text-transparent 
+          className="text-4xl sm:text-5xl font-extrabold text-center mb-12 sm:mb-16 text-transparent 
                      bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400"
         >
           Professional Evolution 🚀
         </h2>
 
         <div className="relative">
+          {/* Timeline line - hidden on mobile, visible on md and up */}
           <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-cyan-600/30"></div>
 
           {visibleExperiences.map((exp, index) => {
@@ -152,19 +153,25 @@ const Experience = () => {
             return (
               <motion.div
                 key={exp.id}
-                className={`flex mb-16 last:mb-0 ${isLeft ? "justify-start" : "justify-end"} w-full`}
+                className={`flex flex-col md:flex-row mb-12 sm:mb-16 last:mb-0 ${isLeft ? "md:justify-start" : "md:justify-end"} w-full`}
                 variants={variants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: false, amount: 0.1 }}
                 transition={{ delay: index * 0.15 }}
               >
+                {/* Timeline dot - different positioning for mobile vs desktop */}
                 <div
                   className={`hidden md:flex absolute top-0 w-8 h-8 rounded-full 
                              bg-cyan-600 border-4 border-[#0f172a] shadow-xl shadow-cyan-500/50 
                              items-center justify-center text-white font-bold z-10`}
                   style={{ left: "50%", transform: "translateX(-50%)" }}
                 >
+                  {index + 1}
+                </div>
+
+                {/* Mobile timeline dot */}
+                <div className="md:hidden flex items-center justify-center w-8 h-8 rounded-full bg-cyan-600 border-4 border-[#0f172a] shadow-xl shadow-cyan-500/50 text-white font-bold z-10 mb-4 mx-auto">
                   {index + 1}
                 </div>
 
@@ -177,12 +184,13 @@ const Experience = () => {
         </div>
 
         {/* See More / See Less Button */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-8 sm:mt-12">
           <button
             onClick={() => setShowAll(!showAll)}
-            className="px-8 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 
+            className="px-6 sm:px-8 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 
                        text-white font-semibold rounded-full shadow-lg 
-                       hover:from-blue-600 hover:to-cyan-600 transition-all duration-300"
+                       hover:from-blue-600 hover:to-cyan-600 transition-all duration-300
+                       text-sm sm:text-base"
           >
             {showAll ? "See Less ▲" : "See More ▼"}
           </button>
