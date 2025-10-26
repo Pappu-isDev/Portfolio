@@ -143,7 +143,7 @@ const Intro = () => {
                   </div>
 
                   <div
-                    className="relative w-44 sm:w-52 md:w-60 lg:w-85 h-80 sm:h-96 md:h-[30rem] lg:h-[28rem] transition-transform duration-500 transform-style preserve-3d hover:rotate-y-180 z-10"
+                    className="relative w-44 sm:w-52 md:w-60 lg:w-85 h-80 sm:h-96 md:h-[30rem] lg:h-[28rem] cursor-pointer transition-transform duration-500 transform-style preserve-3d hover:rotate-y-180 z-10"
                     onMouseEnter={handleCardHover}
                   >
                     {/* Front Side */}
