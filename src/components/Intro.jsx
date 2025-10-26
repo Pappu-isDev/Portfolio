@@ -12,11 +12,50 @@ const Intro = () => {
   const [showWelcomeToast, setShowWelcomeToast] = useState(false);
   const [showFlipToast, setShowFlipToast] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  // useGSAP(() => {
+  //   const getBreakpointConfig = () => {
+  //     const width = window.innerWidth;
 
+  //     if (width >= 1024) {
+  //       return { x: 0, duration: 2, delay: 1, stagger: 0.3 };
+  //     } else if (width >= 768) {
+  //       return { x: 0, duration: 1.5, delay: 0.5, stagger: 0.25 };
+  //     } else {
+  //       return { x: 0, duration: 1, delay: 0, stagger: 0.2 };
+  //     }
+  //   };
+
+  //   const config = getBreakpointConfig();
+
+  //   gsap.fromTo(".info",
+  //     { opacity: 0, x: -50 },
+  //     {
+  //       opacity: 1,
+  //       x: config.x,
+  //       duration: config.duration,
+  //       ease: "power3.inOut",
+  //       stagger: config.stagger,
+  //       delay: config.delay
+  //     }
+  //   );
+
+  //   gsap.fromTo(".info2",
+  //     { opacity: 0, x: 50 },
+  //     {
+  //       opacity: 1,
+  //       x: -config.x,
+  //       duration: config.duration,
+  //       ease: "power3.inOut",
+  //       stagger: config.stagger,
+  //       delay: config.delay
+  //     }
+  //   );
+  // }, []);
   useGSAP(() => {
-    gsap.fromTo(".info", { opacity: 0, x: 0 }, { opacity: 1, x: 50, duration: 1, ease: "power3.inOut", stagger: 0.3, duration: 3, delay: 1 });
-    gsap.fromTo(".info2", { opacity: 0, x: 0 }, { opacity: 1, x: -50, duration: 1, ease: "power3.inOut", stagger: 0.3, duration: 3, delay: 1 });
+    gsap.fromTo(".info", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 1, ease: "power3.inOut", stagger: 0.3, duration: 2, delay: 1 });
+    gsap.fromTo(".info2", { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 1, ease: "power3.inOut", stagger: 0.3, duration: 2, delay: 1 });
   }, []);
+
 
   // Welcome toast on mount
   useEffect(() => {
@@ -48,7 +87,7 @@ const Intro = () => {
 
   return (
     <>
-      <div className="relative w-full h-screen overflow-hidden">
+      <div className="relative w-full h-full lg:h-screen  overflow-hidden">
         {/* Background video */}
         <video
           className="absolute top-0 left-0 opacity-90 w-full h-full object-cover"
@@ -60,9 +99,9 @@ const Intro = () => {
         />
 
         {/* Main Content */}
-        <div className="relative z-10 h-full w-[100%] flex flex-col  lg:flex-row items-center justify-between ">
+        <div className="relative z-10 h-full w-full mx-auto lg:w-[100%] flex flex-col px-2 md:px-10 lg:px-20  lg:flex-row items-center justify-between ">
           {/* Left Content Section */}
-          <div className="info  flex flex-col justify-center items-start mt-8 lg:mt-0">
+          <div className="info  flex flex-col justify-center items-center lg:items-start  mx-auto w-full mt-8 lg:mt-0">
             <div className="w-full  p-2 lg:mt-14">
               <h1 className="text-white font-sans text-center lg:text-left">
                 <span className="text-xl sm:text-2xl lg:text-2xl font-sans block lg:inline">Hello, I'm </span>
@@ -92,11 +131,10 @@ const Intro = () => {
               <button
                 onClick={handleDownload}
                 disabled={isDownloading}
-                className={`px-6 py-3 text-base sm:text-lg font-semibold rounded-md transition-all duration-300 shadow-md cursor-pointer ${
-                  isDownloading
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-blue-400 hover:bg-blue-700 hover:scale-95 text-white"
-                }`}
+                className={`px-6 py-3 text-base sm:text-lg font-semibold rounded-md transition-all duration-300 shadow-md cursor-pointer ${isDownloading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-400 hover:bg-blue-700 hover:scale-95 text-white"
+                  }`}
               >
                 {isDownloading ? (
                   <div className="flex items-center justify-center">
@@ -135,15 +173,15 @@ const Intro = () => {
               <div className="w-full h-full perspective">
                 <div className="relative w-full h-full flex justify-center">
                   <div className="absolute inset-0 flex items-center justify-center border-b-amber-300 animate-spin">
-                    <div className="w-48 sm:w-56 md:w-64 lg:w-72 h-96 sm:h-[28rem] md:h-[32rem] lg:h-[36rem]  rounded-2xl bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500"></div>
+                    <div className="w-60 md:w-70 lg:w-72 h-[30rem] md:h-[36rem] lg:h-[36rem]  rounded-2xl bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500"></div>
                   </div>
 
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-44 sm:w-52 md:w-60 lg:w-85 h-80 sm:h-96 md:h-[30rem] lg:h-[28rem] rounded-2xl bg-black"></div>
+                    <div className="w-58 md:w-83 lg:w-100 h-79 md:h-[27rem] lg:h-[25rem] rounded-2xl bg-black"></div>
                   </div>
 
                   <div
-                    className="relative w-44 sm:w-52 md:w-60 lg:w-85 h-80 sm:h-96 md:h-[30rem] lg:h-[28rem] cursor-pointer transition-transform duration-500 transform-style preserve-3d hover:rotate-y-180 z-10"
+                    className="relative w-58 md:w-83 lg:w-100 h-79 md:h-[27rem] lg:h-[25rem] cursor-pointer transition-transform duration-500 transform-style preserve-3d hover:rotate-y-180 z-10"
                     onMouseEnter={handleCardHover}
                   >
                     {/* Front Side */}
@@ -179,66 +217,115 @@ const Intro = () => {
           </div>
         </div>
 
-          <div
-            className={`fixed top-1/4 left-0 bg-green-700 text-white px-8 py-4 text-xl rounded-lg shadow-lg z-50 
+        <div
+          className={`fixed top-1/4 left-0 bg-green-700 text-white px-8 py-4 text-xl rounded-lg shadow-lg z-50 
     transform transition-transform duration-500 ease-out
     ${showToast ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}
-          >
-            Resume downloaded successfully!
-          </div>
+        >
+          Resume downloaded successfully!
+        </div>
 
-          {/* {showWelcomeToast && (
+        {/* {showWelcomeToast && (
             <div className="fixed top-6 right-6 bg-blue-600 text-white px-4 py-2 rounded shadow-md animate-fade-in-out">
               Welcome to the portfolio!
             </div>
           )} */}
-          <div
-            className={`fixed top-1/5 left-[35%] justify-center mx-auto self-center w-100 text-center  text-xl rounded-lg  z-50 
+        <div
+          className={`fixed top-1/5  lg:left-[35%] justify-center mx-auto px-3  self-center w-full lg:w-100 text-center  text-xl rounded-lg  z-50 
     transform transition-transform duration-2000 ease-out
     ${showWelcomeToast ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}
-          >
+        >
 
-            <div className="  min-h-20 min-w-50 mx-auto text-center bg-gradient-to-br from-[#1f1c2c] to-[#928DAB]
-    text-white px-5 py-3 rounded-2xl shadow-2xl backdrop-blur-lg
-    border border-white/40
-    animate-slide-in-left
-    flex items-center gap-4 transition-all duration-1000"
-            >
-              {/* Icon or Avatar */}
-              {/* <div className="  rounded-full shadow-inner animate-pulse"> */}
-              <div className="flex items-center space-x-2">
-                {/* SVG Icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 rounded-full text-white"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-
-                </svg>
-
-                {/* Image (Avatar) */}
+          <div className="
+ max-w-sm md:max-w-md lg:max-w-lg 
+  min-h-16 md:min-h-20 
+  mx-auto text-center 
+  bg-gradient-to-br from-[#1f1c2c] to-[#928DAB]
+  text-white px-4 sm:px-5 md:px-6 py-4 md:py-4 
+  rounded-xl md:rounded-2xl 
+  shadow-2xl backdrop-blur-lg
+  border border-white/40
+  animate-slide-in-left
+  flex items-center gap-3 sm:gap-4 
+  transition-all duration-300
+  hover:shadow-3xl hover:scale-[1.02]
+  transform-gpu
+">
+            {/* Icon Container */}
+            <div className="flex-shrink-0">
+              <div className="flex items-center justify-center">
+                {/* Avatar Image */}
                 <img
                   src="/myavtar.png"
                   alt="My Avatar"
-                  className="h-15 w-15 rounded-full object-cover"
+                  className="
+          h-12 w-12 
+          sm:h-14 sm:w-14 
+          md:h-16 md:w-16
+          rounded-full 
+          object-cover 
+          border-2 border-white/50
+          shadow-lg
+          hover:border-white/80 
+          transition-all duration-300
+        "
                 />
-              </div>
-
-              {/* Toast Message */}
-              <div className="text-sm sm:text-base font-medium leading-tight">
-                <p className="text-white text-xl p-2 font-semibold">
-                  Welcome to the portfolio✨
-                </p>
               </div>
             </div>
 
-            
+            {/* Toast Message */}
+            <div className="flex-1 text-left min-w-0">
+              <p className="
+      text-white 
+      text-lg sm:text-xl md:text-2xl 
+      font-semibold
+      leading-tight
+      tracking-tight
+      drop-shadow-sm
+      break-words
+    ">
+                Welcome to the portfolio
+                <span className="inline-block animate-bounce ml-1">✨</span>
+              </p>
+              {/* Optional subtitle */}
+              <p className="
+      text-white/80 
+      text-xs sm:text-sm 
+      mt-1
+      font-medium
+      hidden sm:block
+    ">
+                Explore my work and skills
+              </p>
+            </div>
+
+            {/* Optional Close Button */}
+            <button className="
+    flex-shrink-0 
+    text-white/60 
+    hover:text-white 
+    transition-colors duration-200
+    p-1
+    rounded-full
+    hover:bg-white/10
+    focus:outline-none focus:ring-2 focus:ring-white/50
+  ">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 sm:h-5 sm:w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
+
+
         </div>
-     
+      </div>
+
     </>
   );
 };
