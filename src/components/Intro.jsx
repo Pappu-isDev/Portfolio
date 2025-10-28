@@ -122,7 +122,7 @@ const Intro = () => {
 
             <div className="w-full max-w-2xl font-sans text-lg sm:text-xl lg:text-2xl mt-4 lg:mt-6 text-center lg:text-left">
               <p className="text-white leading-relaxed">
-                Full-Stack Software Developer specializing in React, Node.js, and AWS to build scalable, high-performance web applications.
+                Full-Stack Software Developer specializing in React, Node.js, Next.js, Nest.js and AWS to build scalable, high-performance web applications.
               </p>
             </div>
 
