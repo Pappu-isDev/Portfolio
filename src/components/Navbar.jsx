@@ -8,25 +8,18 @@ const Navbar = ({ name }) => {
   };
 
   const navItems = [
-    { label: "Home", href: "#intro" },
-    { label: "About Me", href: "#about" },
-    { label: "Skills", href: "#skills" },
-    { label: "Projects", href: "#projects" },
-    { label: "Experience", href: "#experience" },
-    { label: "Contact Me", href: "#contact" },
+    {id:1, label: "Home", href: "#intro" },
+    {id:2, label: "About Me", href: "#about" },
+    {id:3, label: "Skills", href: "#skills" },
+    {id:4, label: "Projects", href: "#projects" },
+    {id:5, label: "Experience", href: "#experience" },
+    {id:6, label: "Contact Me", href: "#contact" },
   ];
 
-  const NavItem = ({ label, href }) => (
-    <a href={href} onClick={() => setIsMenuOpen(false)}>
-      <li className="relative group cursor-pointer px-1 font-sans py-2 text-base lg:text-xl text-gray-200 font-medium transition-all duration-300 hover:text-white hover:scale-105 hover:shadow-blue-500/50 hover:-translate-y-1 lg:hover:-translate-y-2">
-        {label}
-        <span className="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded"></span>
-      </li>
-    </a>
-  );
+  
 
   return (
-    <nav className="bg-transparent sticky top-0 backdrop-blur-[1.5px] z-50 text-gray-200 shadow-md">
+    <nav className="bg-transparent sticky top-0 backdrop-blur-[1.5px] z-9999 w-full text-gray-200 shadow-md">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 py-2">
         <div className="flex justify-between items-center">
           {/* Logo / Brand */}
@@ -34,11 +27,16 @@ const Navbar = ({ name }) => {
 
           {/* Desktop Menu */}
           <div className="hidden lg:block">
-            <ul className="flex gap-6 xl:gap-8">
+            <div className="flex   gap-6 lg:gap-8 ">
               {navItems.map((item) => (
-                <NavItem key={item.label} {...item} />
+                <a key={item.id} href={item.href} onClick={() => setIsMenuOpen(false)}>
+                  <div className="relative group cursor-pointer px-1 font-sans py-2 text-base lg:text-xl text-gray-200 font-medium transition-all duration-300 hover:text-white hover:scale-105 hover:shadow-blue-500/50 hover:-translate-y-1 lg:hover:-translate-y-2">
+                    {item.label}
+                    <span className="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded"></span>
+                  </div>
+                </a>
               ))}
-            </ul>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
