@@ -166,11 +166,11 @@ const SkillCard = ({ skill, index }) => {
         margin: "0px 0px -30px 0px" // Reduced margin for earlier trigger
       }}
       custom={index}
-      className="relative bg-gradient-to-br from-[#0f172a] to-[#1e293b] rounded-2xl p-4 border-2 border-cyan-500/20 backdrop-blur-xl shadow-xl cursor-pointer overflow-hidden group hover:border-cyan-400/40"
+      className="relative bg-gradient-to-br from-[#0f172a] to-[#1e293b] rounded-2xl bg-cyan-600 border-2 border-[#0f172a] p-8 shadow-xl hover:shadow-cyan-500/50   backdrop-blur-xl cursor-pointer overflow-hidden group hover:border-cyan-400/40"
       // Removed transformStyle: preserve-3d for better performance
     >
       {/* Card Background - simplified */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0f172a] to-[#1e293b] rounded-2xl" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0f172a]  to-[#1e293b] rounded-2xl" />
       
       {/* Icon Container */}
       <motion.div
@@ -274,7 +274,7 @@ const SkillsPage = () => {
         viewport={{ once: false }}
       >
         <motion.h1
-          className="text-4xl sm:text-5xl md:text-6xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500"
+          className="text-4xl sm:text-5xl md:text-6xl font-black  pb-3 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500"
         >
           My Tech Stack{" "}
           <motion.span
@@ -287,7 +287,7 @@ const SkillsPage = () => {
               repeat: Infinity,
               ease: "easeInOut"
             }}
-            className="inline-block"
+            className="inline-block text-white"
           >
             🚀
           </motion.span>
@@ -305,11 +305,11 @@ const SkillsPage = () => {
       </motion.div>
 
       {/* Input Section */}
-      <motion.div
+      {/* <motion.div
         className="flex flex-col sm:flex-row items-center gap-3 bg-gradient-to-r from-[#1e293b]/80 to-[#334155]/60 p-4 rounded-2xl shadow-2xl w-full max-w-xl mb-16 border border-cyan-500/40 backdrop-blur-xl"
         initial={{ opacity: 0, scale: 0.95, y: 15 }}
         whileInView={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }} // Faster animation
+        transition={{ duration: 0.5, delay: 0.1 }} 
         viewport={{ once: false }}
       >
         <input
@@ -331,11 +331,11 @@ const SkillsPage = () => {
         >
           <span className="relative z-10">Add Skill ✨</span>
         </motion.button>
-      </motion.div>
+      </motion.div> */}
 
       {/* Skills Grid - Optimized with will-change */}
       <motion.div
-        className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-6xl relative z-10"
+        className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-[84%] relative z-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false, amount: 0.1 }}
