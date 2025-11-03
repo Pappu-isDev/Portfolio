@@ -4,6 +4,7 @@ import gsap from "gsap/all";
 import React, { useState, useEffect } from "react";
 import { ReactTyped } from "react-typed";
 import ThreePCShowcase from "./ThreePCShowcase";
+import { motion } from "framer-motion";
 
 
 const Intro = () => {
@@ -327,9 +328,13 @@ const Intro = () => {
 
         </div>
       </div>
+   
+
+
       <div className="bg-white">
       <ThreePCShowcase />
       </div>
+    
     </>
   );
 };

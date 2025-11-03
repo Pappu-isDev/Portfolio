@@ -10,7 +10,7 @@ import {
     PerspectiveCamera,
 } from "@react-three/drei";
 import * as THREE from "three";
-
+import { motion } from "framer-motion";
 // --- Utility for the Monitor Screen Texture ---
 function useMonitorTexture({ width = 1600, height = 900 } = {}) {
     return useMemo(() => {
@@ -411,10 +411,12 @@ function MouseAndPad() {
 ------------------------*/
 function SceneContent() {
     const groupRef = useRef();
-    // Subtle breathing/floating effect for the entire setup
+    // Continuous 360-degree rotation for the entire setup
     useFrame(({ clock }) => {
-        const t = clock.getElapsedTime();
-        if (groupRef.current) groupRef.current.rotation.y = Math.sin(t * 0.12) * 0.03;
+        if (groupRef.current) {
+            // Continuous rotation at a constant speed (one full rotation every 20 seconds)
+            groupRef.current.rotation.y = clock.getElapsedTime() * 0.05; // 2π radians / 20 seconds ≈ 0.314 rad/s
+        }
     });
 
     return (
@@ -448,10 +450,8 @@ function Scene() {
 ------------------------*/
 export default function ThreePCShowcase() {
     return (
-        <span className="w-full h-100  flex justify-center">
-            <span className="w-[30%] rounded-lg border border-amber-200 shadow-emerald-700 overflow-hidden flex items-center justify-center   text-center bg-white relative">
-
-
+        <span className="w-full h-100 flex justify-center">
+            <span className="w-[30%] rounded-lg border border-amber-200 shadow-emerald-700 overflow-hidden flex items-center justify-center text-center bg-white relative">
                 <Canvas shadows camera={{ position: [4, 2.2, 6], fov: 35 }}>
                     <PerspectiveCamera makeDefault position={[4, 2.2, 6]} />
                     <Scene /> {/* Component to set the background color */}
@@ -472,11 +472,18 @@ export default function ThreePCShowcase() {
                         {/* Use a simple environment preset that provides global, even illumination/reflection */}
                         <Environment preset="night" />
                     </Suspense>
-                    <OrbitControls target={[0, -0.6, 1]} maxPolarAngle={Math.PI / 2.1} enablePan={false} />
+                    <OrbitControls 
+                        target={[0, -0.6, 1]} 
+                        maxPolarAngle={Math.PI / 2.1} 
+                        enablePan={false}
+                        enableRotate={true} // Allow manual rotation
+                        autoRotate={true} // Enable auto-rotation
+                        autoRotateSpeed={2} // Speed of auto-rotation
+                    />
                 </Canvas>
-            <div className="absolute bottom-3 left-0 right-0 text-center text-gray-400 text-sm bg-white p-1">
-                click & drag to rotate • scroll to zoom
-            </div>
+                <div className="absolute bottom-3 left-0 right-0 text-center text-gray-400 text-sm bg-white p-1">
+                    click & drag to rotate • scroll to zoom • auto-rotating
+                </div>
             </span>
         </span>
     );
