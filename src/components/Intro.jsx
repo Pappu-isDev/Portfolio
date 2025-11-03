@@ -327,7 +327,9 @@ const Intro = () => {
 
         </div>
       </div>
-     
+      <div className="bg-white">
+      <ThreePCShowcase />
+      </div>
     </>
   );
 };
