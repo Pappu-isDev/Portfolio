@@ -259,10 +259,10 @@ function TallSpeaker({ position = [0, 0, 0], hueOffset = 0 }) {
                 <circleGeometry args={[0.1, 32]} />
                 <meshStandardMaterial color="#000000" metalness={0.8} roughness={0.3} />
             </mesh>
-             {/* Midrange RGB Ring - Uses a fixed color for contrast */}
+            {/* Midrange RGB Ring - Uses a fixed color for contrast */}
             <mesh position={[0, 0.8, 0.205]} rotation={[0, 0, 0]}>
                 <torusGeometry args={[0.12, 0.01, 16, 32]} />
-                <meshStandardMaterial emissive="#ff00ff" emissiveIntensity={5} /> 
+                <meshStandardMaterial emissive="#ff00ff" emissiveIntensity={5} />
             </mesh>
 
 
@@ -271,7 +271,7 @@ function TallSpeaker({ position = [0, 0, 0], hueOffset = 0 }) {
                 <circleGeometry args={[0.05, 32]} />
                 <meshStandardMaterial color="#000000" metalness={0.8} roughness={0.3} />
             </mesh>
-            
+
             {/* Speaker base (Floor Stand) */}
             <RoundedBox args={[0.5, 0.05, 0.5]} radius={0.01} position={[0, -0.025, 0]}>
                 <meshStandardMaterial color="#222222" metalness={0.9} roughness={0.2} />
@@ -283,8 +283,8 @@ function TallSpeaker({ position = [0, 0, 0], hueOffset = 0 }) {
 // Group of two floor speakers to fill the PC Tower space
 function FloorSpeakers() {
     // Positioning the group on the floor (Y=-1.6) at the PC tower's original X/Z location
-    const floorY = -1.6; 
-    
+    const floorY = -1.6;
+
     return (
         <group position={[2.6, floorY, 0.9]}>
             {/* Speaker 1 */}
@@ -407,7 +407,7 @@ function MouseAndPad() {
 
 
 /* -----------------------
-  Scene container inside Canvas
+  Scene container inside Canvas
 ------------------------*/
 function SceneContent() {
     const groupRef = useRef();
@@ -444,36 +444,40 @@ function Scene() {
 }
 
 /* -----------------------
-  Main exported component
+  Main exported component
 ------------------------*/
 export default function ThreePCShowcase() {
     return (
-        <div className="w-full h-[680px] rounded-lg overflow-hidden bg-white relative">
-            <Canvas shadows camera={{ position: [4, 2.2, 6], fov: 35 }}>
-                <PerspectiveCamera makeDefault position={[4, 2.2, 6]} />
-                <Scene /> {/* Component to set the background color */}
-                {/* Lighting adjusted for a more dramatic, moody scene with colorful accents */}
-                {/* Increased ambient light to brighten the whole scene, mimicking the "stage" feel */}
-                <ambientLight intensity={0.8} color="#555555" /> 
-                <directionalLight position={[6, 8, 6]} intensity={0.8} castShadow color="#ffccaa" /> {/* Warm highlight */}
-                <directionalLight position={[-4, 2, -6]} intensity={0.4} color="#aaccff" /> {/* Cool fill light, slightly brighter */}
-
-                {/* Accent lights to enhance the RGB glow and reflections - more saturated, strategic placement */}
-                <pointLight position={[-2, 1, 3]} intensity={15} color="#ff00ff" distance={5} decay={2} /> {/* Magenta */}
-                <pointLight position={[2, 1, 3]} intensity={15} color="#00ffff" distance={5} decay={2} /> {/* Cyan */}
-                <pointLight position={[0, 2, -1]} intensity={8} color="#ffff00" distance={3} decay={2} /> {/* Yellow for front */}
+        <span className="w-full h-100  flex justify-center">
+            <span className="w-[30%] rounded-lg border border-amber-200 shadow-emerald-700 overflow-hidden flex items-center justify-center   text-center bg-white relative">
 
 
-                <Suspense fallback={<Html center>Loading...</Html>}>
-                    <SceneContent />
-                    {/* Use a simple environment preset that provides global, even illumination/reflection */}
-                    <Environment preset="night" />
-                </Suspense>
-                <OrbitControls target={[0, -0.6, 1]} maxPolarAngle={Math.PI / 2.1} enablePan={false} />
-            </Canvas>
+                <Canvas shadows camera={{ position: [4, 2.2, 6], fov: 35 }}>
+                    <PerspectiveCamera makeDefault position={[4, 2.2, 6]} />
+                    <Scene /> {/* Component to set the background color */}
+                    {/* Lighting adjusted for a more dramatic, moody scene with colorful accents */}
+                    {/* Increased ambient light to brighten the whole scene, mimicking the "stage" feel */}
+                    <ambientLight intensity={0.8} color="#555555" />
+                    <directionalLight position={[6, 8, 6]} intensity={0.8} castShadow color="#ffccaa" /> {/* Warm highlight */}
+                    <directionalLight position={[-4, 2, -6]} intensity={0.4} color="#aaccff" /> {/* Cool fill light, slightly brighter */}
+
+                    {/* Accent lights to enhance the RGB glow and reflections - more saturated, strategic placement */}
+                    <pointLight position={[-2, 1, 3]} intensity={15} color="#ff00ff" distance={5} decay={2} /> {/* Magenta */}
+                    <pointLight position={[2, 1, 3]} intensity={15} color="#00ffff" distance={5} decay={2} /> {/* Cyan */}
+                    <pointLight position={[0, 2, -1]} intensity={8} color="#ffff00" distance={3} decay={2} /> {/* Yellow for front */}
+
+
+                    <Suspense fallback={<Html center>Loading...</Html>}>
+                        <SceneContent />
+                        {/* Use a simple environment preset that provides global, even illumination/reflection */}
+                        <Environment preset="night" />
+                    </Suspense>
+                    <OrbitControls target={[0, -0.6, 1]} maxPolarAngle={Math.PI / 2.1} enablePan={false} />
+                </Canvas>
             <div className="absolute bottom-3 left-0 right-0 text-center text-gray-400 text-sm bg-white p-1">
                 click & drag to rotate • scroll to zoom
             </div>
-        </div>
+            </span>
+        </span>
     );
 }
