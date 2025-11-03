@@ -3,6 +3,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap/all";
 import React, { useState, useEffect } from "react";
 import { ReactTyped } from "react-typed";
+import ThreePCShowcase from "./ThreePCShowcase";
 
 
 const Intro = () => {
@@ -326,17 +327,8 @@ const Intro = () => {
 
         </div>
       </div>
-      <div className="sketchfab-embed-wrapper flex flex-col items-center justify-center">
-        <iframe
-          title="Programmer desktop 3d PC"
-          src="https://sketchfab.com/models/b22983c256174878973cf59b11e90aad/embed"
-          allow="autoplay; fullscreen; xr-spatial-tracking"
-          xr-spatial-tracking="true"
-          allowFullScreen
-          className="w-full max-w-4xl h-[500px] rounded-2xl shadow-lg"
-        ></iframe>
-
-       
+      <div className="bg-white">
+      {/* <ThreePCShowcase /> */}
       </div>
     </>
   );
