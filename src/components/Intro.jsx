@@ -331,10 +331,10 @@ const Intro = () => {
    
 
 
-      <div className="bg-white">
+      <div className=" absolute top-60 left-125 z-9999">
       <ThreePCShowcase />
       </div>
-    
+  
     </>
   );
 };

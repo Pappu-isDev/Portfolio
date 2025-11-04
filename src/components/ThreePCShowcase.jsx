@@ -10,8 +10,7 @@ import {
     PerspectiveCamera,
 } from "@react-three/drei";
 import * as THREE from "three";
-import { motion } from "framer-motion";
-// --- Utility for the Monitor Screen Texture ---
+
 function useMonitorTexture({ width = 1600, height = 900 } = {}) {
     return useMemo(() => {
         const canvas = document.createElement("canvas");
@@ -19,18 +18,15 @@ function useMonitorTexture({ width = 1600, height = 900 } = {}) {
         canvas.height = height;
         const ctx = canvas.getContext("2d");
 
-        // 1. Background: VS Code Dark theme
         ctx.fillStyle = "#1e1e1e";
         ctx.fillRect(0, 0, width, height);
 
-        // 2. Header/Tabs
         ctx.fillStyle = "#2d2d30";
         ctx.fillRect(0, 0, width, 40);
         ctx.fillStyle = "#cccccc";
         ctx.font = "18px Inter, monospace";
         ctx.fillText("about.jsx", 20, 28);
 
-        // 3. Sidebar (Explorer)
         const sidebarW = Math.floor(width * 0.18);
         ctx.fillStyle = "#252526";
         ctx.fillRect(0, 40, sidebarW, height - 40);
@@ -44,7 +40,6 @@ function useMonitorTexture({ width = 1600, height = 900 } = {}) {
             ctx.fillText((i === 2 ? "› " : "  ") + f, 10, 100 + i * 30);
         });
 
-        // 4. Main Editor: Line Numbers and Code Content
         const editorX = sidebarW;
         const editorW = width - editorX;
         const lnW = 40;
@@ -71,34 +66,31 @@ function useMonitorTexture({ width = 1600, height = 900 } = {}) {
             "export default App;",
         ];
 
-        // Line Numbers
         ctx.fillStyle = "#5c5c5c";
         ctx.font = "14px monospace";
         for (let i = 0; i < codeLines.length; i++) {
             ctx.fillText(String(i + 1), editorX + 10, 70 + i * 26);
         }
 
-        // Code Content (using theme colors)
         codeLines.forEach((line, i) => {
             const y = 70 + i * 26;
-            let color = "#d4d4d4"; // Default white/gray
-            if (line.includes("import") || line.includes("from") || line.includes("export")) color = "#c586c0"; // Keywords
-            if (line.includes("//")) color = "#6a9955"; // Comment
-            if (line.includes("<") && line.includes(">")) color = "#86c3ff"; // JSX tags
-            if (line.includes("className") || line.includes("title")) color = "#9cdcfe"; // Props
-            if (line.includes("'") || line.includes('"')) color = "#ce9178"; // Strings
+            let color = "#d4d4d4";
+            if (line.includes("import") || line.includes("from") || line.includes("export")) color = "#c586c0";
+            if (line.includes("//")) color = "#6a9955";
+            if (line.includes("<") && line.includes(">")) color = "#86c3ff";
+            if (line.includes("className") || line.includes("title")) color = "#9cdcfe";
+            if (line.includes("'") || line.includes('"')) color = "#ce9178";
 
             ctx.fillStyle = color;
             ctx.fillText(line.trim(), codeX, y);
         });
 
-        // 5. Hero Panel (Right side, actual UI preview)
         const heroW = Math.floor(editorW * 0.45);
         const heroX = editorX + editorW - heroW - 10;
         const heroY = 60;
         const heroH = height * 0.6;
 
-        ctx.fillStyle = "#161b24"; // Dark background
+        ctx.fillStyle = "#161b24";
         ctx.fillRect(heroX, heroY, heroW, heroH);
 
         ctx.textAlign = 'left';
@@ -110,7 +102,7 @@ function useMonitorTexture({ width = 1600, height = 900 } = {}) {
         ctx.font = "36px Inter, sans-serif";
         ctx.fillText("Hi, I'm", heroX + 25, heroY + 130);
 
-        ctx.fillStyle = "#a78bfa"; // Purple tone for name
+        ctx.fillStyle = "#a78bfa";
         ctx.font = "56px Inter, sans-serif";
         ctx.fillText("Pappu", heroX + 25, heroY + 200);
 
@@ -119,7 +111,6 @@ function useMonitorTexture({ width = 1600, height = 900 } = {}) {
         ctx.fillText("A professional Front-end Web", heroX + 25, heroY + 240);
         ctx.fillText("Developer", heroX + 25, heroY + 270);
 
-        // 6. Footer (Status Bar)
         ctx.fillStyle = "#007acc";
         ctx.fillRect(0, height - 30, width, 30);
         ctx.fillStyle = "#ffffff";
@@ -136,90 +127,74 @@ function useMonitorTexture({ width = 1600, height = 900 } = {}) {
     }, []);
 }
 
-// --- 3D Components ---
-
 function Monitor() {
     const tex = useMonitorTexture();
     return (
-        <group position={[0, -0.1, 0.7]}>
-            {/* Screen Bezel - More reflective, slightly glowing */}
+        <group position={[0, 0.8, 0.7]}>
             <RoundedBox args={[3.6, 2.1, 0.15]} radius={0.03}>
                 <meshStandardMaterial
                     color="#0b0b0d"
                     metalness={0.9}
                     roughness={0.2}
-                    emissive="#151515" // Subtle edge glow
+                    emissive="#151515"
                     emissiveIntensity={0.2}
                 />
             </RoundedBox>
 
-            {/* Screen Surface */}
             <mesh position={[0, 0, 0.08]}>
                 <planeGeometry args={[3.2, 1.8]} />
                 <meshPhysicalMaterial map={tex} toneMapped={false} />
             </mesh>
 
-            {/* Stand Arm */}
             <RoundedBox args={[0.08, 0.8, 0.08]} radius={0.01} position={[0, -1.0, 0.0]}>
                 <meshStandardMaterial color="#1a1a1a" metalness={0.8} roughness={0.3} />
             </RoundedBox>
 
-            {/* Stand Base */}
             <RoundedBox args={[0.8, 0.08, 0.8]} radius={0.02} position={[0, -1.45, 0.0]}>
                 <meshStandardMaterial color="#1a1a1a" metalness={0.8} roughness={0.3} />
             </RoundedBox>
 
-            {/* Logo (GIGABYTE) */}
             <Html position={[0, -1.35, 0.08]} distanceFactor={3.5}>
-                <div className="text-[6px] font-bold text-gray-400 tracking-wider">GIGABYTE</div>
+                <div className="text-[6px] font-bold text-gray-400 tracking-wider">Virender Verma</div>
             </Html>
         </group>
     );
 }
 
-// Small desk speaker component
 function DeskSpeaker({ position = [0, 0, 0], hueOffset = 0 }) {
     const bodyMaterialRef = useRef();
     const ringMaterialRef = useRef();
 
     useFrame(({ clock }) => {
         const t = clock.getElapsedTime() * 0.5;
-        // RGB color cycling for the entire speaker body
         const hue = ((t * 60 + hueOffset) % 360) / 360;
         const color = new THREE.Color().setHSL(hue, 0.9, 0.5);
 
         if (bodyMaterialRef.current && ringMaterialRef.current) {
-            // Access material refs directly
-            bodyMaterialRef.current.emissive.copy(color); // Body glow
-            bodyMaterialRef.current.color.copy(color).multiplyScalar(0.1); // Base color
-            ringMaterialRef.current.emissive.copy(color); // Ring glow
+            bodyMaterialRef.current.emissive.copy(color);
+            bodyMaterialRef.current.color.copy(color).multiplyScalar(0.1);
+            ringMaterialRef.current.emissive.copy(color);
         }
     });
 
     return (
         <group position={position}>
-            {/* Speaker Body (Cylinder) with full RGB glow */}
             <mesh position={[0, 0, 0]}>
                 <cylinderGeometry args={[0.15, 0.15, 0.5, 32]} />
-                {/* Attach body material ref */}
                 <meshStandardMaterial ref={bodyMaterialRef} color="#0b0d10" metalness={0.7} roughness={0.4} emissive="#00ff00" emissiveIntensity={1.5} />
             </mesh>
-            {/* Speaker Cone (Inner Circle) */}
             <mesh position={[0, 0.25, 0]} rotation={[Math.PI / 2, 0, 0]}>
                 <circleGeometry args={[0.1, 32]} />
                 <meshStandardMaterial color="#000000" metalness={0.8} roughness={0.3} />
             </mesh>
-            {/* RGB Ring Light - more defined */}
             <mesh position={[0, 0.25, 0]} rotation={[Math.PI / 2, 0, 0]}>
                 <torusGeometry args={[0.14, 0.01, 16, 32]} />
-                {/* Attach ring material ref */}
                 <meshStandardMaterial ref={ringMaterialRef} emissive="#00ff00" emissiveIntensity={6} />
             </mesh>
         </group>
     );
 }
 
-// Large floor speaker component (replaces the PC Tower)
 function TallSpeaker({ position = [0, 0, 0], hueOffset = 0 }) {
     const ringMaterialRef = useRef();
     const height = 1.6;
@@ -230,49 +205,39 @@ function TallSpeaker({ position = [0, 0, 0], hueOffset = 0 }) {
         const color = new THREE.Color().setHSL(hue, 0.9, 0.5);
 
         if (ringMaterialRef.current) {
-            // Use the same ref for the rings to synchronize the color pulse
             ringMaterialRef.current.emissive.copy(color);
         }
     });
 
     return (
         <group position={position}>
-            {/* Speaker Cabinet (Box geometry) */}
-            {/* Positioned so its base is at Y=0 (relative to the floor/stand) */}
             <RoundedBox args={[0.4, height, 0.4]} radius={0.02} position={[0, height / 2, 0]}>
                 <meshStandardMaterial color="#0b0d10" metalness={0.8} roughness={0.3} />
             </RoundedBox>
 
-            {/* Woofer (Bottom) - Position relative to the cabinet base (Y=0) */}
             <mesh position={[0, 0.3, 0.205]} rotation={[0, 0, 0]}>
                 <circleGeometry args={[0.15, 32]} />
                 <meshStandardMaterial color="#000000" metalness={0.8} roughness={0.3} />
             </mesh>
-            {/* Woofer RGB Ring (Controlled by frame loop) */}
             <mesh position={[0, 0.3, 0.205]} rotation={[0, 0, 0]}>
                 <torusGeometry args={[0.17, 0.01, 16, 32]} />
                 <meshStandardMaterial ref={ringMaterialRef} emissive="#00ff00" emissiveIntensity={6} />
             </mesh>
 
-            {/* Midrange (Middle) */}
             <mesh position={[0, 0.8, 0.205]} rotation={[0, 0, 0]}>
                 <circleGeometry args={[0.1, 32]} />
                 <meshStandardMaterial color="#000000" metalness={0.8} roughness={0.3} />
             </mesh>
-            {/* Midrange RGB Ring - Uses a fixed color for contrast */}
             <mesh position={[0, 0.8, 0.205]} rotation={[0, 0, 0]}>
                 <torusGeometry args={[0.12, 0.01, 16, 32]} />
                 <meshStandardMaterial emissive="#ff00ff" emissiveIntensity={5} />
             </mesh>
 
-
-            {/* Tweeter (Top) */}
             <mesh position={[0, 1.3, 0.205]} rotation={[0, 0, 0]}>
                 <circleGeometry args={[0.05, 32]} />
                 <meshStandardMaterial color="#000000" metalness={0.8} roughness={0.3} />
             </mesh>
 
-            {/* Speaker base (Floor Stand) */}
             <RoundedBox args={[0.5, 0.05, 0.5]} radius={0.01} position={[0, -0.025, 0]}>
                 <meshStandardMaterial color="#222222" metalness={0.9} roughness={0.2} />
             </RoundedBox>
@@ -280,44 +245,34 @@ function TallSpeaker({ position = [0, 0, 0], hueOffset = 0 }) {
     );
 }
 
-// Group of two floor speakers to fill the PC Tower space
 function FloorSpeakers() {
-    // Positioning the group on the floor (Y=-1.6) at the PC tower's original X/Z location
-    const floorY = -1.6;
-
     return (
-        <group position={[2.6, floorY, 0.9]}>
-            {/* Speaker 1 */}
+        <group position={[2.6, -0.8, 0.9]}>
             <TallSpeaker position={[-0.3, 0, 0]} hueOffset={0} />
-            {/* Speaker 2 */}
             <TallSpeaker position={[0.3, 0, 0]} hueOffset={180} />
         </group>
     );
 }
 
-
 function Key({ position, hueOffset = 0, size = [0.095, 0.02, 0.07] }) {
-    const materialRef = useRef(); // Reference the material directly
+    const materialRef = useRef();
 
     useFrame(({ clock }) => {
         const t = clock.getElapsedTime() * 0.8;
-        // More complex color wave and intensity pulse
         const wave = Math.sin(t * 2 + position[0] * 8 + position[1] * 10);
         const hue = ((t * 60 + hueOffset + wave * 20) % 360) / 360;
         const saturation = 0.9;
-        const lightness = 0.5 + wave * 0.1; // Pulsing effect
+        const lightness = 0.5 + wave * 0.1;
         const emissiveColor = new THREE.Color().setHSL(hue, saturation, lightness);
 
         if (materialRef.current) {
-            // Access the material ref's emissive color property
             materialRef.current.emissive.copy(emissiveColor);
-            materialRef.current.emissiveIntensity = 4 + Math.sin(t * 5 + position[0] * 10) * 1.5; // More intense pulse
+            materialRef.current.emissiveIntensity = 4 + Math.sin(t * 5 + position[0] * 10) * 1.5;
         }
     });
 
     return (
         <RoundedBox args={size} radius={0.005} position={position}>
-            {/* Attach the ref directly to the material */}
             <meshStandardMaterial ref={materialRef} color="#0b0b0b" emissive="#ff0000" emissiveIntensity={3} roughness={0.5} />
         </RoundedBox>
     );
@@ -334,7 +289,6 @@ function Keyboard() {
 
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
-            // Assign a unique hue offset for each key to create a rainbow effect
             keys.push(
                 <Key
                     key={`${r}-${c}`}
@@ -343,15 +297,14 @@ function Keyboard() {
                         startY - r * 0.065,
                         startZ
                     ]}
-                    hueOffset={(r * cols + c) * 10} // Staggered hue for wave effect
+                    hueOffset={(r * cols + c) * 10}
                 />
             );
         }
     }
 
     return (
-        <group position={[-0.8, -1.35, 1.0]} rotation={[-0.06, 0, 0]}>
-            {/* Keyboard Base - More sleek and reflective */}
+        <group position={[-0.8, -0.75, 1.0]} rotation={[-0.06, 0, 0]}>
             <mesh position={[0, -0.02, 0]}>
                 <RoundedBox args={[cols * keySpacing + 0.1, 0.08, rows * 0.065 + 0.15]} radius={0.02}>
                     <meshStandardMaterial color="#111111" metalness={0.9} roughness={0.2} />
@@ -368,7 +321,6 @@ function MouseAndPad() {
 
     useFrame(({ clock }) => {
         const t = clock.getElapsedTime() * 0.8;
-        // Dynamic lightning pattern color
         const hue = (t * 40 % 360) / 360;
         const color = new THREE.Color().setHSL(hue, 0.8, 0.6);
         if (padMaterialRef.current && scrollMaterialRef.current) {
@@ -379,112 +331,153 @@ function MouseAndPad() {
     });
 
     return (
-        <group position={[1.3, -1.42, 1.05]}>
-            {/* Mouse Pad (Dark base with glowing pattern) */}
+        <group position={[1.3, -0.82, 1.05]}>
             <RoundedBox args={[1.2, 0.01, 0.9]} radius={0.05} position={[0, 0, 0]}>
                 <meshStandardMaterial
                     ref={padMaterialRef}
                     color="#0a0a0a"
                     roughness={0.7}
-                    emissive="#8b00ff" // Initial lightning color
+                    emissive="#8b00ff"
                     emissiveIntensity={1.5}
                 />
             </RoundedBox>
 
-            {/* Mouse Body - More glow */}
             <RoundedBox args={[0.2, 0.07, 0.35]} radius={0.02} position={[0, 0.04, 0.1]}>
                 <meshStandardMaterial color="#0b0b0b" metalness={0.9} roughness={0.1} emissive="#333333" emissiveIntensity={0.5} />
             </RoundedBox>
 
-            {/* Mouse Scroll Wheel (Dynamic RGB) */}
             <mesh position={[0, 0.08, 0.2]}>
                 <cylinderGeometry args={[0.01, 0.01, 0.03, 16]} />
-                <meshStandardMaterial ref={scrollMaterialRef} emissive="#ff0000" emissiveIntensity={8} color="#ff0000" /> {/* Intense glow */}
+                <meshStandardMaterial ref={scrollMaterialRef} emissive="#ff0000" emissiveIntensity={8} color="#ff0000" />
             </mesh>
         </group>
     );
 }
 
-
-/* -----------------------
-  Scene container inside Canvas
-------------------------*/
 function SceneContent() {
     const groupRef = useRef();
-    // Continuous 360-degree rotation for the entire setup
+    const shadowGroupRef = useRef();
+    
     useFrame(({ clock }) => {
-        if (groupRef.current) {
-            // Continuous rotation at a constant speed (one full rotation every 20 seconds)
-            groupRef.current.rotation.y = clock.getElapsedTime() * 0.05; // 2π radians / 20 seconds ≈ 0.314 rad/s
+        if (groupRef.current && shadowGroupRef.current) {
+            const time = clock.getElapsedTime();
+            const rotationSpeed = 0.3;
+            const smoothRotation = time * rotationSpeed;
+            
+            groupRef.current.rotation.y = smoothRotation;
+            shadowGroupRef.current.rotation.y = smoothRotation;
+            
+            const floatOffset = 
+                Math.sin(time * 0.8) * 0.08 + 
+                Math.sin(time * 1.2) * 0.03 +
+                Math.cos(time * 0.5) * 0.02;
+            
+            groupRef.current.position.y = 0.2 + floatOffset;
+            shadowGroupRef.current.position.y = -1.0;
         }
     });
 
     return (
-        <group ref={groupRef} position={[0, -0.6, 0]}>
-            {/* Desk Surface (Darker, more reflective) */}
-            <mesh position={[0, -1.6, 0]} receiveShadow>
-                <boxGeometry args={[8, 0.12, 3.8]} />
-                <meshStandardMaterial color="#080808" metalness={0.9} roughness={0.2} /> {/* Darker, more reflective desk */}
-            </mesh>
-            <Monitor />
-            <FloorSpeakers /> {/* Replaced PCTower with two tall Floor Speakers */}
-            <Keyboard />
-            <DeskSpeaker position={[-1.7, -1.35, 0.7]} hueOffset={0} /> {/* Existing desk speaker 1 */}
-            <DeskSpeaker position={[1.7, -1.35, 0.7]} hueOffset={180} /> {/* Existing desk speaker 2 */}
-            <MouseAndPad />
-            <ContactShadows position={[0, -1.75, 0]} opacity={0.8} scale={10} blur={2} far={10} />
-        </group>
+        <>
+            <group ref={groupRef} position={[0, 0.2, 0]}>
+                <mesh position={[0, -1.0, 0]} receiveShadow>
+                    <boxGeometry args={[8, 0.12, 3.8]} />
+                    <meshStandardMaterial color="#080808" metalness={0.9} roughness={0.2} />
+                </mesh>
+                <Monitor />
+                <FloorSpeakers />
+                <Keyboard />
+                <DeskSpeaker position={[-1.7, -0.75, 0.7]} hueOffset={0} />
+                <DeskSpeaker position={[1.7, -0.75, 0.7]} hueOffset={180} />
+                <MouseAndPad />
+            </group>
+
+            <group ref={shadowGroupRef} position={[0, -1.0, 0]}>
+                <ContactShadows 
+                    opacity={0.6} 
+                    scale={12} 
+                    blur={3} 
+                    far={12}
+                    rotation={[0, 0, 0]}
+                />
+            </group>
+        </>
     );
 }
 
-// Component to set the scene background color
-function Scene() {
-    const { scene } = useThree();
-    // Set a very dark gray background instead of pure black
-    scene.background = new THREE.Color('#ffff');
-    return null;
-}
-
-/* -----------------------
-  Main exported component
-------------------------*/
 export default function ThreePCShowcase() {
     return (
-        <span className="w-full h-100 flex justify-center">
-            <span className="w-[30%] rounded-lg border border-amber-200 shadow-emerald-700 overflow-hidden flex items-center justify-center text-center bg-white relative">
-                <Canvas shadows camera={{ position: [4, 2.2, 6], fov: 35 }}>
-                    <PerspectiveCamera makeDefault position={[4, 2.2, 6]} />
-                    <Scene /> {/* Component to set the background color */}
-                    {/* Lighting adjusted for a more dramatic, moody scene with colorful accents */}
-                    {/* Increased ambient light to brighten the whole scene, mimicking the "stage" feel */}
-                    <ambientLight intensity={0.8} color="#555555" />
-                    <directionalLight position={[6, 8, 6]} intensity={0.8} castShadow color="#ffccaa" /> {/* Warm highlight */}
-                    <directionalLight position={[-4, 2, -6]} intensity={0.4} color="#aaccff" /> {/* Cool fill light, slightly brighter */}
+        <div className="w-full h-screen flex items-center justify-center relative overflow-hidden">
+            {/* <div className="absolute inset-0 opacity-20">
+                <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-500 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute top-3/4 right-1/4 w-40 h-40 bg-purple-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
+                <div className="absolute bottom-1/4 left-1/2 w-28 h-28 bg-cyan-500 rounded-full blur-3xl animate-pulse delay-500"></div>
+            </div> */}
+            
+            <div className="relative min-w-full max-w-4xl h-50 lg:min-h-60 lg:w-100 p-2  rounded-2xl overflow-auto">
+                <Canvas 
+                    gl={{ 
+                        alpha: true,
+                        antialias: true,
+                        powerPreference: "high-performance"
+                    }} 
+                    shadows 
+                    camera={{ position: [0, 0.5, 9], fov: 45 }}
+                    // className="w-50 h-50"
+                >
+                    <PerspectiveCamera makeDefault position={[0, 0.5, 9]} fov={45} />
+                    
+                    <ambientLight intensity={0.6} color="#555555" />
+                    
+                    <directionalLight 
+                        position={[5, 8, 5]} 
+                        intensity={1.2} 
+                        color="#ffccaa" 
+                        castShadow
+                        shadow-mapSize-width={2048}
+                        shadow-mapSize-height={2048}
+                        shadow-camera-far={20}
+                        shadow-camera-left={-10}
+                        shadow-camera-right={10}
+                        shadow-camera-top={10}
+                        shadow-camera-bottom={-10}
+                    />
+                    
+                    <directionalLight position={[-5, 5, -5]} intensity={0.5} color="#aaccff" />
+                    <pointLight position={[0, 5, 0]} intensity={0.8} color="#ffffff" distance={10} />
 
-                    {/* Accent lights to enhance the RGB glow and reflections - more saturated, strategic placement */}
-                    <pointLight position={[-2, 1, 3]} intensity={15} color="#ff00ff" distance={5} decay={2} /> {/* Magenta */}
-                    <pointLight position={[2, 1, 3]} intensity={15} color="#00ffff" distance={5} decay={2} /> {/* Cyan */}
-                    <pointLight position={[0, 2, -1]} intensity={8} color="#ffff00" distance={3} decay={2} /> {/* Yellow for front */}
+                    <pointLight position={[-3, 3, 3]} intensity={20} color="#ff00ff" distance={8} decay={2} />
+                    <pointLight position={[3, 3, 3]} intensity={20} color="#00ffff" distance={8} decay={2} />
+                    <pointLight position={[0, 2, -2]} intensity={15} color="#ffff00" distance={6} decay={2} />
 
-
-                    <Suspense fallback={<Html center>Loading...</Html>}>
+                    <Suspense fallback={
+                        <Html center>
+                            <div className="text-white text-lg">Loading 3D Scene...</div>
+                        </Html>
+                    }>
                         <SceneContent />
-                        {/* Use a simple environment preset that provides global, even illumination/reflection */}
-                        <Environment preset="night" />
+                        <Environment preset="dawn" />
                     </Suspense>
+                    
                     <OrbitControls 
-                        target={[0, -0.6, 1]} 
-                        maxPolarAngle={Math.PI / 2.1} 
+                        target={[0, 0.5, 0]}
+                        maxPolarAngle={Math.PI / 2.1}
+                        minPolarAngle={Math.PI / 6}
+                        maxDistance={12}
+                        minDistance={5}
                         enablePan={false}
-                        enableRotate={true} // Allow manual rotation
-                        autoRotate={true} // Enable auto-rotation
-                        autoRotateSpeed={2} // Speed of auto-rotation
+                        enableRotate={true}
+                        autoRotate={true}
+                        autoRotateSpeed={-8}
                     />
                 </Canvas>
-                <div className="absolute bottom-3 left-0 right-0 text-center text-gray-400 text-sm bg-white p-1">
-                    click & drag to rotate • scroll to zoom • auto-rotating
-                </div>
-            </span>
-        </span>
+                
+                {/* <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center">
+                    <div className="bg-black/60 backdrop-blur-sm text-white/80 text-sm px-4 py-2 rounded-full border border-white/20">
+                        🖱️ Drag to rotate • 🔍 Scroll to zoom • 🔄 Auto-rotating
+                    </div>
+                </div> */}
+            </div>
+        </div>
     );
 }
