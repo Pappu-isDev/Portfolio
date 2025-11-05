@@ -415,7 +415,7 @@ export default function ThreePCShowcase() {
                 <div className="absolute bottom-1/4 left-1/2 w-28 h-28 bg-cyan-500 rounded-full blur-3xl animate-pulse delay-500"></div>
             </div> */}
             
-            <div className="relative min-w-full max-w-4xl h-50 lg:min-h-60 lg:w-100 p-2  rounded-2xl overflow-auto">
+            <div className="relative lg:w-150 lg:h-80 h-55  p-2  rounded-2xl overflow-auto">
                 <Canvas 
                     gl={{ 
                         alpha: true,
@@ -424,7 +424,7 @@ export default function ThreePCShowcase() {
                     }} 
                     shadows 
                     camera={{ position: [0, 0.5, 9], fov: 45 }}
-                    // className="w-50 h-50"
+                   
                 >
                     <PerspectiveCamera makeDefault position={[0, 0.5, 9]} fov={45} />
                     
