@@ -15,45 +15,7 @@ const Intro = () => {
   const [showWelcomeToast, setShowWelcomeToast] = useState(false);
   const [showFlipToast, setShowFlipToast] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
-  // useGSAP(() => {
-  //   const getBreakpointConfig = () => {
-  //     const width = window.innerWidth;
 
-  //     if (width >= 1024) {
-  //       return { x: 0, duration: 2, delay: 1, stagger: 0.3 };
-  //     } else if (width >= 768) {
-  //       return { x: 0, duration: 1.5, delay: 0.5, stagger: 0.25 };
-  //     } else {
-  //       return { x: 0, duration: 1, delay: 0, stagger: 0.2 };
-  //     }
-  //   };
-
-  //   const config = getBreakpointConfig();
-
-  //   gsap.fromTo(".info",
-  //     { opacity: 0, x: -50 },
-  //     {
-  //       opacity: 1,
-  //       x: config.x,
-  //       duration: config.duration,
-  //       ease: "power3.inOut",
-  //       stagger: config.stagger,
-  //       delay: config.delay
-  //     }
-  //   );
-
-  //   gsap.fromTo(".info2",
-  //     { opacity: 0, x: 50 },
-  //     {
-  //       opacity: 1,
-  //       x: -config.x,
-  //       duration: config.duration,
-  //       ease: "power3.inOut",
-  //       stagger: config.stagger,
-  //       delay: config.delay
-  //     }
-  //   );
-  // }, []);
   useGSAP(() => {
     gsap.fromTo(".info", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 1, ease: "power3.inOut", stagger: 0.3, duration: 2, delay: 1 });
     gsap.fromTo(".info2", { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 1, ease: "power3.inOut", stagger: 0.3, duration: 2, delay: 1 });
