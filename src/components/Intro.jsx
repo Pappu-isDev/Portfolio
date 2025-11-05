@@ -90,7 +90,7 @@ const Intro = () => {
 
   return (
     <>
-      <div className="relative w-full h-full lg:h-screen  overflow-hidden">
+      <div className="relative w-full h-full lg:h-screen py-3 overflow-hidden">
         {/* Background video */}
         <video
           className="absolute top-0 left-0 opacity-90 w-full h-full object-cover"
@@ -171,10 +171,10 @@ const Intro = () => {
           </div>
 
           {/* Right Card Section */}
-          <div className="info2   p-1 rounded-2xl overflow-hidden  flex justify-center items-center mt-8 lg:mt-0 ">
+          <div className="info2 lg:mb-0 md:mb-40 mb-40   p-1 rounded-2xl overflow-hidden  flex justify-center items-center mt-8 lg:mt-0 ">
             <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
-              <div className="w-full h-full perspective">
-                <div className="relative w-full h-full flex justify-center">
+              <div className="w-full h-full perspective ">
+                <div className="relative w-full h-full flex justify-center ">
                   <div className="absolute inset-0 flex items-center justify-center border-b-amber-300 animate-spin">
                     <div className="w-60 md:w-70 lg:w-72 h-[30rem] md:h-[36rem] lg:h-[36rem]  rounded-2xl bg-gradient-to-r from-blue-500 via-purple-400 to-pink-500"></div>
                   </div>
@@ -188,7 +188,7 @@ const Intro = () => {
                     onMouseEnter={handleCardHover}
                   >
                     {/* Front Side */}
-                    <div className="absolute w-full h-full backface-hidden">
+                    <div className="absolute w-full h-full  backface-hidden">
                       <img
                         src="/myImg.jpg"
                         alt="Itz Me"
@@ -328,13 +328,24 @@ const Intro = () => {
 
         </div>
       </div>
-   
 
 
-      <div className=" absolute top-60 left-125 z-9999">
-      <ThreePCShowcase />
-      </div>
-  
+
+      <motion.div
+        className="absolute lg:top-40 md:top-70 top-110 lg:left-85 md:left-60 left-5 pt-20 z-9999"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        onViewportEnter={() => console.log('entered view')}
+        onViewportLeave={() => console.log('left view')}
+        viewport={{
+          once: false,
+          amount: 0.5 // 50% of element needs to be visible
+        }}
+        transition={{ duration: 0.3 }}
+      >
+        <ThreePCShowcase />
+      </motion.div>
+
     </>
   );
 };
