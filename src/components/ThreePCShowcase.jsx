@@ -128,6 +128,7 @@ function useMonitorTexture({ width = 1600, height = 900 } = {}) {
 }
 
 function Monitor() {
+    const myName = process.env.NEXT_PUBLIC_NAME;
     const tex = useMonitorTexture();
     return (
         <group position={[0, 0.8, 0.7]}>
@@ -155,7 +156,7 @@ function Monitor() {
             </RoundedBox>
 
             <Html position={[0, -1.35, 0.08]} distanceFactor={3.5}>
-                <div className="text-[6px] font-bold text-gray-400 tracking-wider">Virender Verma</div>
+                <div className="text-[6px] font-bold text-gray-400 tracking-wider">{myName}</div>
             </Html>
         </group>
     );

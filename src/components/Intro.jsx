@@ -1,63 +1,52 @@
 "use client";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap/all";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef} from "react";
 import { ReactTyped } from "react-typed";
 import ThreePCShowcase from "./ThreePCShowcase";
 import { motion } from "framer-motion";
-
+import { useGLTF } from "@react-three/drei";
+useGLTF.preload("./ThreePCShowcase");
 
 const Intro = () => {
   const myName = process.env.NEXT_PUBLIC_NAME;
   const pdf = process.env.NEXT_PUBLIC_PDF;
+  const modelRef = useRef(null);
 
   const [showToast, setShowToast] = useState(false);
   const [showWelcomeToast, setShowWelcomeToast] = useState(false);
   const [showFlipToast, setShowFlipToast] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
-  // useGSAP(() => {
-  //   const getBreakpointConfig = () => {
-  //     const width = window.innerWidth;
+  const [showModel, setShowModel] = useState(false);
 
-  //     if (width >= 1024) {
-  //       return { x: 0, duration: 2, delay: 1, stagger: 0.3 };
-  //     } else if (width >= 768) {
-  //       return { x: 0, duration: 1.5, delay: 0.5, stagger: 0.25 };
-  //     } else {
-  //       return { x: 0, duration: 1, delay: 0, stagger: 0.2 };
-  //     }
-  //   };
-
-  //   const config = getBreakpointConfig();
-
-  //   gsap.fromTo(".info",
-  //     { opacity: 0, x: -50 },
-  //     {
-  //       opacity: 1,
-  //       x: config.x,
-  //       duration: config.duration,
-  //       ease: "power3.inOut",
-  //       stagger: config.stagger,
-  //       delay: config.delay
-  //     }
-  //   );
-
-  //   gsap.fromTo(".info2",
-  //     { opacity: 0, x: 50 },
-  //     {
-  //       opacity: 1,
-  //       x: -config.x,
-  //       duration: config.duration,
-  //       ease: "power3.inOut",
-  //       stagger: config.stagger,
-  //       delay: config.delay
-  //     }
-  //   );
-  // }, []);
   useGSAP(() => {
     gsap.fromTo(".info", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 1, ease: "power3.inOut", stagger: 0.3, duration: 2, delay: 1 });
     gsap.fromTo(".info2", { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 1, ease: "power3.inOut", stagger: 0.3, duration: 2, delay: 1 });
   }, []);
+
+   useEffect(() => {
+  let timeoutId;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        clearTimeout(timeoutId);
+        if (entry.isIntersecting) {
+          timeoutId = setTimeout(() => setShowModel(true), 200);
+        } else {
+          timeoutId = setTimeout(() => setShowModel(false), 400);
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  if (modelRef.current) observer.observe(modelRef.current);
+  return () => {
+    if (modelRef.current) observer.unobserve(modelRef.current);
+    clearTimeout(timeoutId);
+  };
+}, []);
+
 
 
   // Welcome toast on mount
@@ -331,7 +320,7 @@ const Intro = () => {
 
 
 
-      <motion.div
+      {/* <motion.div
         className="absolute lg:top-40 md:top-70 top-110 lg:left-85 md:left-60 left-5 pt-20 z-9999"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -344,7 +333,16 @@ const Intro = () => {
         transition={{ duration: 0.3 }}
       >
         <ThreePCShowcase />
-      </motion.div>
+      </motion.div> */}
+      <motion.div
+  ref={modelRef}
+  className="absolute lg:top-40 md:top-70 top-110 lg:left-85 md:left-60 left-5 pt-20 z-9999"
+  initial={{ opacity: 0 }}
+  animate={{ opacity: showModel ? 1 : 0 }}
+  transition={{ duration: 0.5, ease: "easeOut" }}
+>
+  <ThreePCShowcase />
+</motion.div>
 
     </>
   );
