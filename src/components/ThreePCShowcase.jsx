@@ -452,7 +452,7 @@ export default function ThreePCShowcase() {
 
                     <Suspense fallback={
                         <Html center>
-                            <div className="text-white text-lg">Loading 3D Scene...</div>
+                            <div className="loader"></div>
                         </Html>
                     }>
                         <SceneContent />
