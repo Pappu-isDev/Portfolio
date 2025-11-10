@@ -7,16 +7,18 @@ import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaPaperPlane } from "react-icon
 import { motion } from "framer-motion";
 import { useState, FormEvent } from "react";
 import Link from "next/link";
+
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
-
 const ContactUs = () => {
+  const router = useRouter();
   const email = process.env.NEXT_PUBLIC_EMAIL;
   const phone = process.env.NEXT_PUBLIC_PHONE;
-    const whatsUrl = process.env.NEXT_PUBLIC_WHATSAPP;
+  // const whatsUrl = process.env.NEXT_PUBLIC_WHATSAPP;
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState('');
@@ -319,15 +321,20 @@ const [formData, setFormData] = useState({
         <div className="contact-footer text-center mt-12 lg:mt-16 pt-8 border-t border-gray-800/50">
           <p className="text-gray-400 text-sm sm:text-base">
             Prefer a quick chat?{" "}
-            <Link 
+            {/* <Link
               href={whatsUrl}
               target="_blank" 
               rel="noopener noreferrer"
               className="text-green-400 hover:text-green-300 underline transition-colors"
             >
               Message me on WhatsApp
-            </Link>
+            </Link> */}
           </p>
+        </div>
+        <div>
+          <button onClick={() => router.push('/info')}>
+            Add Info
+          </button>
         </div>
       </div>
     </section>
