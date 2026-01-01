@@ -5,8 +5,8 @@ import React, { useState, useEffect, useRef} from "react";
 import { ReactTyped } from "react-typed";
 import ThreePCShowcase from "./ThreePCShowcase";
 import { motion } from "framer-motion";
-import { useGLTF } from "@react-three/drei";
-useGLTF.preload("./ThreePCShowcase");
+// import { useGLTF } from "@react-three/drei";
+// useGLTF.preload("./ThreePCShowcase");
 
 const Intro = () => {
   const myName = process.env.NEXT_PUBLIC_NAME;
