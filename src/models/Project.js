@@ -24,6 +24,7 @@ const ProjectSchema = new mongoose.Schema({
     match: [/^https?:\/\/.+/, "Please enter a valid GitHub URL"]
   },
   tags: [{ type: String }],
+  likes: { type: Number, default: 0 },
 }, { timestamps: true });
 
 export default mongoose.models.Project || mongoose.model("Project", ProjectSchema);

@@ -213,11 +213,31 @@ const SkillCard = ({ skill, index }) => {
 };
 
 const SkillsPage = () => {
-  const [skills, setSkills] = useState([
-    "React", "JavaScript", "Tailwind CSS", "Node js", "Express", 
-    "MongoDB", "Python", "Docker", "Next js", "GitHub"
-  ]);
+  const [skills, setSkills] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [input, setInput] = useState("");
+
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/skills');
+        if (!response.ok) {
+          throw new Error('Failed to fetch skills');
+        }
+        const data = await response.json();
+        // Assuming the API returns { success: true, data: [...] }
+        setSkills(data.success ? data.data.map(skill => skill.name) : []);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSkills();
+  }, []);
 
   const addSkill = () => {
     const clean = input.trim();
@@ -333,24 +353,63 @@ const SkillsPage = () => {
         </motion.button>
       </motion.div> */}
 
+      {/* Loading State */}
+      {loading && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center text-cyan-300/60 mt-12 p-8"
+        >
+          <motion.div
+            animate={{ y: [0, -3, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="text-4xl mb-4"
+          >
+            🔄
+          </motion.div>
+          <p className="text-lg font-medium mb-2">Loading skills...</p>
+        </motion.div>
+      )}
+
+      {/* Error State */}
+      {error && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center text-red-300/80 mt-12 p-8 bg-red-500/10 rounded-2xl border border-red-500/20 backdrop-blur-sm"
+        >
+          <motion.div
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="text-4xl mb-4"
+          >
+            ⚠️
+          </motion.div>
+          <p className="text-lg font-medium mb-2">Failed to load skills</p>
+          <p className="text-red-300/70">{error}</p>
+        </motion.div>
+      )}
+
       {/* Skills Grid - Optimized with will-change */}
-      <motion.div
-        className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-[84%] relative z-10"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.1 }}
-        style={{ willChange: 'transform' }} // Performance hint
-      >
-        <AnimatePresence mode="popLayout">
-          {skills.map((skill, index) => (
-            <SkillCard 
-              key={`${skill}-${index}`} 
-              skill={skill} 
-              index={index} 
-            />
-          ))}
-        </AnimatePresence>
-      </motion.div>
+      {!loading && !error && (
+        <motion.div
+          className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-[84%] relative z-10"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.1 }}
+          style={{ willChange: 'transform' }} // Performance hint
+        >
+          <AnimatePresence mode="popLayout">
+            {skills.map((skill, index) => (
+              <SkillCard
+                key={`${skill}-${index}`}
+                skill={skill}
+                index={index}
+              />
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      )}
 
       {/* Skills Count & Clear Button */}
       <motion.div

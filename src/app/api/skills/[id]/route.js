@@ -1,4 +1,4 @@
-import { skillController } from "@/lib/controllers/skillController";
+import { skillController } from "../../../lib/controllers/skillController";
 
 export async function GET(req, { params }) {
   const { id } = await params;

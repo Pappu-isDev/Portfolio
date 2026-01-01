@@ -1,5 +1,6 @@
+
 "use client";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaBuilding, FaMapMarkerAlt, FaCalendarAlt, FaStar } from "react-icons/fa";
 
@@ -127,7 +128,74 @@ const ExperienceCard = ({ experience }) => (
 );
 
 const Experience = () => {
+  const [experiences, setExperiences] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchExperiences = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/experience');
+        if (!response.ok) {
+          throw new Error('Failed to fetch experiences');
+        }
+        const data = await response.json();
+        setExperiences(data);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchExperiences();
+  }, []);
+
+  const retryFetch = () => {
+    setError(null);
+    setLoading(true);
+    // Trigger useEffect again by changing a dependency, but since we have no dependencies, we can call the function directly
+    const fetchExperiences = async () => {
+      try {
+        const response = await fetch('/api/experience');
+        if (!response.ok) {
+          throw new Error('Failed to fetch experiences');
+        }
+        const data = await response.json();
+        setExperiences(data);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchExperiences();
+  };
   const [showAll, setShowAll] = useState(false);
+
+  useEffect(() => {
+    const fetchExperiences = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/experience');
+        if (!response.ok) {
+          throw new Error('Failed to fetch experiences');
+        }
+        const data = await response.json();
+        // Assuming the API returns { success: true, data: [...] }
+        setExperiences(data.success ? data.data : []);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchExperiences();
+  }, []);
 
   // Decide how many experiences to show
   const visibleExperiences = showAll ? experiences : experiences.slice(0, 3);
@@ -142,9 +210,33 @@ const Experience = () => {
           Professional Evolution 🚀
         </h2>
 
-        <div className="relative">
-          {/* Timeline line - hidden on mobile, visible on md and up */}
-          <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-cyan-600/30"></div>
+        {/* Loading State */}
+        {loading && (
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400"></div>
+            <span className="ml-4 text-cyan-300">Loading experiences...</span>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="text-center py-20">
+            <div className="text-red-400 text-lg mb-4">Failed to load experiences</div>
+            <p className="text-gray-400 mb-6">{error}</p>
+            <button
+              onClick={retryFetch}
+              className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+            >
+              Try Again
+            </button>
+          </div>
+        )}
+
+        {/* Timeline */}
+        {!loading && !error && (
+          <div className="relative">
+            {/* Timeline line - hidden on mobile, visible on md and up */}
+            <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-cyan-600/30"></div>
 
           {visibleExperiences.map((exp, index) => {
             const isLeft = index % 2 === 0;
@@ -181,7 +273,8 @@ const Experience = () => {
               </motion.div>
             );
           })}
-        </div>
+          </div>
+        )}
 
         {/* See More / See Less Button */}
         <div className="text-center mt-8 sm:mt-12">
