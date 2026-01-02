@@ -1,7 +1,3 @@
-
-
-
-
 "use client";
 import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaPaperPlane } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -12,17 +8,19 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 gsap.registerPlugin(ScrollTrigger);
 const ContactUs = () => {
   const router = useRouter();
+  const { user, isAdmin, loading } = useAuth();
   const email = process.env.NEXT_PUBLIC_EMAIL;
   const phone = process.env.NEXT_PUBLIC_PHONE;
   const whatsUrl = process.env.NEXT_PUBLIC_WHATSAPP;
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState('');
- 
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -148,7 +146,7 @@ const ContactUs = () => {
     );
   }, []);
 
- const handleSubmit = (e) => { 
+ const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setStatus('Sending...');
@@ -157,9 +155,9 @@ const ContactUs = () => {
     setTimeout(() => {
       setIsSubmitting(false);
       setStatus('Message Sent! Thank you.');
-      
+
       // Clear form inputs
-      setFormData({ name: '', email: '', message: '' }); 
+      setFormData({ name: '', email: '', message: '' });
     }, 2000);
   };
 const [formData, setFormData] = useState({
@@ -167,7 +165,18 @@ const [formData, setFormData] = useState({
     email: '',
     message: '',
   });
-  
+
+  const handleManagePortfolio = () => {
+    if (!user) {
+      // Store intended destination in localStorage
+      localStorage.setItem('redirectAfterLogin', '/admin');
+      router.push('/SignIn');
+    } else if (!isAdmin()) {
+      alert('Access denied. Admin privileges required.');
+    } else {
+      router.push('/admin');
+    }
+  };
 
   return (
     <section id="contact" className=" overflow-x-hidden bg-gradient-to-br  from-gray-900 to-black text-gray-300 py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
@@ -178,7 +187,7 @@ const [formData, setFormData] = useState({
             Get In <span className="text-blue-400">Touch</span>
           </h2>
           <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            Have a project in mind or just want to say hello? Feel free to reach out — 
+            Have a project in mind or just want to say hello? Feel free to reach out —
             I&apos;d love to connect and discuss how we can work together!
           </p>
         </div>
@@ -190,14 +199,14 @@ const [formData, setFormData] = useState({
               <h3 className="text-2xl sm:text-3xl font-bold text-white mb-6 lg:mb-8">
                 Let&apos;s <span className="text-blue-400">Connect</span>
               </h3>
-              
+
               <div className="space-y-6">
                 {contactInfo.map((item, index) => (
                   <a
                     key={index}
                     href={item.link}
-                    className="contact-info-item flex items-center gap-4 p-4 rounded-xl bg-gray-700/30 hover:bg-gray-700/50 
-                             transition-all duration-300 group cursor-pointer border border-transparent 
+                    className="contact-info-item flex items-center gap-4 p-4 rounded-xl bg-gray-700/30 hover:bg-gray-700/50
+                             transition-all duration-300 group cursor-pointer border border-transparent
                              hover:border-blue-500/30 transform hover:scale-105"
                   >
                     <div className="flex-shrink-0">
@@ -245,7 +254,7 @@ const [formData, setFormData] = useState({
                 onChange={handleChange}
                   type="text"
                   placeholder="Enter your full name"
-                  className="form-input w-full p-4 rounded-xl bg-gray-700/50 border border-gray-600 text-white 
+                  className="form-input w-full p-4 rounded-xl bg-gray-700/50 border border-gray-600 text-white
                            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
                            placeholder-gray-500 transition-all duration-300"
                   required
@@ -263,7 +272,7 @@ const [formData, setFormData] = useState({
                 onChange={handleChange}
                   type="email"
                   placeholder="Enter your email address"
-                  className="form-input w-full p-4 rounded-xl bg-gray-700/50 border border-gray-600 text-white 
+                  className="form-input w-full p-4 rounded-xl bg-gray-700/50 border border-gray-600 text-white
                            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
                            placeholder-gray-500 transition-all duration-300"
                   required
@@ -281,7 +290,7 @@ const [formData, setFormData] = useState({
                 onChange={handleChange}
                   rows={5}
                   placeholder="Tell me about your project or just say hello..."
-                  className="form-input w-full p-4 rounded-xl bg-gray-700/50 border border-gray-600 text-white 
+                  className="form-input w-full p-4 rounded-xl bg-gray-700/50 border border-gray-600 text-white
                            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
                            placeholder-gray-500 resize-none transition-all duration-300"
                   required
@@ -291,8 +300,8 @@ const [formData, setFormData] = useState({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="form-input w-full py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 
-                         rounded-xl text-white font-semibold text-lg transition-all duration-300 
+                className="form-input w-full py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800
+                         rounded-xl text-white font-semibold text-lg transition-all duration-300
                          disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-blue-500/25
                          flex items-center justify-center gap-3 transform hover:scale-105"
               >
@@ -323,7 +332,7 @@ const [formData, setFormData] = useState({
             Prefer a quick chat?{" "}
             <Link
               href={whatsUrl}
-              target="_blank" 
+              target="_blank"
               rel="noopener noreferrer"
               className="text-green-400 hover:text-green-300 underline transition-colors"
             >
@@ -332,8 +341,12 @@ const [formData, setFormData] = useState({
           </p>
         </div>
         <div>
-          <button className="border p-2  rounded-md cursor-pointer" onClick={() => router.push('/info')}>
-            Add Info
+          <button
+            className="border p-2 rounded-md cursor-pointer hover:bg-blue-600 hover:text-white transition-colors"
+            onClick={handleManagePortfolio}
+            disabled={loading}
+          >
+            {loading ? 'Loading...' : 'Manage Portfolio'}
           </button>
         </div>
       </div>

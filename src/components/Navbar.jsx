@@ -1,10 +1,19 @@
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 const Navbar = ({ name }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, logout, isAdmin } = useAuth();
+  const router = useRouter();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = () => {
+    logout();
+    router.push("/");
   };
 
   const navItems = [
@@ -27,7 +36,7 @@ const Navbar = ({ name }) => {
 
           {/* Desktop Menu */}
           <div className="hidden lg:block">
-            <div className="flex   gap-6 lg:gap-8 ">
+            <div className="flex gap-6 lg:gap-8 items-center">
               {navItems.map((item) => (
                 <a key={item.id} href={item.href} onClick={() => setIsMenuOpen(false)}>
                   <div className="relative focus:font-bold group cursor-pointer px-1 font-sans py-2 text-base lg:text-xl text-gray-200 font-medium transition-all duration-300 hover:text-white hover:scale-105 hover:shadow-blue-500/50 hover:-translate-y-1 lg:hover:-translate-y-2">
@@ -36,6 +45,35 @@ const Navbar = ({ name }) => {
                   </div>
                 </a>
               ))}
+
+              {/* Auth Buttons */}
+              <div className="flex gap-4 ml-4">
+                {user ? (
+                  <>
+                    {isAdmin() && (
+                      <button
+                        onClick={() => router.push("/admin")}
+                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-colors"
+                      >
+                        Admin Dashboard
+                      </button>
+                    )}
+                    <button
+                      onClick={handleLogout}
+                      className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-md transition-colors"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => router.push("/SignIn")}
+                    className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md transition-colors"
+                  >
+                    Sign In
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 

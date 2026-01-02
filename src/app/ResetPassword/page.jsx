@@ -1,22 +1,24 @@
 "use client";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const Signup = () => {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+const ResetPassword = () => {
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  useEffect(() => {
+    const emailParam = searchParams.get("email");
+    if (emailParam) {
+      setEmail(emailParam);
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,34 +26,30 @@ const Signup = () => {
     setError("");
     setSuccess("");
 
-    if (form.password !== form.confirmPassword) {
+    if (newPassword !== confirmPassword) {
       setError("Passwords do not match");
       setLoading(false);
       return;
     }
 
     try {
-      const response = await fetch("/api/auth/register", {
+      const response = await fetch("/api/auth/reset-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username: form.name,
-          email: form.email,
-          password: form.password,
-        }),
+        body: JSON.stringify({ email, otp, newPassword }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setSuccess("Registration successful! Check your email for OTP.");
+        setSuccess("Password reset successfully! Redirecting to login...");
         setTimeout(() => {
-          router.push(`/VerifyOTP?email=${encodeURIComponent(form.email)}`);
+          router.push("/SignIn");
         }, 2000);
       } else {
-        setError(data.error || "Registration failed");
+        setError(data.error || "Password reset failed");
       }
     } catch (error) {
       setError("Network error. Please try again.");
@@ -82,74 +80,96 @@ const Signup = () => {
 
       <div className="bg-[#1e293b] p-8 rounded-2xl w-full max-w-md shadow-lg">
         <h2 className="text-2xl font-semibold text-white text-center mb-6">
-          Create your account
+          Reset Password
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Full Name</label>
-            <input
-              type="text"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 rounded-md bg-[#0f172a] text-gray-200 border border-gray-700 focus:outline-none focus:border-indigo-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm text-gray-400 mb-1">Email address</label>
+            <label className="block text-sm text-gray-400 mb-1">
+              Email address
+            </label>
             <input
               type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full px-4 py-2 rounded-md bg-[#0f172a] text-gray-200 border border-gray-700 focus:outline-none focus:border-indigo-500"
+              placeholder="Enter your email"
             />
           </div>
 
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Password</label>
+            <label className="block text-sm text-gray-400 mb-1">
+              OTP Code
+            </label>
             <input
-              type="password"
-              name="password"
-              value={form.password}
-              onChange={handleChange}
+              type="text"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
               required
+              maxLength="6"
               className="w-full px-4 py-2 rounded-md bg-[#0f172a] text-gray-200 border border-gray-700 focus:outline-none focus:border-indigo-500"
+              placeholder="Enter 6-digit OTP"
             />
           </div>
 
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Confirm Password</label>
+            <label className="block text-sm text-gray-400 mb-1">
+              New Password
+            </label>
             <input
               type="password"
-              name="confirmPassword"
-              value={form.confirmPassword}
-              onChange={handleChange}
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
               required
               className="w-full px-4 py-2 rounded-md bg-[#0f172a] text-gray-200 border border-gray-700 focus:outline-none focus:border-indigo-500"
+              placeholder="Enter new password"
             />
           </div>
+
+          <div>
+            <label className="block text-sm text-gray-400 mb-1">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              className="w-full px-4 py-2 rounded-md bg-[#0f172a] text-gray-200 border border-gray-700 focus:outline-none focus:border-indigo-500"
+              placeholder="Confirm new password"
+            />
+          </div>
+
+          {error && (
+            <div className="text-red-400 text-sm text-center">{error}</div>
+          )}
+
+          {success && (
+            <div className="text-green-400 text-sm text-center">{success}</div>
+          )}
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-md font-semibold transition"
+            disabled={loading}
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-md font-semibold transition disabled:opacity-50"
           >
-            Sign up
+            {loading ? "Resetting..." : "Reset Password"}
           </button>
         </form>
 
         <p className="text-sm text-gray-400 text-center mt-6">
-          Already have an account?{" "}
-          <a href="/login" className="text-indigo-400 hover:underline">
+          Remember your password?{" "}
+          <button
+            onClick={() => router.push("/SignIn")}
+            className="text-indigo-400 hover:underline"
+          >
             Sign in
-          </a>
+          </button>
         </p>
       </div>
     </div>
   );
-}
-export default Signup;
+};
+
+export default ResetPassword;

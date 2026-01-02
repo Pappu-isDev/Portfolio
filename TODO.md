@@ -1,36 +1,14 @@
-# TODO: Connect Frontend to Backend APIs
+# TODO: Connect UI with Backend Authentication
 
-## 1. Connect Skills Component to API
-- [ ] Replace static skills array with fetch from /api/skills
-- [ ] Add loading and error states
+## Authentication Integration Tasks
 
-## 2. Connect Projects Component to API
-- [ ] Replace static projectsData with fetch from /api/projects
-- [ ] Add like button that only shows for admin users
-- [ ] Add like count display
-
-## 3. Connect Experience Component to API
-- [ ] Replace static experiences array with fetch from /api/experience
-
-## 4. Implement Authentication in SignIn/SignUp Pages
-- [ ] Update SignIn to call /api/auth/login API
-- [ ] Update SignUp to call /api/auth/register API
-- [ ] Handle JWT tokens and redirect on success
-
-## 5. Add Authentication Links to Navbar
-- [ ] Add Sign In and Sign Up links to navbar
-- [ ] Show user info/logout when logged in
-
-## 6. Add Like Functionality
-- [x] Add likes field to Project model (array of user IDs or count)
-- [x] Create API endpoint for liking projects
-- [x] Update projectController to handle likes
-
-## 7. Authentication State Management
-- [ ] Create auth context for managing login state
-- [ ] Protect admin features with role check
-
-## Followup steps
-- [ ] Test API connections
-- [ ] Implement JWT token handling
-- [ ] Add error handling for API calls
+- [x] 1. Update SignUp page to use AuthContext.register and redirect to OTP verification after successful registration.
+- [x] 2. Create a new OTP verification page that calls the verify API.
+- [x] 3. Update SignIn page to use AuthContext.login.
+- [x] 4. Add forget password API (send reset OTP).
+- [x] 5. Create forget password UI.
+- [x] 6. Update Navbar to show login/logout buttons based on auth state.
+- [x] 7. Fix routing to use Next.js routing consistently.
+- [x] 8. Ensure other components (Skills, Experience) are connected if needed.
+- [x] 9. Make sign up and sign in process visible only for admins (entire portfolio admin-only)
+- [x] 10. Conduct thorough testing of all auth flows and admin restrictions

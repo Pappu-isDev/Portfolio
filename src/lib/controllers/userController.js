@@ -37,7 +37,8 @@ export const userController = {
         password: hashedPassword,
         otp,
         otpExpires,
-        isVerified: false
+        isVerified: false,
+        role: 'user'
       });
 
       await transporter.sendMail({
@@ -88,7 +89,7 @@ export const userController = {
 
       // Find user and explicitly select password because 'select: false' is usually in the Schema
       const user = await User.findOne({ email }).select("+password");
-      
+
       if (!user) {
         return NextResponse.json({ success: false, error: "Invalid credentials" }, { status: 401 });
       }
@@ -109,14 +110,73 @@ export const userController = {
         { expiresIn: "1d" }
       );
 
-      return NextResponse.json({ 
-        success: true, 
-        token, 
-        user: { username: user.username, email: user.email } 
+      return NextResponse.json({
+        success: true,
+        token,
+        user: { username: user.username, email: user.email, role: user.role }
       }, { status: 200 });
 
     } catch (error) {
       return NextResponse.json({ success: false, error: "Login failed" }, { status: 500 });
+    }
+  },
+
+  // --- FORGOT PASSWORD (SEND RESET OTP) ---
+  async forgotPassword(req) {
+    try {
+      await connectDB();
+      const { email } = await req.json();
+
+      const user = await User.findOne({ email });
+      if (!user) {
+        return NextResponse.json({ success: false, error: "User not found" }, { status: 404 });
+      }
+
+      const resetOtp = Math.floor(100000 + Math.random() * 900000).toString();
+      const resetOtpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+      user.resetOtp = resetOtp;
+      user.resetOtpExpires = resetOtpExpires;
+      await user.save();
+
+      await transporter.sendMail({
+        from: process.env.MAIL_USER,
+        to: email,
+        subject: "Password Reset OTP",
+        html: `<h1>Password Reset</h1><p>Your reset code is: <strong>${resetOtp}</strong></p><p>It expires in 10 minutes.</p>`,
+      });
+
+      return NextResponse.json({ success: true, message: "Reset OTP sent to email" }, { status: 200 });
+    } catch (error) {
+      return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    }
+  },
+
+  // --- RESET PASSWORD ---
+  async resetPassword(req) {
+    try {
+      await connectDB();
+      const { email, otp, newPassword } = await req.json();
+
+      const user = await User.findOne({
+        email,
+        resetOtp: otp,
+        resetOtpExpires: { $gt: Date.now() }
+      });
+
+      if (!user) {
+        return NextResponse.json({ success: false, error: "Invalid or expired OTP" }, { status: 400 });
+      }
+
+      const hashedPassword = await bcrypt.hash(newPassword, 12);
+      user.password = hashedPassword;
+      user.resetOtp = null;
+      user.resetOtpExpires = null;
+      await user.save();
+
+      return NextResponse.json({ success: true, message: "Password reset successfully" }, { status: 200 });
+    } catch (error) {
+      return NextResponse.json({ success: false, error: "Password reset failed" }, { status: 500 });
     }
   }
 };
