@@ -406,6 +406,10 @@ function SceneContent() {
     );
 }
 
+// Note: HDR environment loading was removed to avoid HEAD requests for '/model/kiara_1_dawn_1k.hdr'
+// If you want to re-enable an HDR, place the file at `public/model/kiara_1_dawn_1k.hdr`
+// and re-add an Environment component here.
+
 export default function ThreePCShowcase() {
     return (
         <div className="w-full h-screen flex items-center justify-center relative overflow-hidden">
@@ -457,7 +461,6 @@ export default function ThreePCShowcase() {
                         </Html>
                     }>
                         <SceneContent />
-                        <Environment preset="dawn" />
                     </Suspense>
                     
                     <OrbitControls 

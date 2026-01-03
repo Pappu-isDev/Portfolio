@@ -1,5 +1,4 @@
 import { projectController } from "@/lib/controllers/projectController";
-
 // GET ALL PROJECTS
 // Used to display the list of projects on your portfolio
 export async function GET() {

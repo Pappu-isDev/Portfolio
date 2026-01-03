@@ -25,7 +25,7 @@ export const projectController = {
       await connectDB();
       // Returns plain objects for better performance
       const projects = await Project.find({}).sort({ createdAt: -1 }).lean();
-      return NextResponse.json({ success: true, count: projects.length, data: projects }, { status: 200 });
+      return NextResponse.json({ success: true, count: projects.length, data: projects || [] }, { status: 200 });
     } catch (err) { return this.handleError(err); }
   },
 

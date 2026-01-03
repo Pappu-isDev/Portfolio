@@ -1,4 +1,4 @@
-import { experienceController } from "../../../lib/controllers/experienceController";
+import { experienceController } from "@/lib/controllers/experienceController";
 export async function GET(req, { params }) {
   const { id } = await params;
   return experienceController.getOne(id);

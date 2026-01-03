@@ -21,7 +21,7 @@ export const skillController = {
     try {
       await connectDB();
       const skills = await Skill.find({}).sort({ category: 1, name: 1 }).lean();
-      return NextResponse.json({ success: true, data: skills }, { status: 200 });
+      return NextResponse.json({ success: true, data: skills || [] }, { status: 200 });
     } catch (err) { return this.handleError(err); }
   },
 

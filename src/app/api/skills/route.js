@@ -1,4 +1,9 @@
-import { skillController } from "../../../lib/controllers/skillController";
+import { skillController } from "@/lib/controllers/skillController";
 
-export const GET = () => skillController.getAll();
-export const POST = (req) => skillController.create(req);
+export async function GET(req) {
+	return await skillController.getAll();
+}
+
+export async function POST(req) {
+	return await skillController.create(req);
+}

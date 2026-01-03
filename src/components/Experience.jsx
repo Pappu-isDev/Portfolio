@@ -132,73 +132,47 @@ const Experience = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchExperiences = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('/api/experience');
-        if (!response.ok) {
-          throw new Error('Failed to fetch experiences');
-        }
-        const data = await response.json();
-        setExperiences(data);
-        setError(null);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+  const loadExperiences = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/experience');
+      if (!response.ok) {
+        throw new Error('Failed to fetch experiences');
       }
-    };
-
-    fetchExperiences();
-  }, []);
+      const data = await response.json().catch(() => null);
+      // Normalize different possible API shapes:
+      // - { success: true, data: [...] }
+      // - [...] (direct array)
+      // - { data: [...] }
+      let list = [];
+      if (data) {
+        if (data.success && Array.isArray(data.data)) list = data.data;
+        else if (Array.isArray(data)) list = data;
+        else if (Array.isArray(data.data)) list = data.data;
+      }
+      setExperiences(list);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+      setExperiences([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const retryFetch = () => {
     setError(null);
-    setLoading(true);
-    // Trigger useEffect again by changing a dependency, but since we have no dependencies, we can call the function directly
-    const fetchExperiences = async () => {
-      try {
-        const response = await fetch('/api/experience');
-        if (!response.ok) {
-          throw new Error('Failed to fetch experiences');
-        }
-        const data = await response.json();
-        setExperiences(data);
-        setError(null);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchExperiences();
+    loadExperiences();
   };
   const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
-    const fetchExperiences = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('/api/experience');
-        if (!response.ok) {
-          throw new Error('Failed to fetch experiences');
-        }
-        const data = await response.json();
-        // Assuming the API returns { success: true, data: [...] }
-        setExperiences(data.success ? data.data : []);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchExperiences();
+    loadExperiences();
   }, []);
 
   // Decide how many experiences to show
-  const visibleExperiences = showAll ? experiences : experiences.slice(0, 3);
+  const safeExperiences = Array.isArray(experiences) ? experiences : [];
+  const visibleExperiences = showAll ? safeExperiences : safeExperiences.slice(0, 3);
 
   return (
     <section id="experience" className="bg-[#0f172a] text-white py-16 sm:py-20 px-4 overflow-x-hidden sm:px-6 lg:px-8">

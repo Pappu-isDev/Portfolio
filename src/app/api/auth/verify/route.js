@@ -1,4 +1,4 @@
-import { userController } from "../../../../lib/controllers/userController";
+import { userController } from "@/lib/controllers/userController";
 import connectDB from "@/lib/db";
 import User from "@/models/User";
 import { NextResponse } from "next/server";

@@ -1,9 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useToast } from "../../context/ToastContext";
+import ConfirmModal from "../ui/ConfirmModal";
 
 const ExperienceManager = () => {
   const [experiences, setExperiences] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const [editing, setEditing] = useState(null);
   const [formData, setFormData] = useState({
     jobTitle: "",
@@ -13,6 +16,8 @@ const ExperienceManager = () => {
     description: "",
     techStack: "",
   });
+  const [confirmState, setConfirmState] = useState({ open: false, id: null, message: "" });
+  const { addToast } = useToast();
 
   useEffect(() => {
     fetchExperiences();
@@ -21,10 +26,36 @@ const ExperienceManager = () => {
   const fetchExperiences = async () => {
     try {
       const response = await fetch("/api/experience");
-      if (response.ok) {
-        const data = await response.json();
-        setExperiences(data);
+      if (response.status === 401 || response.status === 403) {
+        // Invalid or expired token — clear and redirect to sign in
+        try { localStorage.removeItem("token"); } catch (e) {}
+        window.location.href = "/SignIn";
+        return;
       }
+
+      if (response.status === 405) {
+        setExperiences([]);
+        return;
+      }
+
+      const data = await response.json();
+      const items = (data?.data || []).map((it) => {
+        // Normalize backend model to UI-friendly shape
+        const start = it.startDate ? new Date(it.startDate) : null;
+        const end = it.endDate ? new Date(it.endDate) : null;
+        const format = (d) => d ? d.toLocaleString("en-US", { month: "short", year: "numeric" }) : null;
+        const period = start ? `${format(start)} - ${it.isCurrent ? "Present" : (end ? format(end) : "")}` : "";
+        return {
+          _id: it._id,
+          jobTitle: it.role,
+          company: it.company,
+          location: it.location,
+          period,
+          description: (it.description || "").split("\n").filter(Boolean),
+          techStack: it.technologies || [],
+        };
+      });
+      setExperiences(items);
     } catch (error) {
       console.error("Error fetching experiences:", error);
     } finally {
@@ -34,12 +65,36 @@ const ExperienceManager = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
     const token = localStorage.getItem("token");
 
+    // Convert UI form into backend model payload
+    const parsePeriod = (periodStr) => {
+      const parts = periodStr.split("-").map((p) => p.trim());
+      const parsePart = (p) => {
+        if (!p) return null;
+        if (/^\d{4}$/.test(p)) return new Date(`${p}-01-01`);
+        const parsed = Date.parse(p);
+        return isNaN(parsed) ? null : new Date(parsed);
+      };
+      const start = parsePart(parts[0]);
+      const rawEnd = parts[1] || "";
+      const isCurrent = /present/i.test(rawEnd) || rawEnd === "";
+      const end = isCurrent ? null : parsePart(rawEnd);
+      return { start, end, isCurrent };
+    };
+
+    const { start, end, isCurrent } = parsePeriod(formData.period || "");
+
     const experienceData = {
-      ...formData,
-      techStack: formData.techStack.split(",").map((tech) => tech.trim()),
-      description: formData.description.split("\n").filter((line) => line.trim()),
+      role: formData.jobTitle,
+      company: formData.company,
+      location: formData.location || "",
+      startDate: start,
+      endDate: end,
+      isCurrent: !!isCurrent,
+      description: (formData.description || "").split("\n").map((l) => l.trim()).filter(Boolean).join("\n"),
+      technologies: (formData.techStack || "").split(",").map((t) => t.trim()).filter(Boolean),
     };
 
     try {
@@ -55,17 +110,52 @@ const ExperienceManager = () => {
         body: JSON.stringify(experienceData),
       });
 
+      const resJson = await response.json().catch(() => null);
+
+      // If server returned 401/403, verify token validity before redirecting
+      if (response.status === 401 || response.status === 403 || (resJson && resJson.success === false && /invalid|expired/i.test(resJson.error || ""))) {
+        const token = localStorage.getItem("token");
+        if (token) {
+          try {
+            const verifyResp = await fetch('/api/auth/verify', { headers: { Authorization: `Bearer ${token}` } });
+            if (verifyResp.ok) {
+              // token actually valid — log and surface server error instead of redirecting
+              console.error('Server rejected request despite valid token:', resJson || response.statusText);
+            } else {
+              // token invalid — clear and redirect
+              try { localStorage.removeItem("token"); } catch (e) {}
+              window.location.href = "/SignIn";
+              return;
+            }
+          } catch (e) {
+            try { localStorage.removeItem("token"); } catch (er) {}
+            window.location.href = "/SignIn";
+            return;
+          }
+        } else {
+          try { localStorage.removeItem("token"); } catch (e) {}
+          window.location.href = "/SignIn";
+          return;
+        }
+      }
+
       if (response.ok) {
-        fetchExperiences();
+        await fetchExperiences();
         resetForm();
+        addToast("Saved successfully", "success");
+      } else {
+        console.error("Save failed:", resJson || response.statusText);
+        addToast("Save failed", "error");
       }
     } catch (error) {
       console.error("Error saving experience:", error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("Are you sure you want to delete this experience?")) return;
+    setSubmitting(true);
 
     const token = localStorage.getItem("token");
     try {
@@ -76,11 +166,42 @@ const ExperienceManager = () => {
         },
       });
 
+      const resJson = await response.json().catch(() => null);
+      if (response.status === 401 || response.status === 403 || (resJson && resJson.success === false && /invalid|expired/i.test(resJson.error || ""))) {
+        const token = localStorage.getItem("token");
+        if (token) {
+          try {
+            const verifyResp = await fetch('/api/auth/verify', { headers: { Authorization: `Bearer ${token}` } });
+            if (verifyResp.ok) {
+              console.error('Server rejected delete despite valid token:', resJson || response.statusText);
+            } else {
+              try { localStorage.removeItem("token"); } catch (e) {}
+              window.location.href = "/SignIn";
+              return;
+            }
+          } catch (e) {
+            try { localStorage.removeItem("token"); } catch (er) {}
+            window.location.href = "/SignIn";
+            return;
+          }
+        } else {
+          try { localStorage.removeItem("token"); } catch (e) {}
+          window.location.href = "/SignIn";
+          return;
+        }
+      }
+
       if (response.ok) {
-        fetchExperiences();
+        await fetchExperiences();
+        addToast("Deleted successfully", "success");
+      } else {
+        console.error("Delete failed:", resJson || response.statusText);
+        addToast("Delete failed", "error");
       }
     } catch (error) {
       console.error("Error deleting experience:", error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -91,8 +212,8 @@ const ExperienceManager = () => {
       company: experience.company,
       location: experience.location,
       period: experience.period,
-      description: experience.description.join("\n"),
-      techStack: experience.techStack.join(", "),
+      description: (experience.description || []).join("\n"),
+      techStack: (experience.techStack || []).join(", "),
     });
   };
 
@@ -109,11 +230,21 @@ const ExperienceManager = () => {
   };
 
   if (loading) {
-    return <div className="text-center py-8">Loading experiences...</div>;
+    return (
+      <div className="flex justify-center items-center py-20">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+      </div>
+    );
   }
 
   return (
-    <div>
+    <div className="relative">
+      {submitting && (
+        <div className="absolute inset-0 bg-gray-900/60 z-50 flex items-center justify-center rounded-lg backdrop-blur-sm">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+        </div>
+      )}
+
       <h2 className="text-2xl font-bold mb-6">Manage Experience</h2>
 
       <form onSubmit={handleSubmit} className="mb-8 bg-gray-700 p-6 rounded-lg">
@@ -265,7 +396,7 @@ const ExperienceManager = () => {
                   Edit
                 </button>
                 <button
-                  onClick={() => handleDelete(experience._id)}
+                  onClick={() => setConfirmState({ open: true, id: experience._id, message: "Are you sure you want to delete this experience?" })}
                   className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-sm rounded transition-colors"
                 >
                   Delete
@@ -275,6 +406,17 @@ const ExperienceManager = () => {
           ))
         )}
       </div>
+      <ConfirmModal
+        open={confirmState.open}
+        title="Delete Experience"
+        message={confirmState.message}
+        onCancel={() => setConfirmState({ open: false, id: null, message: "" })}
+        onConfirm={() => {
+          const id = confirmState.id;
+          setConfirmState({ open: false, id: null, message: "" });
+          handleDelete(id);
+        }}
+      />
     </div>
   );
 };

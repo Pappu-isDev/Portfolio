@@ -1,10 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useToast } from "../../context/ToastContext";
+import ConfirmModal from "../ui/ConfirmModal";
 
 const ProjectsManager = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const [editing, setEditing] = useState(null);
+  const [confirmState, setConfirmState] = useState({ open: false, id: null, message: "" });
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -23,7 +27,7 @@ const ProjectsManager = () => {
       const response = await fetch("/api/projects");
       if (response.ok) {
         const data = await response.json();
-        setProjects(data);
+        setProjects(data.data || []);
       }
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -31,14 +35,21 @@ const ProjectsManager = () => {
       setLoading(false);
     }
   };
+  const { addToast } = useToast();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
     const token = localStorage.getItem("token");
 
+    // Map frontend field names to backend model fields
     const projectData = {
-      ...formData,
-      technologies: formData.technologies.split(",").map((tech) => tech.trim()),
+      title: formData.title,
+      description: formData.description,
+      image: formData.imageUrl, // backend expects `image`
+      liveUrl: formData.liveUrl,
+      githubUrl: formData.githubUrl,
+      tags: formData.technologies.split(",").map((tech) => tech.trim()), // backend expects `tags`
     };
 
     try {
@@ -55,16 +66,21 @@ const ProjectsManager = () => {
       });
 
       if (response.ok) {
-        fetchProjects();
+        await fetchProjects();
         resetForm();
+        addToast("Saved successfully", "success");
+      } else {
+        addToast("Save failed", "error");
       }
     } catch (error) {
       console.error("Error saving project:", error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("Are you sure you want to delete this project?")) return;
+    setSubmitting(true);
 
     const token = localStorage.getItem("token");
     try {
@@ -76,10 +92,13 @@ const ProjectsManager = () => {
       });
 
       if (response.ok) {
-        fetchProjects();
+        await fetchProjects();
+        addToast("Deleted successfully", "success");
       }
     } catch (error) {
       console.error("Error deleting project:", error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -88,10 +107,10 @@ const ProjectsManager = () => {
     setFormData({
       title: project.title,
       description: project.description,
-      technologies: project.technologies.join(", "),
+      technologies: (project.tags || []).join(", "),
       githubUrl: project.githubUrl || "",
       liveUrl: project.liveUrl || "",
-      imageUrl: project.imageUrl || "",
+      imageUrl: project.image || "",
     });
   };
 
@@ -108,11 +127,21 @@ const ProjectsManager = () => {
   };
 
   if (loading) {
-    return <div className="text-center py-8">Loading projects...</div>;
+    return (
+      <div className="flex justify-center items-center py-20">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+      </div>
+    );
   }
 
   return (
-    <div>
+    <div className="relative">
+      {submitting && (
+        <div className="absolute inset-0 bg-gray-900/60 z-50 flex items-center justify-center rounded-lg backdrop-blur-sm">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+        </div>
+      )}
+
       <h2 className="text-2xl font-bold mb-6">Manage Projects</h2>
 
       <form onSubmit={handleSubmit} className="mb-8 bg-gray-700 p-6 rounded-lg">
@@ -240,7 +269,7 @@ const ProjectsManager = () => {
                   {project.description}
                 </p>
                 <div className="flex flex-wrap gap-2 mt-2">
-                  {project.technologies.map((tech, index) => (
+                  {(project.tags || project.technologies || []).map((tech, index) => (
                     <span
                       key={index}
                       className="px-2 py-1 bg-indigo-600 text-xs rounded"
@@ -258,7 +287,7 @@ const ProjectsManager = () => {
                   Edit
                 </button>
                 <button
-                  onClick={() => handleDelete(project._id)}
+                  onClick={() => setConfirmState({ open: true, id: project._id, message: "Are you sure you want to delete this project?" })}
                   className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-sm rounded transition-colors"
                 >
                   Delete
@@ -268,6 +297,17 @@ const ProjectsManager = () => {
           ))
         )}
       </div>
+      <ConfirmModal
+        open={confirmState.open}
+        title="Delete Project"
+        message={confirmState.message}
+        onCancel={() => setConfirmState({ open: false, id: null, message: "" })}
+        onConfirm={() => {
+          const id = confirmState.id;
+          setConfirmState({ open: false, id: null, message: "" });
+          handleDelete(id);
+        }}
+      />
     </div>
   );
 };

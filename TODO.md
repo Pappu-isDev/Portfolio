@@ -1,14 +1,19 @@
-# TODO: Connect UI with Backend Authentication
+# Portfolio Management Feature Implementation
 
-## Authentication Integration Tasks
+## Completed Tasks
+- [x] Create SkillsManager component for CRUD operations on skills
+- [x] Create PortfolioManager modal component with tabs for Skills, Projects, Experience
+- [x] Update Navbar to include "Manage Portfolio" button visible only when logged in
+- [x] Add modal state management to Navbar for opening/closing portfolio manager
 
-- [x] 1. Update SignUp page to use AuthContext.register and redirect to OTP verification after successful registration.
-- [x] 2. Create a new OTP verification page that calls the verify API.
-- [x] 3. Update SignIn page to use AuthContext.login.
-- [x] 4. Add forget password API (send reset OTP).
-- [x] 5. Create forget password UI.
-- [x] 6. Update Navbar to show login/logout buttons based on auth state.
-- [x] 7. Fix routing to use Next.js routing consistently.
-- [x] 8. Ensure other components (Skills, Experience) are connected if needed.
-- [x] 9. Make sign up and sign in process visible only for admins (entire portfolio admin-only)
-- [x] 10. Conduct thorough testing of all auth flows and admin restrictions
+## Pending Tasks
+- [ ] Test the "Manage Portfolio" button visibility based on login status
+- [ ] Test CRUD operations in the portfolio manager modal
+- [ ] Ensure proper authorization (logged-in users can manage their portfolio)
+- [ ] Add mobile support for the Manage Portfolio button if needed
+
+## Notes
+- The "Manage Portfolio" button appears only when user is logged in (not just admins)
+- The portfolio manager opens as a modal with tabs for Skills, Projects, and Experience
+- SkillsManager assumes skill fields: name, category, level
+- All components use the existing API endpoints with proper authorization headers

@@ -36,16 +36,13 @@ export async function middleware(request) {
       }
 
       try {
-        // 3. Verify the token using your JWT_SECRET
-        const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+        // 3. Verify the token using the project's JWT secret
+        // Use `JWT_Secret` to match the env variable used elsewhere in the codebase
+        const secret = new TextEncoder().encode(process.env.JWT_Secret);
         const { payload } = await jwtVerify(token, secret);
 
-        // Check if user is admin for write operations
-        if (payload.role !== 'admin') {
-          return NextResponse.json({ success: false, error: "Admin access required" }, { status: 403 });
-        }
-
-        return NextResponse.next(); // Token is valid and user is admin
+        // Allow logged-in users to manage their portfolio (not just admins)
+        return NextResponse.next(); // Token is valid, user is authenticated
       } catch (error) {
         return NextResponse.json({ success: false, error: "Invalid or expired token" }, { status: 403 });
       }
@@ -63,8 +60,8 @@ export async function middleware(request) {
     }
 
     try {
-      const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-      const { payload } = await jwtVerify(token, secret);
+    const secret = new TextEncoder().encode(process.env.JWT_Secret);
+    const { payload } = await jwtVerify(token, secret);
 
       // Check if user is admin
       if (payload.role !== 'admin') {

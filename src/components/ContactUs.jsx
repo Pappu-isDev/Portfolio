@@ -2,6 +2,7 @@
 import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaPaperPlane } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useState, FormEvent } from "react";
+import { useToast } from "@/context/ToastContext";
 import Link from "next/link";
 
 import { useGSAP } from "@gsap/react";
@@ -146,25 +147,43 @@ const ContactUs = () => {
     );
   }, []);
 
- const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setStatus('Sending...');
+ const handleSubmit = async (e) => {
+   e.preventDefault();
+   setIsSubmitting(true);
+   setStatus("Sending...");
+   const { name, email, subject, message } = formData;
 
-    // Simulate an async submission delay
-    setTimeout(() => {
+    try {
+      const resp = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, subject, message }),
+      });
+
+      const json = await resp.json().catch(() => null);
+      if (resp.ok) {
+        setStatus("Message Sent! Thank you.");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+        addToast("Message sent — I will get back to you soon!", "success");
+      } else {
+        const err = (json && json.error) || resp.statusText || "Send failed";
+        setStatus(`Error: ${err}`);
+        addToast(`Failed to send message: ${err}`, "error");
+      }
+    } catch (error) {
+      setStatus("Network error");
+      addToast("Network error while sending message", "error");
+    } finally {
       setIsSubmitting(false);
-      setStatus('Message Sent! Thank you.');
-
-      // Clear form inputs
-      setFormData({ name: '', email: '', message: '' });
-    }, 2000);
+    }
   };
-const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
     name: '',
     email: '',
+    subject: '',
     message: '',
   });
+  const { addToast } = useToast();
 
   const handleManagePortfolio = () => {
     if (!user) {
@@ -276,6 +295,23 @@ const [formData, setFormData] = useState({
                            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
                            placeholder-gray-500 transition-all duration-300"
                   required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="subject" className="block mb-3 text-sm font-medium text-gray-400">
+                  Subject
+                </label>
+                <input
+                  id="subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  type="text"
+                  placeholder="Subject (optional)"
+                  className="form-input w-full p-4 rounded-xl bg-gray-700/50 border border-gray-600 text-white
+                           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                           placeholder-gray-500 transition-all duration-300"
                 />
               </div>
 
