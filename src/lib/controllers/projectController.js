@@ -25,7 +25,12 @@ export const projectController = {
       await connectDB();
       // Returns plain objects for better performance
       const projects = await Project.find({}).sort({ createdAt: -1 }).lean();
-      return NextResponse.json({ success: true, count: projects.length, data: projects || [] }, { status: 200 });
+      // Ensure _id is properly converted to string for frontend use
+      const formattedProjects = projects.map(project => ({
+        ...project,
+        _id: project._id.toString()
+      }));
+      return NextResponse.json({ success: true, count: formattedProjects.length, data: formattedProjects || [] }, { status: 200 });
     } catch (err) { return this.handleError(err); }
   },
 

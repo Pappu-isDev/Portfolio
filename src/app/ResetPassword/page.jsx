@@ -117,12 +117,11 @@ const ResetPasswordContent = () => {
             <label className="block text-sm text-gray-400 mb-1">
               New Password
             </label>
-            <input
-              type="password"
+            <PasswordInput
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
-              className="w-full px-4 py-2 rounded-md bg-[#0f172a] text-gray-200 border border-gray-700 focus:outline-none focus:border-indigo-500"
+              className="bg-[#0f172a] text-gray-200 border-gray-700 focus:border-indigo-500"
               placeholder="Enter new password"
             />
           </div>
@@ -131,12 +130,11 @@ const ResetPasswordContent = () => {
             <label className="block text-sm text-gray-400 mb-1">
               Confirm Password
             </label>
-            <input
-              type="password"
+            <PasswordInput
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              className="w-full px-4 py-2 rounded-md bg-[#0f172a] text-gray-200 border border-gray-700 focus:outline-none focus:border-indigo-500"
+              className="bg-[#0f172a] text-gray-200 border-gray-700 focus:border-indigo-500"
               placeholder="Confirm new password"
             />
           </div>

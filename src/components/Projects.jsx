@@ -63,9 +63,11 @@ export default function ProjectsPage() {
     return ["All", ...Array.from(allTags).sort()];
   }, [projects]);
 
-  const filtered = projects.filter((p) =>
-    activeTag === "All" ? true : p.tags.includes(activeTag)
-  );
+  const filtered = projects
+    .filter((p) =>
+      activeTag === "All" ? true : p.tags && p.tags.includes(activeTag)
+    )
+    .sort((a, b) => (b.likes || 0) - (a.likes || 0)); // Sort by likes descending
 
   return (
     <section className="min-h-screen py-16 px-6 bg-gradient-to-b from-gray-900 via-black to-gray-900 text-gray-200">
@@ -163,7 +165,7 @@ export default function ProjectsPage() {
 
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex gap-2 flex-wrap">
-                      {project.tags.map((t) => (
+                      {project.tags && Array.isArray(project.tags) && project.tags.map((t) => (
                         <span
                           key={t}
                           className="text-xs px-2 py-1 rounded bg-gray-800 text-gray-300/90 border border-gray-700"
@@ -173,16 +175,14 @@ export default function ProjectsPage() {
                       ))}
                     </div>
 
-                    {/* Like Button - Only for Admin */}
-                    {isAdmin() && (
-                      <button
-                        onClick={() => handleLike(project._id)}
-                        className="flex items-center gap-1 px-2 py-1 rounded-full bg-red-600/20 hover:bg-red-600/30 border border-red-600/40 text-red-300 text-xs font-medium transition-colors"
-                      >
-                        <FiHeart size={14} />
-                        {project.likes || 0}
-                      </button>
-                    )}
+                    {/* Like Button - Visible to all visitors */}
+                    <button
+                      onClick={() => handleLike(project._id)}
+                      className="flex items-center gap-1 px-2 py-1 rounded-full bg-red-600/20 hover:bg-red-600/30 border border-red-600/40 text-red-300 text-xs font-medium transition-colors"
+                    >
+                      <FiHeart size={14} />
+                      {project.likes || 0}
+                    </button>
                   </div>
 
                   <div className="flex items-center gap-3">

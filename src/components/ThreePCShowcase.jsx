@@ -413,31 +413,24 @@ function SceneContent() {
 export default function ThreePCShowcase() {
     return (
         <div className="w-full h-screen flex items-center justify-center relative overflow-hidden">
-            {/* <div className="absolute inset-0 opacity-20">
-                <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-500 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute top-3/4 right-1/4 w-40 h-40 bg-purple-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
-                <div className="absolute bottom-1/4 left-1/2 w-28 h-28 bg-cyan-500 rounded-full blur-3xl animate-pulse delay-500"></div>
-            </div> */}
-            
-            <div className="relative lg:w-150 lg:h-80 h-55  p-2  rounded-2xl overflow-auto">
-                <Canvas 
-                    gl={{ 
+            <div className="relative lg:w-150 lg:h-80 h-55 p-2 rounded-2xl overflow-auto">
+                <Canvas
+                    gl={{
                         alpha: true,
                         antialias: true,
                         powerPreference: "high-performance"
-                    }} 
-                    shadows 
+                    }}
+                    shadows
                     camera={{ position: [0, 0.5, 9], fov: 45 }}
-                   
                 >
                     <PerspectiveCamera makeDefault position={[0, 0.5, 9]} fov={45} />
-                    
+
                     <ambientLight intensity={0.6} color="#555555" />
-                    
-                    <directionalLight 
-                        position={[5, 8, 5]} 
-                        intensity={1.2} 
-                        color="#ffccaa" 
+
+                    <directionalLight
+                        position={[5, 8, 5]}
+                        intensity={1.2}
+                        color="#ffccaa"
                         castShadow
                         shadow-mapSize-width={2048}
                         shadow-mapSize-height={2048}
@@ -447,7 +440,7 @@ export default function ThreePCShowcase() {
                         shadow-camera-top={10}
                         shadow-camera-bottom={-10}
                     />
-                    
+
                     <directionalLight position={[-5, 5, -5]} intensity={0.5} color="#aaccff" />
                     <pointLight position={[0, 5, 0]} intensity={0.8} color="#ffffff" distance={10} />
 
@@ -457,13 +450,13 @@ export default function ThreePCShowcase() {
 
                     <Suspense fallback={
                         <Html center>
-                            <div className="loader"></div>
+                            <div className="text-white text-xl">Loading 3D Scene...</div>
                         </Html>
                     }>
                         <SceneContent />
                     </Suspense>
-                    
-                    <OrbitControls 
+
+                    <OrbitControls
                         target={[0, 0.5, 0]}
                         maxPolarAngle={Math.PI / 2.1}
                         minPolarAngle={Math.PI / 6}
@@ -475,12 +468,12 @@ export default function ThreePCShowcase() {
                         autoRotateSpeed={-8}
                     />
                 </Canvas>
-                
-                {/* <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center">
+
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center">
                     <div className="bg-black/60 backdrop-blur-sm text-white/80 text-sm px-4 py-2 rounded-full border border-white/20">
                         🖱️ Drag to rotate • 🔍 Scroll to zoom • 🔄 Auto-rotating
                     </div>
-                </div> */}
+                </div>
             </div>
         </div>
     );

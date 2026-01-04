@@ -22,7 +22,7 @@ const Intro = () => {
   const [showWelcomeToast, setShowWelcomeToast] = useState(false);
   const [showFlipToast, setShowFlipToast] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
-  const [showModel, setShowModel] = useState(false);
+  const [showModel, setShowModel] = useState(true); // Temporarily set to true for testing
   const [isClient, setIsClient] = useState(false);
 
   useGSAP(() => {
@@ -368,14 +368,7 @@ const Intro = () => {
           animate={{ opacity: showModel ? 1 : 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          {/* Temporarily disabled ThreePCShowcase due to React Three Fiber compatibility issues */}
-          <div className="w-full h-96 bg-gray-900 flex items-center justify-center text-white rounded-lg border border-gray-700">
-            <div className="text-center">
-              <div className="text-2xl mb-2">🚧</div>
-              <div className="text-lg font-semibold">3D Scene Coming Soon</div>
-              <div className="text-sm text-gray-400 mt-1">Working on compatibility fixes</div>
-            </div>
-          </div>
+          <ThreePCShowcase />
         </motion.div>
       )}
 

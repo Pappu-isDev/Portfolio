@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import PasswordInput from "@/components/ui/PasswordInput";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -84,17 +85,15 @@ const Signin = () => {
               </div>
             </div>
             <div className="mt-2">
-              <input
+              <PasswordInput
                 id="password"
                 name="password"
-                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 autoComplete="current-password"
                 placeholder="Enter your password"
                 aria-label="Password"
-                className="block w-full rounded-md bg-gray-800 px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
           </div>

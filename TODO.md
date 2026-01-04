@@ -1,15 +1,18 @@
-# Contact Form Improvements
+# Portfolio Project Implementation Tasks
 
-## Tasks
-- [x] Add Gmail validation in contactController.js to prevent spam emails
-- [x] Move toast notifications lower in ToastContext.jsx to avoid navbar overlap
-- [x] Implement email verification system to ensure Gmail accounts exist
-- [x] Create /api/contact route to handle contact form submissions
+## 1. Password Visibility Toggle
+- [x] Create reusable PasswordInput component with eye icon
+- [x] Update SignIn page to use PasswordInput component
+- [x] Update ResetPassword page for newPassword and confirmPassword fields
+- [x] Check and update SignUp page if it exists
 
-## Details
-- Modify contact controller to check if email ends with @gmail.com
-- Adjust toast position from top-6 to a lower value (e.g., top-20) to clear navbar
-- Added email verification flow: users receive verification email and must click link to send message
-- Created /api/contact/verify endpoint to handle verification links
-- Updated ContactUs component to handle verification responses
-- Created /api/contact route to properly handle form submissions
+## 2. Like Button on Admin Side
+- [x] Implement like API route functionality
+- [x] Add like button to ProjectsManager component
+- [x] Update Project model if needed to track likes
+
+## 3. MongoDB Atlas Production Issue
+- [x] Check environment variables setup
+- [x] Ensure proper MongoDB Atlas connection string
+- [x] Add error handling for connection failures
+- [x] Check Vercel deployment configuration

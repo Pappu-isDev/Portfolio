@@ -127,6 +127,27 @@ const ProjectsManager = () => {
     });
   };
 
+  const handleLike = async (projectId) => {
+    try {
+      const response = await fetch(`/api/projects/${projectId}/like`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        await fetchProjects(); // Refresh the projects list to show updated likes
+        addToast("Like updated successfully", "success");
+      } else {
+        addToast("Failed to update like", "error");
+      }
+    } catch (error) {
+      console.error("Error updating like:", error);
+      addToast("Error updating like", "error");
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-20">

@@ -17,6 +17,11 @@ export async function middleware(request) {
     // Auth APIs should be accessible without authentication
     const authAPIs = ["/api/auth/register", "/api/auth/login", "/api/auth/verify", "/api/auth/forgot-password", "/api/auth/reset-password", "/api/contact"];
 
+    // Allow like endpoint for all visitors (no authentication required)
+    if (pathname.match(/^\/api\/projects\/[^\/]+\/like$/)) {
+      return NextResponse.next(); // Allow like API without authentication
+    }
+
     if (authAPIs.includes(pathname)) {
       return NextResponse.next(); // Allow auth APIs without authentication
     }
