@@ -423,16 +423,7 @@ const SkillsPage = () => {
           {skills.length} skill{skills.length !== 1 ? 's' : ''} displayed
         </p>
         
-        {skills.length > 0 && (
-          <motion.button
-            onClick={() => setSkills([])}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 rounded-lg text-red-300 text-sm font-medium transition-colors"
-          >
-            Clear All
-          </motion.button>
-        )}
+        {/* Clear All button removed per request */}
       </motion.div>
 
       {/* Empty State */}

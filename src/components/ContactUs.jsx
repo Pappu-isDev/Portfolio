@@ -376,15 +376,7 @@ const ContactUs = () => {
             </Link>
           </p>
         </div>
-        <div>
-          <button
-            className="border p-2 rounded-md cursor-pointer hover:bg-blue-600 hover:text-white transition-colors"
-            onClick={handleManagePortfolio}
-            disabled={loading}
-          >
-            {loading ? 'Loading...' : 'Manage Portfolio'}
-          </button>
-        </div>
+        {/* Manage Portfolio button removed per request */}
       </div>
     </section>
   );

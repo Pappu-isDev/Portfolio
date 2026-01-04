@@ -20,7 +20,15 @@ const myName = process.env.NEXT_PUBLIC_NAME;
 export const metadata = {
   title: `${myName} Portfolio`,
   description: "This is my portfolio website",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
+
+
+
 
 export default function RootLayout({ children }) {
   return (

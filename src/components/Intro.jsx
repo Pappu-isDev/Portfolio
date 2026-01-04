@@ -77,6 +77,16 @@ const Intro = () => {
     setTimeout(() => setShowFlipToast(false), 2000);
   };
 
+  const handleGoToContact = () => {
+    try {
+      const el = document.getElementById("contact");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      else window.location.href = '/#contact';
+    } catch (e) {
+      window.location.href = '/#contact';
+    }
+  };
+
   return (
     <>
       <div className="relative w-full h-full lg:h-screen py-3 overflow-hidden">
@@ -173,7 +183,7 @@ const Intro = () => {
                   </div>
 
                   <div
-                    className="relative w-58 md:w-83 lg:w-100 h-79 md:h-[27rem] lg:h-[25rem] cursor-pointer transition-transform duration-500 transform-style preserve-3d hover:rotate-y-180 z-10"
+                    className="relative w-58 md:w-83 lg:w-100 h-79 md:h-[27rem] lg:h-[25rem] cursor-pointer transition-transform duration-500 transform-style preserve-3d hover:rotate-y-180 z-10 group"
                     onMouseEnter={handleCardHover}
                   >
                     {/* Front Side */}
@@ -199,7 +209,12 @@ const Intro = () => {
                         I am a passionate technophile.
                       </p>
                       <div className="mt-4 sm:mt-6 lg:mt-8 text-xs sm:text-sm lg:text-base text-white text-center">
-                        Connect with me!
+                        <button
+                          onClick={handleGoToContact}
+                          className="px-4 py-2 bg-gradient-to-r from-green-400 to-green-600 text-black font-semibold rounded-full shadow-md hover:brightness-95 transition-all opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 duration-200"
+                        >
+                          Connect with me
+                        </button>
                       </div>
                     </div>
                   </div>
