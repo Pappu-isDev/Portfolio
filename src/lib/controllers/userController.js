@@ -104,9 +104,10 @@ export const userController = {
       }
 
       // Generate JWT Token
+      const jwtSecret = process.env.JWT_SECRET || process.env.JWT_Secret;
       const token = jwt.sign(
         { id: user._id, role: user.role },
-        process.env.JWT_Secret,
+        jwtSecret,
         { expiresIn: "1d" }
       );
 
@@ -117,7 +118,8 @@ export const userController = {
       }, { status: 200 });
 
     } catch (error) {
-      return NextResponse.json({ success: false, error: "Login failed" }, { status: 500 });
+      // Return the real error message to aid debugging (can be sanitized later)
+      return NextResponse.json({ success: false, error: error.message || "Login failed" }, { status: 500 });
     }
   },
 

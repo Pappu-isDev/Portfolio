@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useToast } from "../../context/ToastContext";
 import ConfirmModal from "../ui/ConfirmModal";
+import ImageUpload from "../ui/ImageUpload";
 
 const ProjectsManager = () => {
   const [projects, setProjects] = useState([]);
@@ -205,16 +206,10 @@ const ProjectsManager = () => {
           </div>
 
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Image URL
-            </label>
-            <input
-              type="url"
+            <ImageUpload
+              label="Project Image"
               value={formData.imageUrl}
-              onChange={(e) =>
-                setFormData({ ...formData, imageUrl: e.target.value })
-              }
-              className="w-full px-3 py-2 bg-gray-600 text-white rounded-md border border-gray-500 focus:outline-none focus:border-indigo-500"
+              onChange={(url) => setFormData({ ...formData, imageUrl: url })}
             />
           </div>
 

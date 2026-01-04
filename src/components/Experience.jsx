@@ -144,12 +144,28 @@ const Experience = () => {
       // - { success: true, data: [...] }
       // - [...] (direct array)
       // - { data: [...] }
-      let list = [];
+      let rawList = [];
       if (data) {
-        if (data.success && Array.isArray(data.data)) list = data.data;
-        else if (Array.isArray(data)) list = data;
-        else if (Array.isArray(data.data)) list = data.data;
+        if (data.success && Array.isArray(data.data)) rawList = data.data;
+        else if (Array.isArray(data)) rawList = data;
+        else if (Array.isArray(data.data)) rawList = data.data;
       }
+      // Normalize backend model to UI-friendly shape
+      const list = rawList.map((exp) => {
+        const start = exp.startDate ? new Date(exp.startDate) : null;
+        const end = exp.endDate ? new Date(exp.endDate) : null;
+        const format = (d) => d ? d.toLocaleString("en-US", { month: "short", year: "numeric" }) : null;
+        const period = start ? `${format(start)} - ${exp.isCurrent ? "Present" : (end ? format(end) : "")}` : "";
+        return {
+          id: exp._id, // Use _id as id for key
+          title: exp.role,
+          company: exp.company,
+          location: exp.location,
+          period,
+          description: (exp.description || "").split("\n").filter(Boolean), // Split into array
+          techStack: exp.technologies || [],
+        };
+      });
       setExperiences(list);
       setError(null);
     } catch (err) {
