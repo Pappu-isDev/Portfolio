@@ -1,8 +1,8 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const ResetPassword = () => {
+const ResetPasswordContent = () => {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -169,6 +169,14 @@ const ResetPassword = () => {
         </p>
       </div>
     </div>
+  );
+};
+
+const ResetPassword = () => {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#0f172a] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
+      <ResetPasswordContent />
+    </Suspense>
   );
 };
 

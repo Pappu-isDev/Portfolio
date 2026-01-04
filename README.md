@@ -29,6 +29,30 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Environment Variables
+
+Create a `.env.local` file in the root directory and add the following variables:
+
+```env
+# Database
+MONGODB_URI=your_mongodb_connection_string
+
+# Authentication
+JWT_SECRET=your_jwt_secret_key
+
+# Email Configuration
+MAIL_USER=your_gmail_address@gmail.com
+MAIL_PASS=your_gmail_app_password
+
+# Base URL for production (required for contact form verification)
+NEXT_PUBLIC_BASE_URL=https://yourdomain.com
+```
+
+### Important Notes:
+- For the contact form verification to work globally, you **must** set `NEXT_PUBLIC_BASE_URL` to your production domain (e.g., `https://yourportfolio.vercel.app`)
+- Without this, verification links will default to `http://localhost:3000` and won't work in production
+- Get Gmail app password from: https://support.google.com/accounts/answer/185833
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.

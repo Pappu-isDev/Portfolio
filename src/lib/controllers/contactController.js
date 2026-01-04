@@ -31,7 +31,7 @@ export const contactController = {
       // If no token provided, send verification email
       if (!token) {
         const verificationToken = crypto.randomBytes(32).toString('hex');
-        const verificationUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001'}/api/contact/verify?token=${verificationToken}&email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}&subject=${encodeURIComponent(subject || '')}&message=${encodeURIComponent(message)}`;
+        const verificationUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/contact/verify?token=${verificationToken}&email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}&subject=${encodeURIComponent(subject || '')}&message=${encodeURIComponent(message)}`;
 
         // Store verification data temporarily (expires in 10 minutes)
         verificationTokens.set(verificationToken, {
