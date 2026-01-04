@@ -363,7 +363,7 @@ const Intro = () => {
       {isClient && (
         <motion.div
           ref={modelRef}
-          className="absolute lg:top-40 md:top-70 top-110 lg:left-85 md:left-60 left-5 pt-20 z-9999"
+          className="absolute inset-0 flex items-center justify-center z-9999"
           initial={{ opacity: 0 }}
           animate={{ opacity: showModel ? 1 : 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}

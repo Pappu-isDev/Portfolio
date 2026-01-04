@@ -1,13 +1,15 @@
 "use client";
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const VerifyOTPContent = () => {
+const VerifyOTP = () => {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [countdown, setCountdown] = useState(0);
+  const [resendDisabled, setResendDisabled] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -18,6 +20,15 @@ const VerifyOTPContent = () => {
     }
   }, [searchParams]);
 
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    } else {
+      setResendDisabled(false);
+    }
+  }, [countdown]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -25,21 +36,35 @@ const VerifyOTPContent = () => {
     setSuccess("");
 
     try {
+      // Check password reset flow
+      const isPasswordReset =
+        searchParams.get("reset") === "true" ||
+        localStorage.getItem("passwordResetFlow") === "true";
+
       const response = await fetch("/api/auth/verify", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, otp }),
+        body: JSON.stringify({ email, otp, isPasswordReset }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setSuccess("Account verified successfully! Redirecting to login...");
-        setTimeout(() => {
-          router.push("/SignIn");
-        }, 2000);
+        if (isPasswordReset) {
+          setSuccess("OTP verified successfully! Redirecting to reset password...");
+          localStorage.removeItem("passwordResetFlow");
+
+          setTimeout(() => {
+            router.push(`/ResetPassword?email=${encodeURIComponent(email)}`);
+          }, 2000);
+        } else {
+          setSuccess("Account verified successfully! Redirecting to login...");
+          setTimeout(() => {
+            router.push("/signin");
+          }, 2000);
+        }
       } else {
         setError(data.error || "Verification failed");
       }
@@ -50,6 +75,41 @@ const VerifyOTPContent = () => {
     }
   };
 
+  const handleResend = async () => {
+    setResendDisabled(true);
+    setCountdown(60); // 60 seconds countdown
+    setError("");
+    setSuccess("");
+
+    try {
+      const isPasswordReset =
+        searchParams.get("reset") === "true" ||
+        localStorage.getItem("passwordResetFlow") === "true";
+
+      const response = await fetch("/api/auth/resend-otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, isPasswordReset }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccess("OTP resent successfully! Check your email.");
+      } else {
+        setError(data.error || "Failed to resend OTP");
+        setResendDisabled(false);
+        setCountdown(0);
+      }
+    } catch (error) {
+      setError("Network error. Please try again.");
+      setResendDisabled(false);
+      setCountdown(0);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#0f172a] flex flex-col justify-center items-center px-4">
       {/* Logo */}
@@ -57,7 +117,7 @@ const VerifyOTPContent = () => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
-          viewBox="0 0 24 24"
+          viewBox="0 24 24"
           strokeWidth="1.5"
           stroke="#6366f1"
           className="w-10 h-10"
@@ -72,7 +132,7 @@ const VerifyOTPContent = () => {
 
       <div className="bg-[#1e293b] p-8 rounded-2xl w-full max-w-md shadow-lg">
         <h2 className="text-2xl font-semibold text-white text-center mb-6">
-          Verify Your Email
+          Verify OTP
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -125,22 +185,15 @@ const VerifyOTPContent = () => {
         <p className="text-sm text-gray-400 text-center mt-6">
           Didn't receive OTP?{" "}
           <button
-            onClick={() => router.push("/SignUp")}
-            className="text-indigo-400 hover:underline"
+            onClick={handleResend}
+            disabled={resendDisabled}
+            className={`hover:underline ${resendDisabled ? 'text-gray-500 cursor-not-allowed' : 'text-indigo-400'}`}
           >
-            Try registering again
+            {resendDisabled ? `Resend in ${countdown}s` : "Resend"}
           </button>
         </p>
       </div>
     </div>
-  );
-};
-
-const VerifyOTP = () => {
-  return (
-    <Suspense fallback={<div className="min-h-screen bg-[#0f172a] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
-      <VerifyOTPContent />
-    </Suspense>
   );
 };
 

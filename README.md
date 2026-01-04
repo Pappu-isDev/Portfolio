@@ -14,7 +14,7 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
@@ -50,7 +50,7 @@ NEXT_PUBLIC_BASE_URL=https://yourdomain.com
 
 ### Important Notes:
 - For the contact form verification to work globally, you **must** set `NEXT_PUBLIC_BASE_URL` to your production domain (e.g., `https://yourportfolio.vercel.app`)
-- Without this, verification links will default to `http://localhost:3000` and won't work in production
+- Without this, verification links will default to `http://localhost:3001` and won't work in production
 - Get Gmail app password from: https://support.google.com/accounts/answer/185833
 
 ## Deploy on Vercel

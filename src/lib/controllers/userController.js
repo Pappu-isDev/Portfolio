@@ -58,24 +58,41 @@ export const userController = {
   async verifyOTP(req) {
     try {
       await connectDB();
-      const { email, otp } = await req.json();
+      const { email, otp, isPasswordReset } = await req.json();
 
-      const user = await User.findOne({ 
-        email, 
-        otp, 
-        otpExpires: { $gt: Date.now() } 
-      });
+      let user;
+      if (isPasswordReset) {
+        // For password reset verification
+        user = await User.findOne({
+          email,
+          resetOtp: otp,
+          resetOtpExpires: { $gt: Date.now() }
+        });
+      } else {
+        // For account verification
+        user = await User.findOne({
+          email,
+          otp,
+          otpExpires: { $gt: Date.now() }
+        });
+      }
 
       if (!user) {
         return NextResponse.json({ success: false, error: "Invalid or expired OTP" }, { status: 400 });
       }
 
-      user.isVerified = true;
-      user.otp = null;
-      user.otpExpires = null;
-      await user.save();
+      if (isPasswordReset) {
+        // For password reset, just verify the OTP is valid (don't clear it yet)
+        return NextResponse.json({ success: true, message: "OTP verified successfully" }, { status: 200 });
+      } else {
+        // For account verification, mark as verified and clear OTP
+        user.isVerified = true;
+        user.otp = null;
+        user.otpExpires = null;
+        await user.save();
 
-      return NextResponse.json({ success: true, message: "Account verified successfully" }, { status: 200 });
+        return NextResponse.json({ success: true, message: "Account verified successfully" }, { status: 200 });
+      }
     } catch (error) {
       return NextResponse.json({ success: false, error: "Verification failed" }, { status: 500 });
     }

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import PasswordInput from "@/components/ui/PasswordInput";
 
 const ResetPasswordContent = () => {
   const [email, setEmail] = useState("");
@@ -46,7 +47,7 @@ const ResetPasswordContent = () => {
       if (response.ok) {
         setSuccess("Password reset successfully! Redirecting to login...");
         setTimeout(() => {
-          router.push("/SignIn");
+          router.push("/signin");
         }, 2000);
       } else {
         setError(data.error || "Password reset failed");

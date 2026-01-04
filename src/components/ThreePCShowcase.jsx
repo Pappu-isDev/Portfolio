@@ -412,8 +412,8 @@ function SceneContent() {
 
 export default function ThreePCShowcase() {
     return (
-        <div className="w-full h-screen flex items-center justify-center relative overflow-hidden">
-            <div className="relative lg:w-150 lg:h-80 h-55 p-2 rounded-2xl overflow-auto">
+        <div className="w-full h-full relative overflow-hidden px-4">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-sm sm:max-w-md md:max-w-xl lg:max-w-3xl xl:max-w-5xl h-64 sm:h-72 md:h-80 lg:h-96 xl:h-[28rem] p-2 rounded-2xl overflow-auto">
                 <Canvas
                     gl={{
                         alpha: true,
@@ -421,9 +421,9 @@ export default function ThreePCShowcase() {
                         powerPreference: "high-performance"
                     }}
                     shadows
-                    camera={{ position: [0, 0.5, 9], fov: 45 }}
+                    camera={{ position: [0, 0.5, 11], fov: 45 }}
                 >
-                    <PerspectiveCamera makeDefault position={[0, 0.5, 9]} fov={45} />
+                    <PerspectiveCamera makeDefault position={[0, 0.5, 11]} fov={45} />
 
                     <ambientLight intensity={0.6} color="#555555" />
 
@@ -460,12 +460,12 @@ export default function ThreePCShowcase() {
                         target={[0, 0.5, 0]}
                         maxPolarAngle={Math.PI / 2.1}
                         minPolarAngle={Math.PI / 6}
-                        maxDistance={12}
-                        minDistance={5}
+                        maxDistance={15}
+                        minDistance={8}
                         enablePan={false}
                         enableRotate={true}
                         autoRotate={true}
-                        autoRotateSpeed={-8}
+                        autoRotateSpeed={-4}
                     />
                 </Canvas>
 
