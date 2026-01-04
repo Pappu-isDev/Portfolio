@@ -1,10 +1,15 @@
 "use client";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap/all";
-import React, { useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef, Suspense} from "react";
 import { ReactTyped } from "react-typed";
-import ThreePCShowcase from "./ThreePCShowcase";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
+
+const ThreePCShowcase = dynamic(() => import("./ThreePCShowcase"), {
+  ssr: false,
+  loading: () => <div className="w-full h-screen flex items-center justify-center"><div className="text-white">Loading 3D Scene...</div></div>
+});
 // import { useGLTF } from "@react-three/drei";
 // useGLTF.preload("./ThreePCShowcase");
 
@@ -18,6 +23,7 @@ const Intro = () => {
   const [showFlipToast, setShowFlipToast] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [showModel, setShowModel] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useGSAP(() => {
     gsap.fromTo(".info", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 1, ease: "power3.inOut", stagger: 0.3, duration: 2, delay: 1 });
@@ -48,6 +54,11 @@ const Intro = () => {
 }, []);
 
 
+
+  // Set isClient to true on mount
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Welcome toast on mount
   useEffect(() => {
@@ -349,15 +360,24 @@ const Intro = () => {
       >
         <ThreePCShowcase />
       </motion.div> */}
-      <motion.div
-  ref={modelRef}
-  className="absolute lg:top-40 md:top-70 top-110 lg:left-85 md:left-60 left-5 pt-20 z-9999"
-  initial={{ opacity: 0 }}
-  animate={{ opacity: showModel ? 1 : 0 }}
-  transition={{ duration: 0.5, ease: "easeOut" }}
->
-  <ThreePCShowcase />
-</motion.div>
+      {isClient && (
+        <motion.div
+          ref={modelRef}
+          className="absolute lg:top-40 md:top-70 top-110 lg:left-85 md:left-60 left-5 pt-20 z-9999"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: showModel ? 1 : 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          {/* Temporarily disabled ThreePCShowcase due to React Three Fiber compatibility issues */}
+          <div className="w-full h-96 bg-gray-900 flex items-center justify-center text-white rounded-lg border border-gray-700">
+            <div className="text-center">
+              <div className="text-2xl mb-2">🚧</div>
+              <div className="text-lg font-semibold">3D Scene Coming Soon</div>
+              <div className="text-sm text-gray-400 mt-1">Working on compatibility fixes</div>
+            </div>
+          </div>
+        </motion.div>
+      )}
 
     </>
   );
