@@ -15,7 +15,7 @@ export async function middleware(request) {
   // For API routes
   if (pathname.startsWith("/api")) {
     // Auth APIs should be accessible without authentication
-    const authAPIs = ["/api/auth/register", "/api/auth/login", "/api/auth/verify", "/api/auth/forgot-password", "/api/auth/reset-password"];
+    const authAPIs = ["/api/auth/register", "/api/auth/login", "/api/auth/verify", "/api/auth/forgot-password", "/api/auth/reset-password", "/api/contact"];
 
     if (authAPIs.includes(pathname)) {
       return NextResponse.next(); // Allow auth APIs without authentication

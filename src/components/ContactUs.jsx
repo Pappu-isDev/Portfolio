@@ -162,9 +162,17 @@ const ContactUs = () => {
 
       const json = await resp.json().catch(() => null);
       if (resp.ok) {
-        setStatus("Message Sent! Thank you.");
-        setFormData({ name: "", email: "", subject: "", message: "" });
-        addToast("Message sent — I will get back to you soon!", "success");
+        if (json.requiresVerification) {
+          // Verification email sent
+          setStatus("Verification email sent! Please check your Gmail and click the verification link.");
+          setFormData({ name: "", email: "", subject: "", message: "" });
+          addToast("Verification email sent! Check your Gmail.", "success");
+        } else {
+          // Direct success (shouldn't happen with new system, but fallback)
+          setStatus("Message Sent! Thank you.");
+          setFormData({ name: "", email: "", subject: "", message: "" });
+          addToast("Message sent — I will get back to you soon!", "success");
+        }
       } else {
         const err = (json && json.error) || resp.statusText || "Send failed";
         setStatus(`Error: ${err}`);

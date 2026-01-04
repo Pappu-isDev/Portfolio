@@ -1,19 +1,15 @@
-# Portfolio Management Feature Implementation
+# Contact Form Improvements
 
-## Completed Tasks
-- [x] Create SkillsManager component for CRUD operations on skills
-- [x] Create PortfolioManager modal component with tabs for Skills, Projects, Experience
-- [x] Update Navbar to include "Manage Portfolio" button visible only when logged in
-- [x] Add modal state management to Navbar for opening/closing portfolio manager
+## Tasks
+- [x] Add Gmail validation in contactController.js to prevent spam emails
+- [x] Move toast notifications lower in ToastContext.jsx to avoid navbar overlap
+- [x] Implement email verification system to ensure Gmail accounts exist
+- [x] Create /api/contact route to handle contact form submissions
 
-## Pending Tasks
-- [ ] Test the "Manage Portfolio" button visibility based on login status
-- [ ] Test CRUD operations in the portfolio manager modal
-- [ ] Ensure proper authorization (logged-in users can manage their portfolio)
-- [ ] Add mobile support for the Manage Portfolio button if needed
-
-## Notes
-- The "Manage Portfolio" button appears only when user is logged in (not just admins)
-- The portfolio manager opens as a modal with tabs for Skills, Projects, and Experience
-- SkillsManager assumes skill fields: name, category, level
-- All components use the existing API endpoints with proper authorization headers
+## Details
+- Modify contact controller to check if email ends with @gmail.com
+- Adjust toast position from top-6 to a lower value (e.g., top-20) to clear navbar
+- Added email verification flow: users receive verification email and must click link to send message
+- Created /api/contact/verify endpoint to handle verification links
+- Updated ContactUs component to handle verification responses
+- Created /api/contact route to properly handle form submissions

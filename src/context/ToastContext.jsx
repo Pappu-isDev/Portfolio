@@ -31,7 +31,7 @@ export const ToastProvider = ({ children }) => {
       {children}
 
       {/* Toast container */}
-      <div className="fixed right-4 top-6 z-50 flex flex-col gap-2">
+      <div className="fixed right-4 top-20 z-50 flex flex-col gap-2">
         {toasts.map((t) => (
           <div
             key={t.id}
