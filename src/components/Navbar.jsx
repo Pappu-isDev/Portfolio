@@ -36,7 +36,7 @@ const Navbar = ({ name }) => {
           <div className="text-xl sm:text-2xl font-sans font-bold">{name}</div>
 
           {/* Desktop Menu */}
-          <div className="">
+          <div className="hidden sm:block">
             <div className="flex gap-6 lg:gap-8 items-center">
               {navItems.map((item) => (
                 <a key={item.id} href={item.href} onClick={() => setIsMenuOpen(false)}>
