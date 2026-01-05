@@ -1,6 +1,9 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+
+export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
 
 const VerifyOTP = () => {
   const [email, setEmail] = useState("");
