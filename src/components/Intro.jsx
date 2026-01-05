@@ -363,7 +363,7 @@ const Intro = () => {
       {isClient && (
         <motion.div
           ref={modelRef}
-          className="absolute z-10 lg:h-106 lg:w-100 lg:ml-100 lg:-mt-100 md:h-90 md:w-80 md:ml-55 md:-mt-73 sm:h-80 sm:w-100 sm:ml-50 sm:-mt-65 h-80 w-100 -ml-5 -mt-65 "
+          className="absolute z-10 lg:h-106 lg:w-100 lg:ml-100 lg:-mt-100 md:h-90 md:w-80 md:ml-55 md:-mt-73 sm:h-80 sm:w-100 sm:ml-50 sm:-mt-65 h-80 w-100 ml-25 -mt-65 "
           initial={{ opacity: 0 }}
           animate={{ opacity: showModel ? 1 : 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}

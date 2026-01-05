@@ -36,11 +36,11 @@ const Navbar = ({ name }) => {
           <div className="text-xl sm:text-2xl font-sans font-bold">{name}</div>
 
           {/* Desktop Menu */}
-          <div className="hidden sm:block">
+          <div className="">
             <div className="flex gap-6 lg:gap-8 items-center">
               {navItems.map((item) => (
                 <a key={item.id} href={item.href} onClick={() => setIsMenuOpen(false)}>
-                  <div className="relative focus:font-bold group cursor-pointer px-1 font-sans py-2 text-base lg:text-xl text-gray-200 font-medium transition-all duration-300 hover:text-white hover:scale-105 hover:shadow-blue-500/50 hover:-translate-y-1 lg:hover:-translate-y-2">
+                  <div className="relative focus:font-bold group cursor-pointer px-1 font-sans py-2 text-base lg:text-xl text-white font-medium transition-all duration-300 hover:text-white hover:scale-105 hover:shadow-blue-500/50 hover:-translate-y-1 lg:hover:-translate-y-2">
                     {item.label}
                     <span className="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded"></span>
                   </div>
