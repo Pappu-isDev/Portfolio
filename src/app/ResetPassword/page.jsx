@@ -160,7 +160,7 @@ const ResetPasswordContent = () => {
         <p className="text-sm text-gray-400 text-center mt-6">
           Remember your password?{" "}
           <button
-            onClick={() => router.push("/SignIn")}
+            onClick={() => router.push("/signin")}
             className="text-indigo-400 hover:underline"
           >
             Sign in
