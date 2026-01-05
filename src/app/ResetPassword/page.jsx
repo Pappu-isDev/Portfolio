@@ -47,7 +47,7 @@ const ResetPasswordContent = () => {
       if (response.ok) {
         setSuccess("Password reset successfully! Redirecting to login...");
         setTimeout(() => {
-          router.push("/signin");
+          router.push("/SignIn");
         }, 2000);
       } else {
         setError(data.error || "Password reset failed");

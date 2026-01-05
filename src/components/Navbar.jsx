@@ -114,7 +114,7 @@ const Navbar = ({ name }) => {
                 </>
               ) : (
                 <button
-                  onClick={() => { router.push("/signin"); setIsMenuOpen(false); }}
+                  onClick={() => { router.push("/SignIn"); setIsMenuOpen(false); }}
                   className="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md transition-colors"
                 >
                   Sign In
