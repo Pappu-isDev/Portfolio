@@ -65,7 +65,7 @@ const VerifyOTP = () => {
         } else {
           setSuccess("Account verified successfully! Redirecting to login...");
           setTimeout(() => {
-            router.push("/signin");
+            router.push("/Signin");
           }, 2000);
         }
       } else {
