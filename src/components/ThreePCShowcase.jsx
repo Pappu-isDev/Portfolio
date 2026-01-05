@@ -469,7 +469,7 @@ export default function ThreePCShowcase() {
                     />
                 </Canvas>
 
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center">
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center hidden sm:block">
                     <div className="bg-black/60 backdrop-blur-sm text-white/80 text-sm px-4 py-2 rounded-full border border-white/20">
                         🖱️ Drag to rotate • 🔍 Scroll to zoom • 🔄 Auto-rotating
                     </div>
