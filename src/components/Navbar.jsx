@@ -20,12 +20,12 @@ const Navbar = ({ name }) => {
   };
 
   const navItems = [
-    {id:1, label: "Home", href: "#intro" },
-    {id:2, label: "About Me", href: "#about" },
-    {id:3, label: "Skills", href: "#skills" },
-    {id:4, label: "Projects", href: "#projects" },
-    {id:5, label: "Experience", href: "#experience" },
-    {id:6, label: "Contact Me", href: "#contact" },
+    {id:1, label: "Home", href: "/#intro" },
+    {id:2, label: "About Me", href: "/#about" },
+    {id:3, label: "Skills", href: "/#skills" },
+    {id:4, label: "Projects", href: "/#projects" },
+    {id:5, label: "Experience", href: "/#experience" },
+    {id:6, label: "Contact Me", href: "/#contact" },
   ];
 
   return (
@@ -62,7 +62,7 @@ const Navbar = ({ name }) => {
                   </>
                 ) : (
                   <button
-                    onClick={() => router.push("/SignIn")}
+                    onClick={() => router.push("/signin")}
                     className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md transition-colors"
                   >
                     Sign In
@@ -114,7 +114,7 @@ const Navbar = ({ name }) => {
                 </>
               ) : (
                 <button
-                  onClick={() => { router.push("/SignIn"); setIsMenuOpen(false); }}
+                  onClick={() => { router.push("/signin"); setIsMenuOpen(false); }}
                   className="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md transition-colors"
                 >
                   Sign In
@@ -163,7 +163,7 @@ const Navbar = ({ name }) => {
                 </>
               ) : (
                 <button
-                  onClick={() => { router.push("/SignIn"); setIsMenuOpen(false); }}
+                  onClick={() => { router.push("/signin"); setIsMenuOpen(false); }}
                   className="w-full px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md transition-colors"
                 >
                   Sign In

@@ -77,7 +77,7 @@ const Signin = () => {
               <div className="text-sm">
                 <button
                   type="button"
-                  onClick={() => router.push("/ForgotPassword")}
+                  onClick={() => router.push("/forgotpassword")}
                   className="font-semibold text-indigo-400 hover:text-indigo-300"
                 >
                   Forgot password?
