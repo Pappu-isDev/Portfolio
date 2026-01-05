@@ -62,7 +62,7 @@ const Navbar = ({ name }) => {
                   </>
                 ) : (
                   <button
-                    onClick={() => router.push("/signin")}
+                    onClick={() => router.push("/SignIn")}
                     className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md transition-colors"
                   >
                     Sign In
@@ -163,7 +163,7 @@ const Navbar = ({ name }) => {
                 </>
               ) : (
                 <button
-                  onClick={() => { router.push("/signin"); setIsMenuOpen(false); }}
+                  onClick={() => { router.push("/SignIn"); setIsMenuOpen(false); }}
                   className="w-full px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md transition-colors"
                 >
                   Sign In
