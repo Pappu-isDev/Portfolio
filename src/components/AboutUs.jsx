@@ -131,7 +131,7 @@ const AboutUs = () => {
               </p>
               
               <p className="text-lg sm:text-xl lg:text-xl leading-relaxed text-gray-200 mt-6 text-center lg:text-left">
-                Motivated and self-taught Full-Stack Developer with a strong foundation in HTML, CSS, JavaScript,React Js,Redux-toolkit Node Js, Express Js, Zoho-catalyst and databases like SQL/MySQL, Catalyst and Mongodb along with hands-on experience building responsive websites and web applications through personal and academic projects. Eager to contribute to real-world development teams, I specialize in turning ideas into digital experiences, ensuring both functionality and user satisfaction.
+                Motivated and self-taught Full-Stack Developer with a strong foundation in HTML, CSS, JavaScript,React Js,Redux-toolkit, Node Js, Express Js, Zoho-catalyst and databases like SQL/MySQL, Catalyst and Mongodb along with hands-on experience building responsive websites and web applications through personal and academic projects. Eager to contribute to real-world development teams, I specialize in turning ideas into digital experiences, ensuring both functionality and user satisfaction.
               </p>
             </div>
           </div>
