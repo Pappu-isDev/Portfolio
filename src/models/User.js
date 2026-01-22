@@ -39,6 +39,27 @@ const userSchema = new mongoose.Schema({
   resetOtpExpires: {
     type: Date,
   },
+  failedLoginAttempts: {
+    type: Number,
+    default: 0,
+  },
+  lockoutUntil: {
+    type: Date,
+  },
+  failedResetAttempts: {
+    type: Number,
+    default: 0,
+  },
+  resetLockoutUntil: {
+    type: Date,
+  },
+  failedResetOtpAttempts: {
+    type: Number,
+    default: 0,
+  },
+  resetOtpLockoutUntil: {
+    type: Date,
+  },
 }, {
   timestamps: true,
 });
